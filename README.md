@@ -6,6 +6,9 @@ O Rodei é um aplicativo móvel voltado para a gestão financeira de caminhões,
 O aplicativo será desenvolvido utilizando o React Native. Para a interface, será utilizado o React Native Elements, e a comunicação entre o aplicativo e o backend será feita por meio de uma API desenvolvida em Laravel.
 
 ## Diagrama do Banco
+https://dbdiagram.io/d/RodeiDiagram-68041a181ca52373f599e8fd
+
+![RodeiDiagram](https://github.com/user-attachments/assets/eddd4396-3f8e-4798-9339-bd442cf29273)
 
 
 ## Protótipos de Telas
@@ -16,8 +19,10 @@ https://www.figma.com/design/tHKk2Co4Vp2Ffndpv8GiZn/Rodei?node-id=0-1&t=VIIJsGCZ
 ## Atividades 
 ATIVIDADE / *TEMPO EM SEMANAS*
 - [ ] Configurar o tema da aplicação / *1*
+- [ ] Login / *1*
+- [ ] Registro de usuários / *2*
+- [ ] CRUD Frotas / *1*
 - [ ] Dashboard / *1*
-- [ ] CRUD caminhões / *2*
+- [ ] CRUD caminhões / *1*
 - [ ] Criar viagem / *2*
 - [ ] Página do caminhoneiro / *1*
-- [ ] Criar despesas / *1*
