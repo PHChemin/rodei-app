@@ -1,9 +1,11 @@
-import Flex from "@/components/shared/flex";
-import useModal from "@/hooks/use-modal";
-import { t } from "@/services/lang";
 import { Button, Input, makeStyles } from "@rneui/themed";
 import React, { useState } from "react";
 import { Alert, Dimensions, Text } from "react-native";
+
+import useModal from "@/hooks/use-modal";
+import { t } from "@/services/lang";
+
+import { Flex } from "../flex";
 
 type InputModalProps = {
   onSubmit: (value: string) => void;
@@ -14,7 +16,7 @@ type InputModalProps = {
   minLength?: number;
 };
 
-export default function InputModal({
+export function InputModal({
   onSubmit,
   initialValue,
   label,

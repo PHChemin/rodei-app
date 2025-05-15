@@ -2,7 +2,7 @@ import {
   DEFAULT_PADDING,
   DEFAULT_RADIUS,
   defaultShadow,
-} from "@/services/theme";
+} from "@/services/theme/theme";
 import { Icon, makeStyles } from "@rneui/themed";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";

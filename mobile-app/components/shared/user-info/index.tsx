@@ -3,7 +3,7 @@ import { User } from "@/schemas/User";
 import { Image, makeStyles, Text } from "@rneui/themed";
 import { View } from "react-native";
 import { getUserAvatarUri } from "@/services/pb";
-import Flex from "@/components/shared/flex";
+import Flex from "@/components/ui/flex";
 
 type UserInfoProps = {
   user: User;

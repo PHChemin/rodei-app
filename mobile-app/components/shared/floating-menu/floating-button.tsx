@@ -1,4 +1,4 @@
-import { defaultShadow } from "@/services/theme";
+import { defaultShadow } from "@/services/theme/theme";
 import { Icon, IconProps, makeStyles } from "@rneui/themed";
 import { TouchableOpacity, ViewProps } from "react-native";
 

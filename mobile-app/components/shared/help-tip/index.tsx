@@ -1,5 +1,5 @@
-import Flex from "@/components/shared/flex";
-import { DEFAULT_PADDING, DEFAULT_RADIUS } from "@/services/theme";
+import Flex from "@/components/ui/flex";
+import { DEFAULT_PADDING, DEFAULT_RADIUS } from "@/services/theme/theme";
 import { Icon, makeStyles } from "@rneui/themed";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";

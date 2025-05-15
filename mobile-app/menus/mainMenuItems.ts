@@ -1,4 +1,4 @@
-import { HeaderMenuItemProps } from "@/components/shared/header/header-menu";
+import { HeaderMenuItemProps } from "@/components/ui/header/header-menu";
 import { t } from "@/services/lang";
 import pb from "@/services/pb";
 import { router } from "expo-router";

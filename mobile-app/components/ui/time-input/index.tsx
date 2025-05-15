@@ -1,9 +1,9 @@
+import { Dialog, Text } from "@rneui/themed";
 import { useState } from "react";
 import { TouchableOpacity, View, ViewProps } from "react-native";
 
-import { Dialog, Text } from "@rneui/themed";
+import { Flex } from "../flex";
 import TimeInputPicker from "./time-input-picker";
-import Flex from "@/components/shared/flex";
 
 export type TimeInputValueProps = {
   hour: number;
@@ -18,7 +18,7 @@ type TimeInputProps = {
   error?: string;
 } & ViewProps;
 
-export default function TimeInput({
+export function TimeInput({
   value,
   onChange,
   label,

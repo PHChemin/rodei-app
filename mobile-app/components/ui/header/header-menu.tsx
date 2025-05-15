@@ -1,12 +1,15 @@
-import {
-  DEFAULT_PADDING,
-  DEFAULT_RADIUS,
-  defaultShadow,
-} from "@/services/theme";
 import { Icon, makeStyles } from "@rneui/themed";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
 import { Dimensions, Pressable, Text, TouchableOpacity } from "react-native";
+
+import {
+  DEFAULT_PADDING,
+  DEFAULT_RADIUS,
+  iconSize,
+} from "@/services/theme/constants";
+import { defaultShadow } from "@/services/theme/theme";
+
 import { HEADER_HEIGHT } from "./app-header";
 
 export type HeaderMenuItemProps = {
@@ -39,7 +42,8 @@ export default function HeaderMenu({ items }: HeaderMenuProps) {
           style={styles.menuTouchable}
           type="material"
           name={visible ? "menu-open" : "menu"}
-          size={32}
+          color="white"
+          size={iconSize.xl}
         />
       </TouchableOpacity>
 

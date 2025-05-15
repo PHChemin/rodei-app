@@ -1,9 +1,11 @@
-import { DEFAULT_RADIUS, defaultShadow } from "@/services/theme";
 //@ts-ignore
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
 import Constants from "expo-constants";
 import { Pressable, Text, View } from "react-native";
+
+import { colors } from "@/services/theme/constants";
+import { defaultShadow } from "@/services/theme/theme";
 
 export const HEADER_HEIGHT = 96;
 
@@ -13,9 +15,7 @@ export default function AppHeader(props: NativeStackHeaderProps) {
       <View
         style={[
           {
-            borderBottomLeftRadius: DEFAULT_RADIUS,
-            borderBottomRightRadius: DEFAULT_RADIUS,
-            backgroundColor: "white",
+            backgroundColor: colors.secondary,
             height: HEADER_HEIGHT,
             paddingTop: Constants.statusBarHeight,
             flexDirection: "row",
@@ -31,13 +31,15 @@ export default function AppHeader(props: NativeStackHeaderProps) {
             onPress={() => props.navigation.goBack()}
             style={{ marginRight: 16 }}
           >
-            <Icon type="antdesign" name="left" />
+            <Icon type="antdesign" name="left" color="white" />
           </Pressable>
         ) : (
           <View />
         )}
 
-        <Text style={{ fontWeight: "bold", fontSize: 16, flex: 1 }}>
+        <Text
+          style={{ fontWeight: "bold", fontSize: 16, flex: 1, color: "white" }}
+        >
           {props.options.title}
         </Text>
 
