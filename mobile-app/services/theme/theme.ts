@@ -1,16 +1,6 @@
 import { createTheme } from "@rneui/themed";
 import { TextStyle } from "react-native";
-
-//-------------------------------------------------------- Theme Constants
-
-export const COLORS = {
-  BACKGROUND: "#f8f8fb",
-  PRIMARY: "#5082f5",
-  SECONDARY: "#01a88d",
-};
-
-export const DEFAULT_RADIUS = 24;
-export const DEFAULT_PADDING = 16;
+import { colors, DEFAULT_PADDING, DEFAULT_RADIUS, spacing } from "./constants";
 
 const HEADINGS_RATIO = 1.067; // https://typescale.com/
 const HEADINGS_BODY = 15; //RN default
@@ -48,13 +38,18 @@ export const defaultShadow = {
 
 const theme = createTheme({
   lightColors: {
-    primary: COLORS.PRIMARY,
-    secondary: COLORS.SECONDARY,
+    primary: colors.primary,
+    secondary: colors.secondary,
   },
+  spacing,
   components: {
     Button: {
-      containerStyle: {
+      buttonStyle: {
         borderRadius: DEFAULT_RADIUS,
+      },
+      containerStyle: {
+        marginTop: spacing.md,
+        width: "100%",
       },
     },
     Text: {
@@ -94,6 +89,7 @@ const theme = createTheme({
         borderColor: "transparent",
         padding: 0,
         margin: 0,
+        width: "100%",
       },
       wrapperStyle: {
         backgroundColor: "white",
@@ -102,6 +98,11 @@ const theme = createTheme({
         margin: 0,
         padding: DEFAULT_PADDING,
         ...defaultShadow,
+      },
+    },
+    Input: {
+      rightIcon: {
+        color: colors.secondary,
       },
     },
   },

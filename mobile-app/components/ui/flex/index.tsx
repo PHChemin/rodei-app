@@ -10,7 +10,7 @@ type FlexProps = {
   justify?: "flex-start" | "flex-end" | "center" | "space-between";
 } & ViewProps;
 
-export default function Flex({
+export function Flex({
   children,
   direction = "column",
   gap,
