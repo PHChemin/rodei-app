@@ -1,7 +1,8 @@
 import { Button, Input, makeStyles, Text } from "@rneui/themed";
 import { useState } from "react";
+
 import { TimeInputValueProps } from ".";
-import Flex from "@/components/shared/flex";
+import { Flex } from "../flex";
 
 type TimeInputPickerProps = {
   onChange: (value: TimeInputValueProps) => void;

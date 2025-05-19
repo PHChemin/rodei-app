@@ -1,10 +1,11 @@
-import useModal from "@/hooks/use-modal";
-import { DEFAULT_PADDING, DEFAULT_RADIUS } from "@/services/theme";
 import { Overlay, makeStyles } from "@rneui/themed";
 import React from "react";
 import { View } from "react-native";
 
-export default function Modal() {
+import useModal from "@/hooks/use-modal";
+import { DEFAULT_PADDING, DEFAULT_RADIUS } from "@/services/theme/constants";
+
+export function Modal() {
   const styles = useStyles();
   const { content, options, hideModal } = useModal();
 
