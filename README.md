@@ -4,7 +4,8 @@
 O Rodei é um aplicativo móvel voltado para a gestão financeira de caminhões, desenvolvido com o objetivo de oferecer maior controle e organização nas operações logísticas. Através dele, será possível acompanhar as finanças do caminhão, registrar e visualizar as viagens realizadas, despesas associadas e eventuais imprevistos ocorridos durante os trajetos. O sistema contará com dois perfis de usuário: gestores e motoristas. O gestor será responsável por cadastrar caminhões, registrar viagens e lançar ou acompanhar as despesas informadas. Já o motorista poderá registrar os gastos ocorridos ao longo da viagem.  
 
 As funcionalidades vitais para o sistema são:
-- [ ] Login/Registro;
+- [ ] Login;
+- [ ] Registro;
 - [ ] CRUD Frota;
 - [ ] CRUD Caminhão;
 - [ ] Adicionar viagens;
@@ -38,7 +39,8 @@ Levando em conta, que a API será feita por mim ao mesmo tempo que o mobile, as 
   
 ATIVIDADE / *TEMPO EM SEMANAS*
 - [ ] Inicio do projeto e configuração do tema da aplicação / *1*
-- [ ] Login e Registro de usuários / *2*
+- [ ] Login de usuários / *1*
+- [ ] Registro de usuários / *1*
 - [ ] CRUD Frotas e Página inicial *Minhas frotas* / *2*
 - [ ] CRUD caminhões / *1*
 - [ ] Criar viagem / *1*
