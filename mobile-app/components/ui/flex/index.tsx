@@ -12,9 +12,9 @@ type FlexProps = {
 
 export function Flex({
   children,
-  direction = "column",
+  direction = "row",
   gap,
-  align,
+  align = "center",
   justify,
   style,
   ...rest

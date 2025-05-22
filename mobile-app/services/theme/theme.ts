@@ -1,5 +1,6 @@
 import { createTheme } from "@rneui/themed";
 import { TextStyle } from "react-native";
+
 import { colors, DEFAULT_PADDING, DEFAULT_RADIUS, spacing } from "./constants";
 
 const HEADINGS_RATIO = 1.067; // https://typescale.com/
@@ -18,8 +19,6 @@ const calcHeadingSize = (h: number) => {
 
 const headingDefaults: TextStyle = {
   fontWeight: "bold",
-  marginBottom: 16, //1rem
-  marginTop: 36, //2.25rem
 };
 
 export const defaultShadow = {
@@ -49,7 +48,6 @@ const theme = createTheme({
       },
       containerStyle: {
         marginTop: spacing.md,
-        width: "100%",
       },
     },
     Text: {

@@ -1,11 +1,12 @@
-import { Button, Input, makeStyles } from "@rneui/themed";
+import { Button, Icon, Input, makeStyles, Text } from "@rneui/themed";
 import React, { useState } from "react";
-import { Alert, Dimensions, Text } from "react-native";
+import { Alert, Dimensions, TouchableOpacity } from "react-native";
 
 import useModal from "@/hooks/use-modal";
 import { t } from "@/services/lang";
 
 import { Flex } from "../flex";
+import { iconSize } from "@/services/theme/constants";
 
 type InputModalProps = {
   onSubmit: (value: string) => void;
@@ -14,6 +15,7 @@ type InputModalProps = {
   modalTitle?: string;
   submitButtonTitle?: string;
   minLength?: number;
+  withCloseButton?: boolean;
 };
 
 export function InputModal({
@@ -23,6 +25,7 @@ export function InputModal({
   modalTitle,
   submitButtonTitle,
   minLength,
+  withCloseButton = true,
 }: InputModalProps) {
   const styles = useStyles();
   const { hideModal } = useModal();
@@ -30,8 +33,20 @@ export function InputModal({
   const [value, setValue] = useState(initialValue || "");
 
   return (
-    <Flex style={styles.container}>
-      {modalTitle && <Text style={styles.title}>{modalTitle}</Text>}
+    <Flex direction="column" style={styles.container}>
+      <Flex style={{ width: "100%" }} justify="space-between">
+        {modalTitle && (
+          <Text h3 style={styles.title}>
+            {modalTitle}
+          </Text>
+        )}
+
+        {withCloseButton && (
+          <TouchableOpacity onPress={hideModal}>
+            <Icon type="material" name="close" size={iconSize.lg} />
+          </TouchableOpacity>
+        )}
+      </Flex>
 
       <Input label={label} value={value} onChangeText={setValue} />
 
@@ -55,7 +70,7 @@ export function InputModal({
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: Dimensions.get("window").width - theme.spacing.xl * 4,
+    width: Dimensions.get("window").width - theme.spacing.xl * 3,
   },
-  title: { fontWeight: "bold", textAlign: "center", fontSize: 17 },
+  title: { fontWeight: "bold" },
 }));
