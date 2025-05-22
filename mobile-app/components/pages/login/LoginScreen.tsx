@@ -1,5 +1,5 @@
 import { Button, makeStyles, Text } from "@rneui/themed";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useState } from "react";
 import { Image } from "react-native";
 
@@ -17,21 +17,20 @@ export function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
 
   // if (pb.authStore.isValid) return <Redirect href="/(auth)/home" />;
+  return <Redirect href="/(manager)/home" />;
 
   const handleLogin = async () => {
     try {
-      if (email == "manager@email.com" && password == "123456") {
-        console.log("Logado!");
-        router.replace("/(manager)/home");
-      } else {
-        throw new Error("Credenciais inválidas!");
-      }
+      // if (email == "manager@email.com" && password == "123456") {
+      //   console.log("Logado!");
+      //   router.replace("/(manager)/home");
+      // } else {
+      //   throw new Error("Credenciais inválidas!");
+      // }
       //   await pb.collection("users").authWithPassword(email, password);
-
       //   if (router.canDismiss()) {
       //     router.dismissAll();
       //   }
-
       // router.replace("/(auth)/home");
     } catch (error) {
       Log.pretty(error);
@@ -80,9 +79,14 @@ export function LoginScreen() {
         }}
       />
 
-      <Button title={t("Entrar")} onPress={handleLogin} />
+      <Button
+        containerStyle={styles.fullButton}
+        title={t("Entrar")}
+        onPress={handleLogin}
+      />
 
       <Button
+        containerStyle={styles.fullButton}
         type="outline"
         title={t("Registre-se.")}
         // onPress={() => router.push("/sign-up")}
@@ -116,5 +120,8 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: 0,
     right: theme.spacing.xl,
+  },
+  fullButton: {
+    width: "100%",
   },
 }));
