@@ -12,21 +12,20 @@ import { ScreenWrapper, TextInput } from "@/components/ui";
 export function LoginScreen() {
   const styles = useStyles();
   const { showFlashMessage } = useFlashMessages();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("manager@email.com");
+  const [password, setPassword] = useState("123456");
   const [showPassword, setShowPassword] = useState(false);
 
   // if (pb.authStore.isValid) return <Redirect href="/(auth)/home" />;
-  return <Redirect href="/(manager)/home" />;
 
   const handleLogin = async () => {
     try {
-      // if (email == "manager@email.com" && password == "123456") {
-      //   console.log("Logado!");
-      //   router.replace("/(manager)/home");
-      // } else {
-      //   throw new Error("Credenciais inválidas!");
-      // }
+      if (email == "manager@email.com" && password == "123456") {
+        console.log("Logado!");
+        router.replace("/(manager)/home");
+      } else {
+        throw new Error("Credenciais inválidas!");
+      }
       //   await pb.collection("users").authWithPassword(email, password);
       //   if (router.canDismiss()) {
       //     router.dismissAll();
