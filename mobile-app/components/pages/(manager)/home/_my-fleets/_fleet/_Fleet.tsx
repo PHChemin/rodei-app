@@ -20,7 +20,7 @@ export function Fleet({ fleet }: FleetProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
   const { showFlashMessage } = useFlashMessages();
-  const { remove, get, update } = useFleetStore();
+  const { remove, update } = useFleetStore();
 
   const editFleetModal = async () => {
     showModal(
