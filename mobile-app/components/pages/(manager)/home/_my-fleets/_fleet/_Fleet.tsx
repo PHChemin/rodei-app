@@ -2,6 +2,7 @@ import { Button, Icon, makeStyles, Text } from "@rneui/themed";
 import { TouchableOpacity } from "react-native";
 
 import useFlashMessages from "@/hooks/use-flash-messages";
+import { useFleetStore } from "@/hooks/use-fleet-store";
 import useModal from "@/hooks/use-modal";
 import { FleetBase } from "@/schemas";
 import { t } from "@/services/lang";
@@ -19,18 +20,20 @@ export function Fleet({ fleet }: FleetProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
   const { showFlashMessage } = useFlashMessages();
+  const { remove, get, update } = useFleetStore();
 
   const editFleetModal = async () => {
     showModal(
       <InputModal
         modalTitle={t("Editar Frota")}
-        initialValue={fleet?.name}
+        initialValue={fleet.name}
         label={t("Nome")}
         minLength={2}
         submitButtonTitle="Confirmar"
         onSubmit={async (name) => {
           try {
-            console.log(name);
+            const updatedFleet = { ...fleet, name: name };
+            update(fleet.id, updatedFleet);
           } catch (e) {
             showFlashMessage({
               type: "error",
@@ -51,7 +54,18 @@ export function Fleet({ fleet }: FleetProps) {
         message={t("Você tem certeza que deseja excluir a frota?")}
         confirmButtonTitle={t("Sim")}
         cancelButtonTitle={t("Não")}
-        onConfirm={async () => {}}
+        onConfirm={async () => {
+          try {
+            remove(fleet.id);
+          } catch (e) {
+            showFlashMessage({
+              type: "error",
+              message: t("Ocorreu um erro ao processar a operação!"),
+            });
+          } finally {
+            hideModal();
+          }
+        }}
       />
     );
   };

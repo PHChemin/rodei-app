@@ -1,8 +1,8 @@
 import { Button, makeStyles, Text } from "@rneui/themed";
-import { useState } from "react";
 import { FlatList, View } from "react-native";
 
 import useFlashMessages from "@/hooks/use-flash-messages";
+import { useFleetStore } from "@/hooks/use-fleet-store";
 import useModal from "@/hooks/use-modal";
 import { FleetBase } from "@/schemas";
 import { t } from "@/services/lang";
@@ -19,8 +19,7 @@ export function MyFleets({}: MyFleetsProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
   const { showFlashMessage } = useFlashMessages();
-
-  const [fleets, setFleets] = useState<FleetBase[]>([]);
+  const { list, add } = useFleetStore();
 
   const createFleetModal = async () => {
     showModal(
@@ -31,7 +30,12 @@ export function MyFleets({}: MyFleetsProps) {
         submitButtonTitle="Confirmar"
         onSubmit={async (name) => {
           try {
-            console.log(name);
+            const newFleet: FleetBase = {
+              id: list().length,
+              name: name,
+              trucks: [],
+            };
+            add(newFleet);
           } catch (e) {
             showFlashMessage({
               type: "error",
@@ -61,7 +65,8 @@ export function MyFleets({}: MyFleetsProps) {
       </Flex>
 
       <FlatList
-        data={fleets}
+        data={list()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <Fleet fleet={item} />}
         ListEmptyComponent={() => <EmpityMessage />}
         ItemSeparatorComponent={() => (
