@@ -10,7 +10,7 @@ type FullscreenProps = {
 export default function Fullscreen({
   children,
   center,
-  padding = "xl",
+  padding = "lg",
 }: FullscreenProps) {
   const { theme } = useTheme();
 

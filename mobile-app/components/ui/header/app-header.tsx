@@ -38,7 +38,7 @@ export default function AppHeader(props: NativeStackHeaderProps) {
         )}
 
         <Text
-          style={{ fontWeight: "bold", fontSize: 16, flex: 1, color: "white" }}
+          style={{ fontWeight: "bold", fontSize: 24, flex: 1, color: "white" }}
         >
           {props.options.title}
         </Text>

@@ -9,7 +9,7 @@ type ScrollableProps = {
 
 export default function Scrollable({
   children,
-  padding = "xl",
+  padding = "lg",
   onRefresh,
 }: ScrollableProps) {
   const { theme } = useTheme();

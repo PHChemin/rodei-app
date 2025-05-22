@@ -1,3 +1,4 @@
+export { AlertModal } from "./alert-modal";
 export { Flex } from "./flex";
 export { Header } from "./header";
 export { InputLabel } from "./input-label";
