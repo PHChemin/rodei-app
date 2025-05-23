@@ -31,7 +31,7 @@ export default function AppHeader(props: NativeStackHeaderProps) {
             onPress={() => props.navigation.goBack()}
             style={{ marginRight: 16 }}
           >
-            <Icon type="antdesign" name="left" color="white" />
+            <Icon type="feather" name="arrow-left" color="white" />
           </Pressable>
         ) : (
           <View />
