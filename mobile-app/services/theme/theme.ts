@@ -9,7 +9,7 @@ const HEADINGS_LINE_HEIGHT_MULTIPLIER = 1.6;
 
 //-------------------------------------------------------- Theme Helpers
 
-const calcHeadingSize = (h: number) => {
+export const calcHeadingSize = (h: number) => {
   let headingSize = HEADINGS_BODY;
   for (let i = 0; i < 7 - h; i++) {
     headingSize *= HEADINGS_RATIO;
