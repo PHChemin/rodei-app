@@ -88,7 +88,7 @@ export function LoginScreen() {
         containerStyle={styles.fullButton}
         type="outline"
         title={t("Registre-se.")}
-        // onPress={() => router.push("/sign-up")}
+        onPress={() => router.push("/sign-up")}
       />
 
       <Button
