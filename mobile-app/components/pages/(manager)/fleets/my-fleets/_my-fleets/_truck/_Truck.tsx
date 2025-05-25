@@ -3,6 +3,7 @@ import { Image, TouchableOpacity, View } from "react-native";
 
 import { TruckBase } from "@/schemas";
 import { colors, iconSize } from "@/services/theme/constants";
+import { getTruckBrandImage } from "@/services/truck-brand-images";
 
 import { Flex } from "@/components/ui";
 
@@ -19,7 +20,7 @@ export function Truck({ truck }: TruckProps) {
         <Flex justify="space-between">
           <Flex>
             <Image
-              source={require("@/assets/images/logo.png")}
+              source={getTruckBrandImage(truck.brand_name)}
               style={styles.image}
             />
 

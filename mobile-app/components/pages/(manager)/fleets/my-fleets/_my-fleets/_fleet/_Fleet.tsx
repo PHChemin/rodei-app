@@ -1,4 +1,5 @@
 import { Button, Icon, makeStyles, Text } from "@rneui/themed";
+import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 
 import useFlashMessages from "@/hooks/use-flash-messages";
@@ -113,6 +114,9 @@ export function Fleet({ fleet }: FleetProps) {
             size: iconSize.sm,
           }}
           containerStyle={styles.addTruck}
+          onPress={() =>
+            router.push(`/(manager)/fleets/${fleet.id}/trucks/new`)
+          }
         />
       </Flex>
     </>
