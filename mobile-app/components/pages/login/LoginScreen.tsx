@@ -1,5 +1,5 @@
 import { Button, makeStyles, Text } from "@rneui/themed";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Image } from "react-native";
 
@@ -22,7 +22,7 @@ export function LoginScreen() {
     try {
       if (email == "manager@email.com" && password == "123456") {
         console.log("Logado!");
-        router.replace("/(manager)/home");
+        router.replace("/(manager)/fleets/my-fleets");
       } else {
         throw new Error("Credenciais inválidas!");
       }

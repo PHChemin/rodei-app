@@ -4,9 +4,7 @@ import { Header, ScreenWrapper } from "@/components/ui";
 
 import { MyFleets } from "./_my-fleets/_MyFleets";
 
-type HomeScreenProps = {};
-
-export function HomeScreen({}: HomeScreenProps) {
+export function MyFleetsScreen() {
   const styles = useStyles();
 
   return (

@@ -1,13 +1,10 @@
-import { makeStyles, Text } from "@rneui/themed";
+import { Text } from "@rneui/themed";
 
-import { Flex } from "@/components/ui";
 import { spacing } from "@/services/theme/constants";
 
-type EmpityMessageProps = {};
+import { Flex } from "@/components/ui";
 
-export function EmpityMessage({}: EmpityMessageProps) {
-  const styles = useStyles();
-
+export function EmpityMessage() {
   return (
     <Flex direction="column" justify="center" gap={spacing.sm}>
       <Text h4>Nenhuma frota cadastrada!</Text>
@@ -16,5 +13,3 @@ export function EmpityMessage({}: EmpityMessageProps) {
     </Flex>
   );
 }
-
-const useStyles = makeStyles((theme) => ({}));
