@@ -32,7 +32,7 @@
     "expo-splash-screen": "~0.30.8",
     "expo-status-bar": "~2.2.3",
     "expo-system-ui": "~5.0.7",
-    "expo-updates": "~0.28.12",
+    "expo-updates": "~0.28.15",
     "expo-web-browser": "~14.1.6",
     "immer": "^10.1.1",
     "react": "19.0.0",
