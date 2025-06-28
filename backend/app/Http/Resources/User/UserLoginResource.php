@@ -16,8 +16,17 @@ class UserLoginResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'cpf' => $this->cpf,
             'email' => $this->email,
             'name' => $this->name,
+            'is_manager' => $this->isManager(),
+            'is_driver' => $this->isDriver(),
+            'manager_id' => $this->when($this->isManager(), function () {
+                return $this->manager->id;
+            }),
+            'driver_id' => $this->when($this->isDriver(), function () {
+                return $this->driver->id;
+            }),
         ];
     }
 }

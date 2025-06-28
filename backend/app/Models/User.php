@@ -58,4 +58,17 @@ class User extends Authenticatable
     {
         return $this->hasOne(Driver::class);
     }
+
+    /**
+     * Helper to check if the user is a manager.
+     */
+    public function isManager(): bool
+    {
+        return $this->manager()->exists();
+    }
+
+    public function isDriver(): bool
+    {
+        return $this->driver()->exists();
+    }
 }
