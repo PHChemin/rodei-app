@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Messages\FlashMessage;
 use App\Http\Resources\User\UserLoginResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,29 +21,24 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
     
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Login realizado com sucesso',
-                'data' => [
+            return response()->json(
+                FlashMessage::success(trans('auth.success'))->merge([
                     'user' => new UserLoginResource($user),
                     'token' => $token
-                ]
-            ], Response::HTTP_OK);
+                ]), Response::HTTP_OK);
         }
     
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Credenciais inválidas'
-        ], Response::HTTP_UNAUTHORIZED);
+        return response()->json(
+            FlashMessage::error(trans('auth.failed')), Response::HTTP_UNAUTHORIZED
+        );
     }
 
     public function logout(Request $request): Response
     {
         $request->user()->currentAccessToken()->delete();
     
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Logout realizado com sucesso'
-        ], Response::HTTP_OK);
+        return response()->json(
+            FlashMessage::success(trans('auth.logout')), Response::HTTP_OK
+        );
     }
 }
