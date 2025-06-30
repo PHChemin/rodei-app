@@ -1,14 +1,8 @@
-// https://docs.pmnd.rs/zustand/guides/maps-and-sets-usage
-// https://docs.pmnd.rs/zustand/integrations/immer-middleware
-
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { enableMapSet } from "immer";
-
-enableMapSet();
 
 type State = {
-  data: Map<string, any>;
+  data: Record<string, any>;
 };
 
 type Actions = {
@@ -19,29 +13,28 @@ type Actions = {
 
 export const useCache = create(
   immer<State & Actions>((set, get) => ({
-    data: new Map<string, any>(),
+    data: {},
 
-    cache: (key: string, params: any) => {
+    cache: (key, params) => {
       set((state) => {
-        state.data.set(key, params);
+        state.data[key] = params;
       });
     },
 
     cached: <T>(key: string, defaultValue?: T): T => {
-      if (!get().data.has(key)) {
-        if (defaultValue) {
+      const value = get().data[key];
+      if (value === undefined) {
+        if (defaultValue !== undefined) {
           return defaultValue;
-        } else {
-          throw new Error("useCache has no data for key: " + key);
         }
+        throw new Error("useCache has no data for key: " + key);
       }
-
-      return get().data.get(key) as T;
+      return value;
     },
 
-    invalidate: (key: string) => {
+    invalidate: (key) => {
       set((state) => {
-        state.data.delete(key);
+        delete state.data[key];
       });
     },
   }))

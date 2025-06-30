@@ -1,13 +1,10 @@
 import { FlashMessageRendererProps } from "@/components/shared/flash-message/flash-message-renderer";
 import * as Crypto from "expo-crypto";
-import { enableMapSet } from "immer";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-enableMapSet();
-
 type State = {
-  flashMessages: Map<string, FlashMessageRendererProps>;
+  flashMessages: FlashMessageRendererProps[];
 };
 
 type Actions = {
@@ -19,30 +16,28 @@ type Actions = {
 
 const useFlashMessages = create(
   immer<State & Actions>((set) => ({
-    flashMessages: new Map<string, FlashMessageRendererProps>(),
+    flashMessages: [],
 
-    showFlashMessage: (flashMessage: Omit<FlashMessageRendererProps, "id">) => {
+    showFlashMessage: (flashMessage) => {
       set((state) => {
-        // remove autoClose for all existing flashMessages (re-create all to force re-render)
-        state.flashMessages.forEach((oldFm) => {
-          state.flashMessages.delete(oldFm.id);
-          const subId = Crypto.randomUUID();
-          state.flashMessages.set(subId, {
-            autoClose: false,
-            ...oldFm,
-            id: subId,
-          });
-        });
+        // Remove todos os autoClose existentes e recria com autoClose false
+        state.flashMessages = state.flashMessages.map((msg) => ({
+          ...msg,
+          id: Crypto.randomUUID(),
+          autoClose: false,
+        }));
 
-        // insert a new flashMessage
+        // Adiciona novo flash message
         const id = Crypto.randomUUID();
-        state.flashMessages.set(id, { id, ...flashMessage });
+        state.flashMessages.push({ id, ...flashMessage });
       });
     },
 
-    closeFlashMessage: (id: string) => {
+    closeFlashMessage: (id) => {
       set((state) => {
-        state.flashMessages.delete(id);
+        state.flashMessages = state.flashMessages.filter(
+          (msg) => msg.id !== id
+        );
       });
     },
   }))

@@ -1,0 +1,63 @@
+{
+  "buttons": {
+    "confirm": "Confirmar",
+    "forget-password": "Esqueci minha senha",
+    "login": "Entrar",
+    "ok": "OK",
+    "sign-up": "Registrar-se",
+    "yes": "Sim",
+    "no": "Não",
+    "register": "Registrar",
+    "add": "Adicionar"
+  },
+
+  "components": {
+    "input-modal": {
+      "error": "Erro",
+      "min-length": "O campo deve ter pelo menos {{count}} caracteres."
+    },
+
+    "my-fleets": {
+      "add": "Criar Frota",
+      "delete": "Excluir Frota",
+      "delete-confirm": "Você tem certeza que deseja excluir a frota?",
+      "edit": "Editar Frota",
+      "error": "Ocorreu um erro ao processar a operação!",
+      "name": "Nome",
+      "title": "Minhas Frotas",
+      "add-truck": "Adicionar Caminhão",
+      "empty-title": "Nenhuma frota cadastrada.",
+      "empty-message": "Clique em criar frota para começar"
+    },
+
+    "version-checker": {
+      "message": "Uma nova versão do aplicativo foi lançada! Para aproveitar as novidades e evitar erros, atualize o aplicativo para a versão mais recente.",
+      "update": "Atualize o aplicativo!",
+      "update-now": "Atualizar agora!"
+    },
+
+    "sign-up": {
+      "title": "Registrar-se"
+    },
+
+    "add-truck": {
+      "title": "Adicionar Caminhão"
+    }
+  },
+
+  "flash-messages": {
+    "server-error": "Ocorreu um erro no servidor, tente novamente mais tarde."
+  },
+
+  "fields": {
+    "confirm-password": "Confirmar Senha",
+    "email": "E-mail",
+    "name": "Nome",
+    "password": "Senha",
+    "cpf": "CPF",
+    "brand": "Marca",
+    "model": "Modelo",
+    "plate": "Placa",
+    "color": "Cor"
+  }
+}

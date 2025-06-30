@@ -1,11 +1,11 @@
 import { Button, makeStyles, Text } from "@rneui/themed";
+import { t } from "i18next";
 import { FlatList, View } from "react-native";
 
 import useFlashMessages from "@/hooks/use-flash-messages";
 import { useFleetStore } from "@/hooks/use-fleet-store";
 import useModal from "@/hooks/use-modal";
 import { FleetBase } from "@/schemas";
-import { t } from "@/services/lang";
 import { spacing } from "@/services/theme/constants";
 
 import { Flex, InputModal } from "@/components/ui";
@@ -24,10 +24,10 @@ export function MyFleets({}: MyFleetsProps) {
   const createFleetModal = async () => {
     showModal(
       <InputModal
-        modalTitle={t("Criar frota")}
-        label={t("Nome")}
+        modalTitle={t("components.my-fleets.add")}
+        label={t("components.my-fleets.name")}
         minLength={2}
-        submitButtonTitle="Confirmar"
+        submitButtonTitle={t("buttons.confirm")}
         onSubmit={async (name) => {
           try {
             const newFleet: FleetBase = {
@@ -39,7 +39,7 @@ export function MyFleets({}: MyFleetsProps) {
           } catch (e) {
             showFlashMessage({
               type: "error",
-              message: t("Ocorreu um erro ao processar a operação!"),
+              message: t("components.my-fleets.error"),
             });
           } finally {
             hideModal();

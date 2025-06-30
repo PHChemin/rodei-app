@@ -5,6 +5,7 @@ import { InputLabel } from "../input-label";
 type TextInputProps = {
   value?: string;
   onChangeText?: (value: string) => void;
+  errorMessage?: string;
   label?: string;
   placeholder?: string;
   labelProps?: TextProps;
@@ -15,6 +16,7 @@ type TextInputProps = {
 export function TextInput({
   value,
   onChangeText,
+  errorMessage,
   label,
   placeholder,
   inputProps,
@@ -32,6 +34,7 @@ export function TextInput({
       <Input
         value={value}
         onChangeText={onChangeText}
+        errorMessage={errorMessage}
         placeholder={placeholder}
         {...inputProps}
       />

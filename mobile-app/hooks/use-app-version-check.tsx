@@ -6,8 +6,9 @@ import useModal from "@/hooks/use-modal";
 import pb from "@/services/pb";
 import { compareVersions } from "compare-versions";
 import { Button, Text } from "@rneui/themed";
-import { t } from "@/services/lang";
+
 import { Log } from "@/services/logger";
+import { t } from "i18next";
 
 export default function useAppVersionCheck() {
   const modal = useModal();
@@ -38,18 +39,19 @@ export default function useAppVersionCheck() {
         modal.showModal(
           <>
             <Text style={{ fontWeight: "bold" }}>
-              {t("Atualize o aplicativo!")}
+              {t("components.version-checker.update")}
             </Text>
 
             <Text
               style={{ textAlign: "justify", marginTop: 16, marginBottom: 16 }}
             >
-              {t(
-                "Uma nova versão do aplicativo foi lançada! Para aproveitar as novidades e evitar erros, atualize o aplicativo para a versão mais recente."
-              )}
+              {t("components.version-checker.message")}
             </Text>
 
-            <Button onPress={handleOpenStore} title={t("Atualizar agora!")} />
+            <Button
+              onPress={handleOpenStore}
+              title={t("components.version-checker.update-now")}
+            />
           </>
         );
       }

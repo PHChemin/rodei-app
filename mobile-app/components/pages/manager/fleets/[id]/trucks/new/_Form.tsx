@@ -1,11 +1,11 @@
 import { Button, makeStyles } from "@rneui/themed";
 import { router } from "expo-router";
+import { t } from "i18next";
 import { useState } from "react";
 
 import useFlashMessages from "@/hooks/use-flash-messages";
 import { useFleetStore } from "@/hooks/use-fleet-store";
 import { TruckBase } from "@/schemas";
-import { t } from "@/services/lang";
 
 import { SelectInput, TextInput } from "@/components/ui";
 
@@ -47,7 +47,7 @@ export function AddTruckForm({ fleetId }: AddTruckFormProps) {
     } catch (error) {
       showFlashMessage({
         type: "error",
-        message: t("Ocorreu um erro ao processar a operação!"),
+        message: "Ocorreu um erro ao processar a operação!",
       });
     }
   };
@@ -55,28 +55,32 @@ export function AddTruckForm({ fleetId }: AddTruckFormProps) {
   return (
     <>
       <SelectInput
-        label="Marca"
+        label={t("fields.brand")}
         value={brandName}
         onChange={setBrandName}
         data={truckBrandOptions}
       />
 
-      <TextInput label="Modelo" value={model} onChangeText={setModel} />
+      <TextInput
+        label={t("fields.model")}
+        value={model}
+        onChangeText={setModel}
+      />
 
       <TextInput
-        label="Placa"
+        label={t("fields.plate")}
         value={licensePlate}
         onChangeText={setLicensePlate}
       />
 
       <SelectInput
-        label="Cor"
+        label={t("fields.color")}
         value={color}
         onChange={setColor}
         data={colorOptions}
       />
 
-      <Button title="Adicionar" onPress={handleCreateTruck} />
+      <Button title={t("buttons.add")} onPress={handleCreateTruck} />
     </>
   );
 }
