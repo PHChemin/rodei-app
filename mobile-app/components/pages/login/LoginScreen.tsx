@@ -1,44 +1,54 @@
 import { Button, makeStyles, Text } from "@rneui/themed";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
+import { t } from "i18next";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Image } from "react-native";
 
-import useFlashMessages from "@/hooks/use-flash-messages";
-import { t } from "@/services/lang";
-import { Log } from "@/services/logger";
-
 import { ScreenWrapper, TextInput } from "@/components/ui";
+import { useToken } from "@/hooks/use-token";
+import { UserLogin } from "@/schemas/User/UserLogin";
+import { api, handleFormErrors } from "@/services";
 
 export function LoginScreen() {
   const styles = useStyles();
-  const { showFlashMessage } = useFlashMessages();
-  const [email, setEmail] = useState("manager@email.com");
-  const [password, setPassword] = useState("123456");
+  const { token, setToken } = useToken();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // if (pb.authStore.isValid) return <Redirect href="/(auth)/home" />;
+  const {
+    setError,
+    formState: { errors },
+  } = useForm();
 
   const handleLogin = async () => {
     try {
-      if (email == "manager@email.com" && password == "123456") {
-        console.log("Logado!");
-        router.replace("/(manager)/fleets/my-fleets");
-      } else {
-        throw new Error("Credenciais inválidas!");
-      }
-      //   await pb.collection("users").authWithPassword(email, password);
-      //   if (router.canDismiss()) {
-      //     router.dismissAll();
-      //   }
-      // router.replace("/(auth)/home");
-    } catch (error) {
-      Log.pretty(error);
-      showFlashMessage({
-        type: "error",
-        message: t("Credenciais inválidas!"),
+      setIsLoading(true);
+      const { data } = await api({ flashSuccess: false }).post("/login", {
+        email: email,
+        password: password,
       });
+
+      const user = UserLogin.parse(data.user);
+
+      setToken(data.token, user);
+
+      if (user.is_manager) {
+        router.push("/manager/fleets/my-fleets");
+      } else {
+        // router.push("/driver/home");
+      }
+    } catch (error) {
+      handleFormErrors(error, setError);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (token) return <Redirect href="/manager/fleets/my-fleets" />;
 
   return (
     <ScreenWrapper.Fullscreen center>
@@ -48,9 +58,10 @@ export function LoginScreen() {
       />
 
       <TextInput
-        placeholder={t("Email")}
+        placeholder={t("fields.email")}
         value={email}
         onChangeText={setEmail}
+        errorMessage={errors.email?.message?.toString()}
         inputProps={{
           autoCapitalize: "none",
           keyboardType: "email-address",
@@ -62,9 +73,10 @@ export function LoginScreen() {
       />
 
       <TextInput
-        placeholder={t("Senha")}
+        placeholder={t("fields.password")}
         value={password}
         onChangeText={setPassword}
+        errorMessage={errors.password?.message?.toString()}
         inputProps={{
           secureTextEntry: !showPassword,
           autoCapitalize: "none",
@@ -80,20 +92,21 @@ export function LoginScreen() {
 
       <Button
         containerStyle={styles.fullButton}
-        title={t("Entrar")}
+        title={t("buttons.login")}
         onPress={handleLogin}
+        loading={isLoading}
       />
 
       <Button
         containerStyle={styles.fullButton}
         type="outline"
-        title={t("Registre-se.")}
+        title={t("buttons.sign-up")}
         onPress={() => router.push("/sign-up")}
       />
 
       <Button
         type="clear"
-        title={t("Esqueci minha senha")}
+        title={t("buttons.forget-password")}
         // onPress={() => router.push("/forgot-password")}
       />
 
@@ -102,7 +115,6 @@ export function LoginScreen() {
           <Text style={styles.version}>
             [channel: {process.env.EXPO_PUBLIC_EAS_CHANNEL}]
           </Text>
-          {/* <Text>[api: {getPbBaseURL()}]</Text> */}
         </>
       )}
     </ScreenWrapper.Fullscreen>

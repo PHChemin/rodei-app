@@ -1,12 +1,12 @@
 import { Button, Icon, Input, makeStyles, Text } from "@rneui/themed";
+import { t } from "i18next";
 import React, { useState } from "react";
 import { Alert, Dimensions, TouchableOpacity } from "react-native";
 
 import useModal from "@/hooks/use-modal";
-import { t } from "@/services/lang";
 
-import { Flex } from "../flex";
 import { iconSize } from "@/services/theme/constants";
+import { Flex } from "../flex";
 
 type InputModalProps = {
   onSubmit: (value: string) => void;
@@ -51,12 +51,12 @@ export function InputModal({
       <Input label={label} value={value} onChangeText={setValue} />
 
       <Button
-        title={submitButtonTitle || t("OK")}
+        title={submitButtonTitle || t("buttons.ok")}
         onPress={() => {
           if (minLength && value.length < minLength) {
             Alert.alert(
-              t("Erro"),
-              t(`O campo deve ter pelo menos ${minLength} caracteres!`)
+              t("components.input-modal.error"),
+              t("components.input-modal.min-length", { count: minLength })
             );
           } else {
             hideModal();

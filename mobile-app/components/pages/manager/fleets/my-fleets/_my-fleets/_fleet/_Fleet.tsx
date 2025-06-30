@@ -1,12 +1,12 @@
 import { Button, Icon, makeStyles, Text } from "@rneui/themed";
 import { router } from "expo-router";
+import { t } from "i18next";
 import { TouchableOpacity } from "react-native";
 
 import useFlashMessages from "@/hooks/use-flash-messages";
 import { useFleetStore } from "@/hooks/use-fleet-store";
 import useModal from "@/hooks/use-modal";
 import { FleetBase } from "@/schemas";
-import { t } from "@/services/lang";
 import { colors, iconSize, spacing } from "@/services/theme/constants";
 
 import { AlertModal, Flex, InputModal } from "@/components/ui";
@@ -26,11 +26,11 @@ export function Fleet({ fleet }: FleetProps) {
   const editFleetModal = async () => {
     showModal(
       <InputModal
-        modalTitle={t("Editar Frota")}
+        modalTitle={t("components.my-fleets.edit")}
         initialValue={fleet.name}
-        label={t("Nome")}
+        label={t("components.my-fleets.name")}
         minLength={2}
-        submitButtonTitle="Confirmar"
+        submitButtonTitle={t("buttons.confirm")}
         onSubmit={async (name) => {
           try {
             const updatedFleet = { ...fleet, name: name };
@@ -38,7 +38,7 @@ export function Fleet({ fleet }: FleetProps) {
           } catch (e) {
             showFlashMessage({
               type: "error",
-              message: t("Ocorreu um erro ao processar a operação!"),
+              message: t("components.my-fleets.error"),
             });
           } finally {
             hideModal();
@@ -51,17 +51,17 @@ export function Fleet({ fleet }: FleetProps) {
   const deleteFleetModal = async () => {
     showModal(
       <AlertModal
-        title={t("Excluir frota")}
-        message={t("Você tem certeza que deseja excluir a frota?")}
-        confirmButtonTitle={t("Sim")}
-        cancelButtonTitle={t("Não")}
+        title={t("components.my-fleets.delete")}
+        message={t("components.my-fleets.delete-confirm")}
+        confirmButtonTitle={t("buttons.yes")}
+        cancelButtonTitle={t("buttons.no")}
         onConfirm={async () => {
           try {
             remove(fleet.id);
           } catch (e) {
             showFlashMessage({
               type: "error",
-              message: t("Ocorreu um erro ao processar a operação!"),
+              message: t("components.my-fleets.error"),
             });
           } finally {
             hideModal();
@@ -105,7 +105,7 @@ export function Fleet({ fleet }: FleetProps) {
         <Button
           type="outline"
           size="sm"
-          title="Adicionar caminhão"
+          title={t("components.my-fleets.add-truck")}
           iconRight
           icon={{
             name: "truck",
@@ -114,9 +114,7 @@ export function Fleet({ fleet }: FleetProps) {
             size: iconSize.sm,
           }}
           containerStyle={styles.addTruck}
-          onPress={() =>
-            router.push(`/(manager)/fleets/${fleet.id}/trucks/new`)
-          }
+          onPress={() => router.push(`/manager/fleets/${fleet.id}/trucks/new`)}
         />
       </Flex>
     </>

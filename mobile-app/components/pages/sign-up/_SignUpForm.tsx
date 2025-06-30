@@ -1,8 +1,11 @@
 import { Button } from "@rneui/themed";
 import { router } from "expo-router";
+import { t } from "i18next";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 import { TextInput } from "@/components/ui";
+import { api, handleFormErrors } from "@/services";
 
 export function SignUpForm() {
   const [name, setName] = useState("");
@@ -11,21 +14,35 @@ export function SignUpForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSignUp = () => {
-    if (!name || cpf.length != 11 || !email || !password || !confirmPassword) {
-      return;
-    }
+  const {
+    setError,
+    formState: { errors },
+  } = useForm();
 
-    console.log("Registrado");
-    router.replace("/");
+  const handleSubmit = async () => {
+    try {
+      await api().post("/register", {
+        name: name,
+        cpf: cpf,
+        email: email,
+        password: password,
+        password_confirmation: confirmPassword,
+        is_manager: true,
+      });
+
+      router.replace("/");
+    } catch (error) {
+      handleFormErrors(error, setError);
+    }
   };
 
   return (
     <>
       <TextInput
-        label="Nome"
+        label={t("fields.name")}
         value={name}
         onChangeText={setName}
+        errorMessage={errors.name?.message?.toString()}
         inputProps={{
           rightIcon: {
             name: "account-outline",
@@ -36,9 +53,10 @@ export function SignUpForm() {
       />
 
       <TextInput
-        label="CPF"
+        label={t("fields.cpf")}
         value={cpf}
         onChangeText={setCpf}
+        errorMessage={errors.cpf?.message?.toString()}
         inputProps={{
           keyboardType: "numeric",
           rightIcon: {
@@ -50,9 +68,10 @@ export function SignUpForm() {
       />
 
       <TextInput
-        label="Email"
+        label={t("fields.email")}
         value={email}
         onChangeText={setEmail}
+        errorMessage={errors.email?.message?.toString()}
         inputProps={{
           autoCapitalize: "none",
           keyboardType: "email-address",
@@ -65,9 +84,10 @@ export function SignUpForm() {
       />
 
       <TextInput
-        label="Senha"
+        label={t("fields.password")}
         value={password}
         onChangeText={setPassword}
+        errorMessage={errors.password?.message?.toString()}
         inputProps={{
           secureTextEntry: true,
           rightIcon: {
@@ -79,9 +99,10 @@ export function SignUpForm() {
       />
 
       <TextInput
-        label="Confirmar Senha"
+        label={t("fields.confirm-password")}
         value={confirmPassword}
         onChangeText={setConfirmPassword}
+        errorMessage={errors.password_confirmation?.message?.toString()}
         inputProps={{
           secureTextEntry: true,
           rightIcon: {
@@ -92,7 +113,7 @@ export function SignUpForm() {
         required
       />
 
-      <Button title="Registrar" onPress={handleSignUp} />
+      <Button title={t("buttons.register")} onPress={handleSubmit} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { HeaderMenuItemProps } from "@/components/ui/header/header-menu";
-import { t } from "@/services/lang";
 import pb from "@/services/pb";
+import { logout } from "@/services/user/logout";
 import { router } from "expo-router";
 
 export const mainMenuItems: HeaderMenuItemProps[] = [
@@ -9,7 +9,7 @@ export const mainMenuItems: HeaderMenuItemProps[] = [
       type: "antdesign",
       name: "home",
     },
-    title: t("Início"),
+    title: "Início",
     onPress: () => router.push("/(auth)/home"),
   },
   {
@@ -17,7 +17,7 @@ export const mainMenuItems: HeaderMenuItemProps[] = [
       type: "antdesign",
       name: "user",
     },
-    title: t("Meu Perfil"),
+    title: "Meu Perfil",
     onPress: () => router.push("/(auth)/profile"),
   },
   {
@@ -25,7 +25,7 @@ export const mainMenuItems: HeaderMenuItemProps[] = [
       type: "antdesign",
       name: "message1",
     },
-    title: t("Opine sobre o app!"),
+    title: "Opine sobre o app!",
     onPress: () => router.push("/(auth)/user-feedback"),
   },
   {
@@ -33,13 +33,9 @@ export const mainMenuItems: HeaderMenuItemProps[] = [
       type: "antdesign",
       name: "logout",
     },
-    title: t("Sair"),
+    title: "Sair",
     onPress: () => {
-      pb.authStore.clear();
-      if (router.canDismiss()) {
-        router.dismissAll();
-      }
-      router.replace("/");
+      logout();
     },
   },
 ];

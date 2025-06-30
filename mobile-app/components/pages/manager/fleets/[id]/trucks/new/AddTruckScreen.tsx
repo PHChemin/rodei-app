@@ -1,4 +1,5 @@
 import { makeStyles } from "@rneui/themed";
+import { t } from "i18next";
 
 import { Header, ScreenWrapper } from "@/components/ui";
 
@@ -13,7 +14,7 @@ export function AddTruckScreen({ fleetId }: AddTruckScreenProps) {
 
   return (
     <ScreenWrapper.Fullscreen>
-      <Header.WithTitle title="Adicionar Caminhão" />
+      <Header.WithTitle title={t("components.add-truck.title")} />
 
       <AddTruckForm fleetId={fleetId} />
     </ScreenWrapper.Fullscreen>

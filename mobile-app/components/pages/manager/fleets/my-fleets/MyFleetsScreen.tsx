@@ -1,4 +1,5 @@
 import { makeStyles } from "@rneui/themed";
+import { t } from "i18next";
 
 import { Header, ScreenWrapper } from "@/components/ui";
 
@@ -9,7 +10,8 @@ export function MyFleetsScreen() {
 
   return (
     <ScreenWrapper.Fullscreen>
-      <Header.WithTitle title="Minhas Frotas" />
+      <Header.WithTitle title={t("components.my-fleets.title")} />
+      <Header.WithMenu />
 
       <MyFleets />
     </ScreenWrapper.Fullscreen>
