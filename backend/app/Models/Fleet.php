@@ -25,4 +25,9 @@ class Fleet extends Model
     {
         return $this->belongsTo(Manager::class);
     }
+
+    public function trucks()
+    {
+        return $this->hasMany(Truck::class);
+    }
 }
