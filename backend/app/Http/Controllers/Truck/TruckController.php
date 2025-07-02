@@ -8,6 +8,7 @@ use App\Http\Actions\Truck\UpdateTruckAction;
 use App\Http\Controllers\Controller;
 use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Truck\StoreTruckRequest;
+use App\Http\Requests\Truck\UpdateTruckRequest;
 use App\Models\Fleet;
 use App\Models\Truck;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class TruckController extends Controller
         );
     }
 
-    public function update(Request $request, Truck $truck)
+    public function update(UpdateTruckRequest $request,Fleet $fleet, Truck $truck)
     {
         $data = $request->validated();
 
@@ -57,8 +58,12 @@ class TruckController extends Controller
         );
     }
 
-    public function destroy(Truck $truck)
+    public function destroy(Request $request,Fleet $fleet,Truck $truck)
     {
+        if($request->user()->cannot('truck', $fleet)) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
         (new DeleteTruckAction($truck))->execute();
 
         return response()->json(

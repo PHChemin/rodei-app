@@ -26,11 +26,6 @@ class Truck extends Model
         'driver_id',
     ];
 
-    protected $casts = [
-        'brand_name' => TruckBrand::class,
-        'color' => TruckColor::class,
-    ];
-
     public function fleet()
     {
         return $this->belongsTo(Fleet::class);
