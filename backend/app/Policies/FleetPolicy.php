@@ -20,4 +20,9 @@ class FleetPolicy
     {
         return $user->isManager() && $user->manager->id === $fleet->manager_id;
     }
+
+    public function truck(User $user, $fleet): bool
+    {
+        return $user->isManager() && $user->manager->id === $fleet->manager_id;
+    }
 }

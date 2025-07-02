@@ -10,6 +10,7 @@ use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Fleet\StoreFleetRequest;
 use App\Http\Requests\Fleet\UpdateFleetRequest;
 use App\Http\Resources\Fleet\FleetBaseResource;
+use App\Http\Resources\Fleet\FleetWithTrucksResource;
 use App\Models\Fleet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,9 +25,9 @@ class FleetController extends Controller
         }
 
         $user = $request->user();
-        $fleets = $user->manager->fleets;
+        $fleets = $user->manager->fleets()->with('trucks')->get();
 
-        return FleetBaseResource::collection($fleets);
+        return FleetWithTrucksResource::collection($fleets);
     }
 
     public function store(StoreFleetRequest $request): JsonResponse

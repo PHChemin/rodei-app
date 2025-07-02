@@ -4,6 +4,7 @@ namespace Tests\Feature\Fleet;
 
 use App\Models\Fleet;
 use App\Models\Manager;
+use App\Models\Truck;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -26,15 +27,23 @@ class FleetControllerTest extends TestCase
     public function test_manager_can_list_own_fleets(): void
     {
         $user = $this->actingAsManager();
-        $user->manager->fleets()->createMany([
+        $fleets = $user->manager->fleets()->createMany([
             ['name' => 'Frota 1'],
             ['name' => 'Frota 2'],
         ]);
+
+        $fleets[0]->trucks()->createMany(Truck::factory()->count(2)->make()->toArray());
+        $fleets[1]->trucks()->create(Truck::factory()->make()->toArray());
 
         $response = $this->getJson(route('fleets.index'));
 
         $response->assertStatus(200);
         $response->assertJsonCount(2, 'data');
+        
+        $response->assertJsonCount(2, 'data.0.trucks');
+        $response->assertJsonCount(1, 'data.1.trucks');
+        $response->assertJsonPath('data.0.trucks.0.license_plate', $fleets[0]->trucks[0]->license_plate);
+        $response->assertJsonPath('data.1.trucks.0.license_plate', $fleets[1]->trucks[0]->license_plate);
     }
 
     public function test_manager_only_sees_their_own_fleets()
