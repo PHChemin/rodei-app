@@ -12,6 +12,7 @@ type SelectInputProps = {
   value: string;
   onChange: (value: string) => void;
   data?: SelectInputItem[];
+  errorMessage?: string;
 };
 
 export function SelectInput({
@@ -19,6 +20,7 @@ export function SelectInput({
   value,
   onChange,
   data,
+  errorMessage,
 }: SelectInputProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
@@ -54,6 +56,8 @@ export function SelectInput({
           />
         </View>
       </TouchableOpacity>
+
+      {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
     </>
   );
 }
@@ -68,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     paddingBottom: theme.spacing.sm,
-    marginBottom: theme.spacing.lg,
+    marginBottom: theme.spacing.sm,
   },
   infoContainer: {
     flex: 1,
@@ -79,5 +83,12 @@ const useStyles = makeStyles((theme) => ({
   placeholderText: {
     color: theme.colors.grey3,
     fontWeight: "normal",
+  },
+  errorMessage: {
+    color: "red",
+    marginTop: 0,
+    marginBottom: theme.spacing.sm,
+    marginLeft: theme.spacing.lg,
+    fontSize: 12,
   },
 }));

@@ -58,6 +58,7 @@
     "brand": "Marca",
     "model": "Modelo",
     "plate": "Placa",
-    "color": "Cor"
+    "color": "Cor",
+    "commission-percentage": "Percentual de Comissão"
   }
 }
