@@ -5,3 +5,4 @@ export { MyFleetsScreen } from "./manager/fleets/my-fleets/MyFleetsScreen";
 
 export { AddTruckScreen } from "./manager/fleets/[fleet_id]/trucks/new/AddTruckScreen";
 export { TruckDetailsScreen } from "./manager/fleets/[fleet_id]/trucks/[truck_id]/details/TruckDetailsScreen";
+export { TruckEditScreen } from "./manager/fleets/[fleet_id]/trucks/[truck_id]/edit/TruckEditScreen";

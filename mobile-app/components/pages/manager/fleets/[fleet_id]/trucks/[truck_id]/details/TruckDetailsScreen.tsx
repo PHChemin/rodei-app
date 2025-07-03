@@ -1,11 +1,13 @@
-import { Header, ScreenWrapper } from "@/components/ui";
-import { makeStyles, Text } from "@rneui/themed";
 import { t } from "i18next";
-import { Details } from "./_Details";
-import { TruckBase } from "@/schemas";
 import { useEffect, useState } from "react";
-import { api } from "@/services";
 import { ActivityIndicator } from "react-native";
+
+import { TruckBase } from "@/schemas";
+import { api } from "@/services";
+
+import { Header, ScreenWrapper } from "@/components/ui";
+
+import { Details } from "./_Details";
 
 type TruckDetailsScreenProps = {
   fleetId: number;
@@ -16,8 +18,6 @@ export function TruckDetailsScreen({
   fleetId,
   truckId,
 }: TruckDetailsScreenProps) {
-  const styles = useStyles();
-
   const [truck, setTruck] = useState<TruckBase>();
   const [loading, setLoading] = useState(false);
 
@@ -45,11 +45,9 @@ export function TruckDetailsScreen({
 
   return (
     <ScreenWrapper.Fullscreen>
-      <Header.WithTitle title={"Detalhes do Caminhão"} />
+      <Header.WithTitle title={t("components.truck-details.title")} />
 
       {truck && <Details truck={truck} />}
     </ScreenWrapper.Fullscreen>
   );
 }
-
-const useStyles = makeStyles((theme) => ({}));
