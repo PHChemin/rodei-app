@@ -3,13 +3,12 @@ import { router } from "expo-router";
 import { t } from "i18next";
 import { useState } from "react";
 
-import useFlashMessages from "@/hooks/use-flash-messages";
-import { useFleetStore } from "@/hooks/use-fleet-store";
-import { TruckBase } from "@/schemas";
+import { api, handleFormErrors } from "@/services";
 
 import { SelectInput, TextInput } from "@/components/ui";
 
 import { colorOptions, truckBrandOptions } from "./_helper";
+import { useForm } from "react-hook-form";
 
 type AddTruckFormProps = {
   fleetId: number;
@@ -17,38 +16,32 @@ type AddTruckFormProps = {
 
 export function AddTruckForm({ fleetId }: AddTruckFormProps) {
   const styles = useStyles();
-  const { addTruck, get } = useFleetStore();
-  const { showFlashMessage } = useFlashMessages();
 
   const [brandName, setBrandName] = useState("");
   const [model, setModel] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
   const [color, setColor] = useState("");
+  const [commisionPercentage, setCommisionPercentage] = useState("");
+
+  const {
+    setError,
+    formState: { errors },
+  } = useForm();
 
   const handleCreateTruck = async () => {
     try {
-      if (!brandName || !model || !licensePlate || !color) {
-        throw new Error("Todos os campos devem ser preenchidos!");
-      }
-
-      const fleet = get(fleetId);
-
-      const newTruck: TruckBase = {
-        id: fleet.trucks.length,
+      await api().post(`/fleets/${fleetId}/trucks`, {
         brand_name: brandName,
         model: model,
         license_plate: licensePlate,
         color: color,
-        fleet_id: fleetId,
-      };
-
-      addTruck(fleetId, newTruck);
-      router.back();
-    } catch (error) {
-      showFlashMessage({
-        type: "error",
-        message: "Ocorreu um erro ao processar a operação!",
+        commission_percentage: parseFloat(commisionPercentage),
       });
+
+      router.dismissAll();
+      router.push(`/manager/fleets/my-fleets`);
+    } catch (error) {
+      handleFormErrors(error, setError);
     }
   };
 
@@ -59,18 +52,21 @@ export function AddTruckForm({ fleetId }: AddTruckFormProps) {
         value={brandName}
         onChange={setBrandName}
         data={truckBrandOptions}
+        errorMessage={errors.brand_name?.message?.toString()}
       />
 
       <TextInput
         label={t("fields.model")}
         value={model}
         onChangeText={setModel}
+        errorMessage={errors.model?.message?.toString()}
       />
 
       <TextInput
         label={t("fields.plate")}
         value={licensePlate}
         onChangeText={setLicensePlate}
+        errorMessage={errors.license_plate?.message?.toString()}
       />
 
       <SelectInput
@@ -78,6 +74,14 @@ export function AddTruckForm({ fleetId }: AddTruckFormProps) {
         value={color}
         onChange={setColor}
         data={colorOptions}
+        errorMessage={errors.color?.message?.toString()}
+      />
+
+      <TextInput
+        label={t("fields.commission-percentage")}
+        value={commisionPercentage}
+        onChangeText={setCommisionPercentage}
+        errorMessage={errors.commission_percentage?.message?.toString()}
       />
 
       <Button title={t("buttons.add")} onPress={handleCreateTruck} />

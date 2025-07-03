@@ -3,10 +3,9 @@ import { router } from "expo-router";
 import { t } from "i18next";
 import { TouchableOpacity } from "react-native";
 
-import useFlashMessages from "@/hooks/use-flash-messages";
-import { useFleetStore } from "@/hooks/use-fleet-store";
 import useModal from "@/hooks/use-modal";
-import { FleetBase } from "@/schemas";
+import { FleetWithTrucks } from "@/schemas/Fleet/FleetWithTrucks";
+import { api } from "@/services";
 import { colors, iconSize, spacing } from "@/services/theme/constants";
 
 import { AlertModal, Flex, InputModal } from "@/components/ui";
@@ -14,14 +13,12 @@ import { AlertModal, Flex, InputModal } from "@/components/ui";
 import { Truck } from "../_truck/_Truck";
 
 type FleetProps = {
-  fleet: FleetBase;
+  fleet: FleetWithTrucks;
 };
 
 export function Fleet({ fleet }: FleetProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
-  const { showFlashMessage } = useFlashMessages();
-  const { remove, update } = useFleetStore();
 
   const editFleetModal = async () => {
     showModal(
@@ -33,13 +30,14 @@ export function Fleet({ fleet }: FleetProps) {
         submitButtonTitle={t("buttons.confirm")}
         onSubmit={async (name) => {
           try {
-            const updatedFleet = { ...fleet, name: name };
-            update(fleet.id, updatedFleet);
-          } catch (e) {
-            showFlashMessage({
-              type: "error",
-              message: t("components.my-fleets.error"),
+            await api().put(`/fleets/${fleet.id}`, {
+              name: name,
             });
+
+            router.dismissAll();
+            router.push(`/manager/fleets/my-fleets`);
+          } catch (e) {
+            console.log(e);
           } finally {
             hideModal();
           }
@@ -57,12 +55,12 @@ export function Fleet({ fleet }: FleetProps) {
         cancelButtonTitle={t("buttons.no")}
         onConfirm={async () => {
           try {
-            remove(fleet.id);
+            await api().delete(`/fleets/${fleet.id}`);
+
+            router.dismissAll();
+            router.push(`/manager/fleets/my-fleets`);
           } catch (e) {
-            showFlashMessage({
-              type: "error",
-              message: t("components.my-fleets.error"),
-            });
+            console.log(e);
           } finally {
             hideModal();
           }

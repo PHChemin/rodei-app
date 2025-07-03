@@ -1,11 +1,12 @@
 import { Button, makeStyles, Text } from "@rneui/themed";
 import { t } from "i18next";
+import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
+import { z } from "zod";
 
-import useFlashMessages from "@/hooks/use-flash-messages";
-import { useFleetStore } from "@/hooks/use-fleet-store";
 import useModal from "@/hooks/use-modal";
-import { FleetBase } from "@/schemas";
+import { FleetWithTrucks } from "@/schemas/Fleet/FleetWithTrucks";
+import { api } from "@/services";
 import { spacing } from "@/services/theme/constants";
 
 import { Flex, InputModal } from "@/components/ui";
@@ -18,8 +19,20 @@ type MyFleetsProps = {};
 export function MyFleets({}: MyFleetsProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
-  const { showFlashMessage } = useFlashMessages();
-  const { list, add } = useFleetStore();
+
+  const [fleets, setFleets] = useState<FleetWithTrucks[]>([]);
+
+  const handleMyFleets = async () => {
+    const { data } = await api().get("/fleets");
+
+    const fleets = z.array(FleetWithTrucks).parse(data.data);
+
+    setFleets(fleets);
+  };
+
+  useEffect(() => {
+    handleMyFleets();
+  }, []);
 
   const createFleetModal = async () => {
     showModal(
@@ -30,17 +43,13 @@ export function MyFleets({}: MyFleetsProps) {
         submitButtonTitle={t("buttons.confirm")}
         onSubmit={async (name) => {
           try {
-            const newFleet: FleetBase = {
-              id: list().length,
+            await api().post("/fleets", {
               name: name,
-              trucks: [],
-            };
-            add(newFleet);
-          } catch (e) {
-            showFlashMessage({
-              type: "error",
-              message: t("components.my-fleets.error"),
             });
+
+            await handleMyFleets();
+          } catch (error) {
+            console.log(error);
           } finally {
             hideModal();
           }
@@ -56,7 +65,7 @@ export function MyFleets({}: MyFleetsProps) {
           Olá, GESTOR
         </Text>
         <Button
-          title="Criar frota"
+          title={t("components.my-fleets.add")}
           size="sm"
           iconRight
           icon={{ name: "add", type: "material", color: "white" }}
@@ -65,7 +74,7 @@ export function MyFleets({}: MyFleetsProps) {
       </Flex>
 
       <FlatList
-        data={list()}
+        data={fleets}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <Fleet fleet={item} />}
         ListEmptyComponent={() => <EmpityMessage />}
