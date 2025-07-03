@@ -22,6 +22,44 @@ Funcionalidades adicionais:
   
 O aplicativo será desenvolvido utilizando o React Native. Para a interface, será utilizado o React Native Elements, e a comunicação entre o aplicativo e o backend será feita por meio de uma API desenvolvida em Laravel.
 
+## Como rodar o projeto
+
+### 📦 Backend (Laravel 12)
+```bash
+# 1. Clone o repositório
+git clone https://github.com/PHChemin/rodei-app.git
+cd rodei-app/backend
+
+# 2. Instale as dependências PHP
+composer install
+
+# 3. Copie o arquivo de ambiente
+cp .env.example .env
+
+# 4. Gere a chave da aplicação
+php artisan key:generate
+
+# 5. Execute as migrações
+php artisan migrate
+
+# 6. Rode a aplicação em modo desenvolvimento
+php artisan serve
+```
+### 📱 Mobile (React Native + Expo)
+```bash
+# 1. Vá até o diretório do app mobile
+cd mobile-app/
+
+# 2. Instale as dependências
+yarn install
+
+# 3. Copie o arquivo .env de exemplo (se existir)
+cp .env.example .env
+
+# 5. Inicie o projeto
+yarn start
+```
+
 ## Interface do Aplicativo
 [https://youtu.be/KY5VE2RL9Lo](https://youtu.be/yvXVXeb6b6E)
 
@@ -48,8 +86,8 @@ ATIVIDADES / *TEMPO EM SEMANAS*
 - [X] Login de usuários / *0.5*
 - [X] Registro de usuários / *0.2*
 - [X] CRUD Frotas e Página inicial *Minhas frotas* / *1*
-- [ ] Adicionar i118n e as traduções para a aplicação / *0.5*
-- [ ] CRUD caminhões / *1*
+- [x] Adicionar i118n e as traduções para a aplicação / *0.5*
+- [x] CRUD caminhões / *1*
 - [ ] Criar viagem / *1*
 - [ ] Histórico do Caminhão / *1*
 
@@ -57,9 +95,9 @@ ATIVIDADES / *TEMPO EM SEMANAS*
 
 ATIVIDADES / *TEMPO EM SEMANAS*
 - [X] Inicio do projeto / *1*
-- [ ] Login e Registro de usuários / *1*
-- [ ] CRUD Frotas e Página inicial *Minhas frotas* / *2*
-- [ ] CRUD caminhões / *1*
+- [x] Login e Registro de usuários / *1*
+- [x] CRUD Frotas e Página inicial *Minhas frotas* / *2*
+- [x] CRUD caminhões / *1*
 - [ ] Criar viagem / *1*
 - [ ] Histórico do Caminhão / *2*
 
