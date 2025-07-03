@@ -5,4 +5,5 @@ return [
     'manager' => '{1}Gestor|[2,*]Gestores',
     'user' => '{1}Usuário|[2,*]Usuários',
     'fleet' => '{1}Frota|[2,*]Frotas',
+    'truck' => '{1}Caminhão|[2,*]Caminhões',
 ];

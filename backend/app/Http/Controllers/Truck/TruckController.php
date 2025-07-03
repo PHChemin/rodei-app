@@ -30,7 +30,7 @@ class TruckController extends Controller
         ))->execute();
 
         return response()->json(
-            FlashMessage::success(trans_choice('flash_messages.success.created.t', 1, [
+            FlashMessage::success(trans_choice('flash_messages.success.created.m', 1, [
                 'model' => trans_choice('model.truck', 1),
             ])),
             Response::HTTP_OK
@@ -51,7 +51,7 @@ class TruckController extends Controller
         ))->execute();
 
         return response()->json(
-            FlashMessage::success(trans_choice('flash_messages.success.updated.t', 1, [
+            FlashMessage::success(trans_choice('flash_messages.success.updated.m', 1, [
                 'model' => trans_choice('model.truck', 1),
             ])),
             Response::HTTP_OK
@@ -67,7 +67,7 @@ class TruckController extends Controller
         (new DeleteTruckAction($truck))->execute();
 
         return response()->json(
-            FlashMessage::success(trans_choice('flash_messages.success.deleted.t', 1, [
+            FlashMessage::success(trans_choice('flash_messages.success.deleted.m', 1, [
                 'model' => trans_choice('model.truck', 1),
             ])),
             Response::HTTP_OK

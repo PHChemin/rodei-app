@@ -2,7 +2,6 @@
 
 namespace App\Http\Messages;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FlashMessage extends JsonResource
@@ -19,7 +18,7 @@ class FlashMessage extends JsonResource
         return $this->toArray() + $data;
     }
 
-    public function toArray(Request $request = null): array
+    public function toArray($request = null): array
     {
         return ['message' => ['type' => $this->type, 'text' => $this->msg]];
     }
