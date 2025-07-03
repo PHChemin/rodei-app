@@ -174,7 +174,13 @@ class TruckControllerTest extends TestCase
         ]);
 
         $this->actingAsManager();
-        $response = $this->putJson("/api/fleets/{$this->fleet->id}/trucks/{$truck->id}", $this->payload());
+        $response = $this->putJson("/api/fleets/{$this->fleet->id}/trucks/{$truck->id}", [
+            'brand_name' => 'Volvo',
+            'model' => 'FH 540',
+            'license_plate' => 'VWX1234', // Same as SetUp
+            'color' => 'Branca',
+            'commission_percentage' => 10.5,
+        ]);
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['license_plate']);

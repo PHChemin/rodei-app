@@ -9,3 +9,4 @@ export { ScreenWrapper } from "./screen-wrapper";
 export { SelectInput } from "./select-input";
 export { TextInput } from "./text-input";
 export { TimeInput } from "./time-input";
+export { TextIcon } from "./text-icon";

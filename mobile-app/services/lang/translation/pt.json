@@ -8,7 +8,8 @@
     "yes": "Sim",
     "no": "Não",
     "register": "Registrar",
-    "add": "Adicionar"
+    "add": "Adicionar",
+    "edit": "Editar"
   },
 
   "components": {
@@ -28,6 +29,16 @@
       "add-truck": "Adicionar Caminhão",
       "empty-title": "Nenhuma frota cadastrada.",
       "empty-message": "Clique em criar frota para começar"
+    },
+
+    "truck-details": {
+      "title": "Detalhes do Caminhão",
+      "delete": "Excluir Caminhão",
+      "delete-confirm": "Você tem certeza que deseja excluir o caminhão? Todos os dados referentes ao caminhão serão perdidos."
+    },
+
+    "truck-edit": {
+      "title": "Editar Caminhão"
     },
 
     "version-checker": {
@@ -58,6 +69,7 @@
     "brand": "Marca",
     "model": "Modelo",
     "plate": "Placa",
-    "color": "Cor"
+    "color": "Cor",
+    "commission-percentage": "Percentual de Comissão"
   }
 }

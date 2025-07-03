@@ -199,6 +199,11 @@ return [
         'password' => 'senha',
         'password_confirmation' => 'confirmação de senha',
         'cpf' => 'cpf',
+        'brand_name' => 'marca',
+        'model' => 'modelo',
+        'license_plate' => 'placa',
+        'color' => 'cor',
+        'commission_percentage' => 'percentual de comissão',
     ],
 
 ];

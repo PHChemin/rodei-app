@@ -21,6 +21,7 @@ class TruckBaseResource extends JsonResource
             'license_plate' => $this->license_plate,
             'color' => $this->color,
             'commission_percentage' => $this->commission_percentage,
+            'fleet_id' => $this->fleet_id
         ];
     }
 }

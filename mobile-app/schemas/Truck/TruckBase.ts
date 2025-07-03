@@ -6,6 +6,7 @@ export const TruckBase = z.object({
   model: z.string(),
   license_plate: z.string(),
   color: z.string(),
+  commission_percentage: z.number(),
   fleet_id: z.number(),
 });
 
