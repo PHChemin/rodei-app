@@ -29,7 +29,12 @@ class UpdateTruckRequest extends FormRequest
         return [
             'brand_name' => ['required', 'string', Rule::in(TruckBrand::values())],
             'model' => ['required', 'string'],
-            'license_plate' => ['required', 'string', 'size:7', 'unique:trucks,license_plate'],
+            'license_plate' => [
+                'required',
+                'string',
+                'size:7',
+                Rule::unique('trucks', 'license_plate')->ignore($this->route('truck')->id)
+            ],
             'color' => ['required', 'string', Rule::in(TruckColor::values())],
             'commission_percentage' => ['required', 'numeric', 'between:0,100'],
         ];
