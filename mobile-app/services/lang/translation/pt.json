@@ -30,6 +30,12 @@
       "empty-message": "Clique em criar frota para começar"
     },
 
+    "truck-details": {
+      "title": "Detalhes do Caminhão",
+      "delete": "Excluir Caminhão",
+      "delete-confirm": "Você tem certeza que deseja excluir o caminhão? Todos os dados referentes ao caminhão serão perdidos."
+    },
+
     "version-checker": {
       "message": "Uma nova versão do aplicativo foi lançada! Para aproveitar as novidades e evitar erros, atualize o aplicativo para a versão mais recente.",
       "update": "Atualize o aplicativo!",

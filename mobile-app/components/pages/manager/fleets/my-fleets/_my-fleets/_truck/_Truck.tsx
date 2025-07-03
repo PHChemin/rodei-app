@@ -6,6 +6,7 @@ import { colors, iconSize } from "@/services/theme/constants";
 import { getTruckBrandImage } from "@/services/truck-brand-images";
 
 import { Flex } from "@/components/ui";
+import { router } from "expo-router";
 
 type TruckProps = {
   truck: TruckBase;
@@ -14,8 +15,12 @@ type TruckProps = {
 export function Truck({ truck }: TruckProps) {
   const styles = useStyles();
 
+  const handlePress = () => {
+    router.push(`/manager/fleets/${truck.fleet_id}/trucks/${truck.id}/details`);
+  };
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
       <Card>
         <Flex justify="space-between">
           <Flex>
