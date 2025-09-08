@@ -113,7 +113,8 @@ export function LoginScreen() {
       {process.env.EXPO_PUBLIC_EAS_CHANNEL !== "production" && (
         <>
           <Text style={styles.version}>
-            [channel: {process.env.EXPO_PUBLIC_EAS_CHANNEL}]
+            [channel: {process.env.EXPO_PUBLIC_EAS_CHANNEL}] [API:{" "}
+            {process.env.EXPO_PUBLIC_API_BASE_URL}]
           </Text>
         </>
       )}
