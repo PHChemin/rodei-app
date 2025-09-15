@@ -1,9 +1,9 @@
 import { Button, makeStyles, Text } from "@rneui/themed";
 import { t } from "i18next";
-import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { z } from "zod";
 
+import { useAsyncData } from "@/hooks/use-async-data";
 import useModal from "@/hooks/use-modal";
 import { FleetWithTrucks } from "@/schemas/Fleet/FleetWithTrucks";
 import { api } from "@/services";
@@ -20,19 +20,19 @@ export function MyFleets({}: MyFleetsProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
 
-  const [fleets, setFleets] = useState<FleetWithTrucks[]>([]);
-
-  const handleMyFleets = async () => {
+  const { loading, refresh, fleets } = useAsyncData(async () => {
     const { data } = await api().get("/fleets");
 
     const fleets = z.array(FleetWithTrucks).parse(data.data);
 
-    setFleets(fleets);
-  };
-
-  useEffect(() => {
-    handleMyFleets();
+    return {
+      fleets,
+    };
   }, []);
+
+  if (loading) {
+    return loading;
+  }
 
   const createFleetModal = async () => {
     showModal(
@@ -47,7 +47,7 @@ export function MyFleets({}: MyFleetsProps) {
               name: name,
             });
 
-            await handleMyFleets();
+            refresh();
           } catch (error) {
             console.log(error);
           } finally {
