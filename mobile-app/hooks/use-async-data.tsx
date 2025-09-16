@@ -7,10 +7,10 @@ import {
   usePathname,
   useRouter,
 } from "expo-router";
+import { t } from "i18next";
 import { ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, View } from "react-native";
 import { ZodError } from "zod";
-import { t } from "@/services/lang";
 
 export function useAsyncData<T>(
   onLoad: () => Promise<T>,
@@ -80,16 +80,14 @@ const AsyncDataLoading = ({ hasError }: LoadingProps) => {
         <Stack.Screen options={{ headerShown: false }} />
 
         <View style={styles.container}>
-          <Text>{t("Ocorreu um erro ao renderizar o componente!")}</Text>
+          <Text>{t("components.error.title")}</Text>
 
           <Text style={{ textAlign: "justify" }}>
-            {t(
-              "Isso pode ter ocorrido por vários motivos, como por exemplo se você tentou acessar um recurso excluído por outro usuário, ou ainda falha de comunicação com o servidor."
-            )}
+            {t("components.error.message")}
           </Text>
 
           <Button
-            title={t("Retornar à tela anterior")}
+            title={t("buttons.return-back")}
             onPress={() => {
               router.back();
             }}
@@ -97,7 +95,7 @@ const AsyncDataLoading = ({ hasError }: LoadingProps) => {
 
           <Button
             type="clear"
-            title={t("Retornar ao Início")}
+            title={t("buttons.return-start")}
             onPress={() => {
               // optionally clean user token here. this can avoid a redirect loop
               router.replace("/");

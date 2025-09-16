@@ -9,7 +9,9 @@
     "no": "Não",
     "register": "Registrar",
     "add": "Adicionar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "return-back": "Retornar à tela anterior",
+    "return-start": "Retornar ao Início"
   },
 
   "components": {
@@ -53,6 +55,10 @@
 
     "add-truck": {
       "title": "Adicionar Caminhão"
+    },
+    "error": {
+      "title": "Ocorreu um erro ao renderizar o componente!",
+      "message": "Isso pode ter ocorrido por vários motivos, como por exemplo se você tentou acessar um recurso excluído por outro usuário, ou ainda falha de comunicação com o servidor."
     }
   },
 
