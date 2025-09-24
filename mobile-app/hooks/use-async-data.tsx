@@ -77,8 +77,6 @@ const AsyncDataLoading = ({ hasError }: LoadingProps) => {
 
     return (
       <>
-        <Stack.Screen options={{ headerShown: false }} />
-
         <View style={styles.container}>
           <Text>{t("components.error.title")}</Text>
 
@@ -128,8 +126,6 @@ const AsyncDataLoading = ({ hasError }: LoadingProps) => {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
-
       <View style={styles.container}>
         <ActivityIndicator color={theme.colors.primary} />
       </View>
