@@ -12,7 +12,7 @@ import { api, handleFormErrors } from "@/services";
 
 export function LoginScreen() {
   const styles = useStyles();
-  const { token, setToken } = useToken();
+  const { token, setToken, user } = useToken();
 
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -37,9 +37,9 @@ export function LoginScreen() {
       setToken(data.token, user);
 
       if (user.is_manager) {
-        router.push("/manager/fleets/my-fleets");
+        router.replace("/manager/fleets/my-fleets");
       } else {
-        // router.push("/driver/home");
+        router.replace("/driver/home");
       }
     } catch (error) {
       handleFormErrors(error, setError);
@@ -48,7 +48,10 @@ export function LoginScreen() {
     }
   };
 
-  if (token) return <Redirect href="/manager/fleets/my-fleets" />;
+  if (token) {
+    if (user?.is_manager) return <Redirect href="/manager/fleets/my-fleets" />;
+    else return <Redirect href="/driver/home" />;
+  }
 
   return (
     <ScreenWrapper.Fullscreen center>
