@@ -1,18 +1,21 @@
-import { Button } from "@rneui/themed";
+import { Button, CheckBox, makeStyles, Text } from "@rneui/themed";
 import { router } from "expo-router";
 import { t } from "i18next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { TextInput } from "@/components/ui";
+import { Flex, InputLabel, TextInput } from "@/components/ui";
 import { api, handleFormErrors } from "@/services";
 
 export function SignUpForm() {
+  const styles = useStyles();
+
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isManager, setIsManager] = useState(true);
 
   const {
     setError,
@@ -27,7 +30,7 @@ export function SignUpForm() {
         email: email,
         password: password,
         password_confirmation: confirmPassword,
-        is_manager: true,
+        is_manager: isManager,
       });
 
       router.replace("/");
@@ -38,6 +41,31 @@ export function SignUpForm() {
 
   return (
     <>
+      <InputLabel>
+        {t("fields.role")} {<Text style={{ color: "red" }}>*</Text>}
+      </InputLabel>
+      <Flex>
+        <CheckBox
+          title={t("fields.manager")}
+          checked={isManager}
+          onPress={() => setIsManager(true)}
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          containerStyle={styles.checkbox}
+          textStyle={styles.checkboxText}
+        />
+
+        <CheckBox
+          title={t("fields.driver")}
+          checked={!isManager}
+          onPress={() => setIsManager(false)}
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          containerStyle={styles.checkbox}
+          textStyle={styles.checkboxText}
+        />
+      </Flex>
+
       <TextInput
         label={t("fields.name")}
         value={name}
@@ -117,3 +145,13 @@ export function SignUpForm() {
     </>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  checkbox: {
+    backgroundColor: "transparent",
+  },
+  checkboxText: {
+    fontSize: 20,
+    fontWeight: "semibold",
+  },
+}));

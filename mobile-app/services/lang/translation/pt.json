@@ -76,6 +76,9 @@
     "model": "Modelo",
     "plate": "Placa",
     "color": "Cor",
-    "commission-percentage": "Percentual de Comissão"
+    "commission-percentage": "Percentual de Comissão",
+    "manager": "Gestor",
+    "driver": "Motorista",
+    "role": "Tipo de Usuário"
   }
 }
