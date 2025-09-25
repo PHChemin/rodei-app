@@ -15,6 +15,10 @@
   },
 
   "components": {
+    "driver-home": {
+      "title": "Início"
+    },
+
     "input-modal": {
       "error": "Erro",
       "min-length": "O campo deve ter pelo menos {{count}} caracteres."

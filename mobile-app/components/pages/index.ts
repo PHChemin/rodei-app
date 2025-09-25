@@ -1,6 +1,8 @@
 export { LoginScreen } from "./login/LoginScreen";
 export { SignUpScreen } from "./sign-up/SignUpScreen";
 
+export { DriverHomeScreen } from "./driver/home/DriverHomeScreen";
+
 export { MyFleetsScreen } from "./manager/fleets/my-fleets/MyFleetsScreen";
 
 export { AddTruckScreen } from "./manager/fleets/[fleet_id]/trucks/new/AddTruckScreen";
