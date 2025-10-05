@@ -1,6 +1,7 @@
 {
   "buttons": {
     "confirm": "Confirmar",
+    "cancel": "Cancelar",
     "forget-password": "Esqueci minha senha",
     "login": "Entrar",
     "ok": "OK",
@@ -11,7 +12,16 @@
     "add": "Adicionar",
     "edit": "Editar",
     "return-back": "Retornar à tela anterior",
-    "return-start": "Retornar ao Início"
+    "return-start": "Retornar ao Início",
+    "save": "Salvar"
+  },
+
+  "alerts": {
+    "changePassword": {
+      "confirmChange": "Deseja confirmar a alteração de senha?"
+    },
+    "confirmation": "Confirmação",
+    "logout": "Deseja realmente sair?"
   },
 
   "components": {
@@ -60,9 +70,30 @@
     "add-truck": {
       "title": "Adicionar Caminhão"
     },
+
     "error": {
       "title": "Ocorreu um erro ao renderizar o componente!",
       "message": "Isso pode ter ocorrido por vários motivos, como por exemplo se você tentou acessar um recurso excluído por outro usuário, ou ainda falha de comunicação com o servidor."
+    },
+
+    "profile": {
+      "title": "Meu Perfil",
+      "change-name": {
+        "title": "Alterar Nome",
+        "name": "Nome"
+      },
+      "menu": {
+        "edit-name": "Editar Nome",
+        "change-password": "Alterar Senha",
+        "logout": "Sair"
+      }
+    },
+
+    "change-password": {
+      "title": "Alterar Senha",
+      "password": "Senha",
+      "new-password": "Nova Senha",
+      "confirm-new-password": "Confirmar Nova Senha"
     }
   },
 
