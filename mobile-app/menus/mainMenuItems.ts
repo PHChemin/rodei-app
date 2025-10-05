@@ -5,9 +5,9 @@ import { router } from "expo-router";
 // Routes that are common to both roles
 const userMenu: HeaderMenuItemProps[] = [
   {
-    icon: { type: "antdesign", name: "user" },
+    icon: { type: "material-community", name: "account-outline" },
     title: "Meu Perfil",
-    onPress: () => router.push("/(auth)/profile"),
+    onPress: () => router.push("/my-profile"),
   },
   {
     icon: { type: "antdesign", name: "message1" },
@@ -15,7 +15,7 @@ const userMenu: HeaderMenuItemProps[] = [
     onPress: () => router.push("/(auth)/user-feedback"),
   },
   {
-    icon: { type: "antdesign", name: "logout" },
+    icon: { type: "material-community", name: "logout" },
     title: "Sair",
     onPress: logout,
   },
