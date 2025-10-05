@@ -8,6 +8,8 @@ import HeaderMenu from "./header-menu";
 export function WithMenu() {
   const { user } = useToken();
 
+  if (!user) return null;
+
   const mainMenuItems = getMenuItems(user!.is_manager);
 
   return (
