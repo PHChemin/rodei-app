@@ -1,4 +1,3 @@
-import { makeStyles } from "@rneui/themed";
 import { router } from "expo-router";
 import { t } from "i18next";
 
@@ -10,7 +9,6 @@ import {
   ScreenWrapper,
 } from "@/components/ui";
 import useModal from "@/hooks/use-modal";
-import { useToken } from "@/hooks/use-token";
 
 import { useAsyncData } from "@/hooks/use-async-data";
 import { UserLogin } from "@/schemas/User/UserLogin";
@@ -18,8 +16,7 @@ import { api } from "@/services";
 
 import { UserInfo } from "./_UserInfo";
 
-export function ProfileScreen() {
-  // const { user } = useToken();
+export function MyProfileScreen() {
   const { showModal, hideModal } = useModal();
 
   const { loading, refresh, user } = useAsyncData(async () => {
