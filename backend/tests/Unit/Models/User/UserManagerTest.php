@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Unit\Models\User;
 
 use App\Models\Driver;
 use App\Models\Manager;
