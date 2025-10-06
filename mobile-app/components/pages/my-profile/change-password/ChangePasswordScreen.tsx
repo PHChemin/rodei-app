@@ -1,4 +1,4 @@
-import { Button, Card } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import { t } from "i18next";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";

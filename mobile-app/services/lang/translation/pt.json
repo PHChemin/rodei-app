@@ -91,7 +91,7 @@
 
     "change-password": {
       "title": "Alterar Senha",
-      "password": "Senha",
+      "password": "Senha Atual",
       "new-password": "Nova Senha",
       "confirm-new-password": "Confirmar Nova Senha"
     }

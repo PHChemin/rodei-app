@@ -19,20 +19,20 @@ import { api } from "@/services";
 import { UserInfo } from "./_UserInfo";
 
 export function ProfileScreen() {
-  const { user } = useToken();
+  // const { user } = useToken();
   const { showModal, hideModal } = useModal();
 
-  const { loading, refresh } = useAsyncData(async () => {
+  const { loading, refresh, user } = useAsyncData(async () => {
     const { data } = await api().get("/user/profile");
-
-    const user = UserLogin.parse(data.data);
+    
+    const user = UserLogin.parse(data);
 
     return {
       user,
     };
   }, []);
 
-  // if(loading) return loading;
+  if(loading) return loading;
 
   const changeNameModal = async () => {
     showModal(
@@ -41,7 +41,7 @@ export function ProfileScreen() {
         label={t("components.profile.change-name.name")}
         minLength={2}
         submitButtonTitle={t("buttons.confirm")}
-        initialValue={user!.name}
+        initialValue={user.name}
         onSubmit={async (name) => {
           try {
             await api().put("/user/profile/name", {
@@ -63,7 +63,7 @@ export function ProfileScreen() {
     <ScreenWrapper.Fullscreen>
       <Header.WithTitle title={t("components.profile.title")} />
 
-      <UserInfo user={user!} />
+      <UserInfo user={user} />
 
       <Menu withLogout>
         <MenuItem
