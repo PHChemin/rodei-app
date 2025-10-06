@@ -180,6 +180,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'mensagem-personalizada',
         ],
+        'auth' => [
+            'wrong-password' => 'Senha incorreta.',
+        ]
     ],
 
     /*
@@ -204,6 +207,8 @@ return [
         'license_plate' => 'placa',
         'color' => 'cor',
         'commission_percentage' => 'percentual de comissão',
+        'new_password' => 'nova senha',
+        'new_password_confirmation' => 'confirmar nova senha',
     ],
 
 ];
