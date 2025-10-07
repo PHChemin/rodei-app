@@ -10,3 +10,6 @@ export { SelectInput } from "./select-input";
 export { TextInput } from "./text-input";
 export { TimeInput } from "./time-input";
 export { TextIcon } from "./text-icon";
+export { PasswordInput } from "./password-input";
+export { Menu } from "./menu";
+export { MenuItem } from "./menu-item";

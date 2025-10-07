@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Fleet\FleetController;
 use App\Http\Controllers\Truck\TruckController;
 use App\Http\Controllers\User\RegisterUserController;
+use App\Http\Controllers\User\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'authenticate'])->name('api.login');
@@ -11,6 +12,10 @@ Route::post('/register', [RegisterUserController::class, 'register'])->name('api
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('api.logout');
+
+    Route::get('/user/profile', [UserProfileController::class, 'profile'])->name('user.profile');
+    Route::patch('/user/profile/name', [UserProfileController::class, 'updateName'])->name('user.profile.name');
+    Route::patch('/user/profile/password', [UserProfileController::class, 'updatePassword'])->name('user.profile.password');
 
     Route::get('/fleets', [FleetController::class, 'index'])->name('fleets.index');
     Route::post('/fleets', [FleetController::class, 'store'])->name('fleets.store');

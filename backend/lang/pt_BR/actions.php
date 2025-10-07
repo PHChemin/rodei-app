@@ -6,6 +6,8 @@ return [
     'user' => [
         'unable' => [
             'register' => 'Não foi possível registrar o usuário.' . Translate::TRY_AGAIN,
+            'update' => 'Não foi possível atualizar o usuário.' . Translate::TRY_AGAIN,
+            'verify_password' => 'Houve um problema ao verificar a senha do usuário.' . Translate::TRY_AGAIN
         ]
     ],
     'fleet' => [

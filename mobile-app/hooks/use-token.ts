@@ -2,15 +2,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { UserBase } from "@/schemas";
+import { UserLogin } from "@/schemas/User/UserLogin";
 
 type State = {
   token: string | null;
-  user: UserBase | null;
+  user: UserLogin | null;
 };
 
 type Actions = {
-  setToken: (token: string, user: UserBase) => void;
+  setToken: (token: string, user: UserLogin) => void;
   clearToken: () => void;
 };
 
@@ -19,7 +19,8 @@ export const useToken = create<State & Actions>()(
     (set) => ({
       token: null,
       user: null,
-      setToken: (token: string, user: UserBase) => set(() => ({ token, user })),
+      setToken: (token: string, user: UserLogin) =>
+        set(() => ({ token, user })),
       clearToken: () => set(() => ({ token: null, user: null })),
     }),
     {

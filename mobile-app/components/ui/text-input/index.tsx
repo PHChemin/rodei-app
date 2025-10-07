@@ -2,7 +2,7 @@ import { Input, InputProps, makeStyles, Text, TextProps } from "@rneui/themed";
 
 import { InputLabel } from "../input-label";
 
-type TextInputProps = {
+export type TextInputProps = {
   value?: string;
   onChangeText?: (value: string) => void;
   errorMessage?: string;
