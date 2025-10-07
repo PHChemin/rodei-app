@@ -36,7 +36,7 @@ class UpdateUserPasswordTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->putJson($this->route($this->validInfo()));
+        $response = $this->patchJson($this->route($this->validInfo()));
 
         $response->assertStatus(200);
         $response->assertJsonPath('message.type', 'success');
@@ -50,7 +50,7 @@ class UpdateUserPasswordTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->putJson($this->route(
+        $response = $this->patchJson($this->route(
             $this->validInfo([
                 'password' => 'wrong-password',
             ])
@@ -62,7 +62,7 @@ class UpdateUserPasswordTest extends TestCase
 
     public function test_guest_cannot_update_password(): void
     {
-        $response = $this->putJson($this->route($this->validInfo()));
+        $response = $this->patchJson($this->route($this->validInfo()));
 
         $response->assertStatus(401);
     }
@@ -76,7 +76,7 @@ class UpdateUserPasswordTest extends TestCase
         ]);
         $this->actingAs($user);
 
-        $response = $this->putJson($this->route([]));
+        $response = $this->patchJson($this->route([]));
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
@@ -93,7 +93,7 @@ class UpdateUserPasswordTest extends TestCase
         ]);
         $this->actingAs($user);
 
-        $response = $this->putJson($this->route([
+        $response = $this->patchJson($this->route([
             'password' => 'password',
             'new_password' => 'new-password',
             'new_password_confirmation' => 'different-password',
@@ -110,7 +110,7 @@ class UpdateUserPasswordTest extends TestCase
         ]);
         $this->actingAs($user);
 
-        $response = $this->putJson($this->route([
+        $response = $this->patchJson($this->route([
             'password' => 'wrong-password',
             'new_password' => 'new-password',
             'new_password_confirmation' => 'new-password',

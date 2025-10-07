@@ -31,7 +31,7 @@ class UpdateUserNameTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->putJson($this->route($this->validInfo()));
+        $response = $this->patchJson($this->route($this->validInfo()));
 
         $response->assertStatus(200);
         $response->assertJsonPath('message.type', 'success');
@@ -39,7 +39,7 @@ class UpdateUserNameTest extends TestCase
 
     public function test_guest_cannot_update_name()
     {
-        $response = $this->putJson($this->route($this->validInfo()));
+        $response = $this->patchJson($this->route($this->validInfo()));
 
         $response->assertStatus(401);
     }
@@ -51,7 +51,7 @@ class UpdateUserNameTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->putJson($this->route([]));
+        $response = $this->patchJson($this->route([]));
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['name']);
@@ -62,7 +62,7 @@ class UpdateUserNameTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $response = $this->putJson($this->route([
+        $response = $this->patchJson($this->route([
             'name' => str_repeat('a', 256),
         ]));
 
