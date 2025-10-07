@@ -41,7 +41,7 @@ export function MyProfileScreen() {
         initialValue={user.name}
         onSubmit={async (name) => {
           try {
-            await api().put("/user/profile/name", {
+            await api().patch("/user/profile/name", {
               name: name,
             });
 

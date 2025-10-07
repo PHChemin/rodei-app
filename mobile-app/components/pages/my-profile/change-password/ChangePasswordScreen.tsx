@@ -34,7 +34,7 @@ export function ChangePasswordScreen() {
 
   const submitSave = async () => {
     try {
-      await api().put(`/user/profile/password`, {
+      await api().patch(`/user/profile/password`, {
         password: password,
         new_password: newPassword,
         new_password_confirmation: newPasswordConfirmation,

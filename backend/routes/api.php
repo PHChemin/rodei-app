@@ -14,8 +14,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('api.logout');
 
     Route::get('/user/profile', [UserProfileController::class, 'profile'])->name('user.profile');
-    Route::put('/user/profile/name', [UserProfileController::class, 'updateName'])->name('user.profile.name');
-    Route::put('/user/profile/password', [UserProfileController::class, 'updatePassword'])->name('user.profile.password');
+    Route::patch('/user/profile/name', [UserProfileController::class, 'updateName'])->name('user.profile.name');
+    Route::patch('/user/profile/password', [UserProfileController::class, 'updatePassword'])->name('user.profile.password');
 
     Route::get('/fleets', [FleetController::class, 'index'])->name('fleets.index');
     Route::post('/fleets', [FleetController::class, 'store'])->name('fleets.store');
