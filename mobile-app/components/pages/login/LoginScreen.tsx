@@ -35,12 +35,6 @@ export function LoginScreen() {
       const user = UserLogin.parse(data.user);
 
       setToken(data.token, user);
-
-      if (user.is_manager) {
-        router.replace("/manager/fleets/my-fleets");
-      } else {
-        router.replace("/driver/home");
-      }
     } catch (error) {
       handleFormErrors(error, setError);
     } finally {
