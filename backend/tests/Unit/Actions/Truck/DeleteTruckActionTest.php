@@ -21,6 +21,6 @@ class DeleteTruckActionTest extends TestCase
 
         (new DeleteTruckAction($truck))->execute();
 
-        $this->assertDatabaseMissing('trucks', ['id' => $truck->id]);
+        $this->assertSoftDeleted('trucks', ['id' => $truck->id]);
     }
 }

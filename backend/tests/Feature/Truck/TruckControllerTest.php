@@ -194,7 +194,7 @@ class TruckControllerTest extends TestCase
         $response = $this->deleteJson("/api/fleets/{$this->fleet->id}/trucks/{$this->truck->id}");
     
         $response->assertStatus(200);
-        $this->assertDatabaseMissing('trucks', ['id' => $this->truck->id]);
+        $this->assertSoftDeleted('trucks', ['id' => $this->truck->id]);
     }
     
     public function test_user_cannot_delete_truck_from_other_users_fleet()

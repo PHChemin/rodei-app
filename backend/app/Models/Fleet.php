@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fleet extends Model
 {
+    use SoftDeletes;
+
     /** @use HasFactory<\Database\Factories\DriverFactory> */
     use HasFactory;
 
@@ -26,8 +30,13 @@ class Fleet extends Model
         return $this->belongsTo(Manager::class);
     }
 
-    public function trucks()
+    public function trucks(): HasMany
     {
         return $this->hasMany(Truck::class);
+    }
+
+    public function freights(): HasMany
+    {
+        return $this->hasMany(Freights::class);
     }
 }

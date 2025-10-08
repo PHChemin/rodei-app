@@ -18,6 +18,6 @@ class DeleteFleetActionTest extends TestCase
 
         (new DeleteFleetAction($fleet))->execute();
 
-        $this->assertDatabaseMissing('fleets', ['id' => $fleet->id]);
+        $this->assertSoftDeleted('fleets', ['id' => $fleet->id]);
     }
 }

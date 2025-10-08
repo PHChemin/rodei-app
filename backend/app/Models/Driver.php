@@ -5,10 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Driver extends Model
 {
+    use SoftDeletes;
+
     /** @use HasFactory<\Database\Factories\DriverFactory> */
     use HasFactory;
 
@@ -29,5 +33,10 @@ class Driver extends Model
     public function truck(): HasOne
     {
         return $this->hasOne(Truck::class);
+    }
+
+    public function freights(): HasMany
+    {
+        return $this->hasMany(Freights::class);
     }
 }
