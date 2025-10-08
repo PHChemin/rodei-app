@@ -6,4 +6,5 @@ return [
     'user' => '{1}Usuário|[2,*]Usuários',
     'fleet' => '{1}Frota|[2,*]Frotas',
     'truck' => '{1}Caminhão|[2,*]Caminhões',
+    'freight' => '{1}Frete|[2,*]Fretes',
 ];
