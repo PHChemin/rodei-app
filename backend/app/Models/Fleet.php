@@ -37,6 +37,6 @@ class Fleet extends Model
 
     public function freights(): HasMany
     {
-        return $this->hasMany(Freights::class);
+        return $this->hasMany(Freight::class);
     }
 }
