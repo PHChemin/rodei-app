@@ -29,4 +29,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/fleets/{fleet}/trucks/{truck}', [TruckController::class, 'destroy'])->name('fleets.trucks.destroy');
 
     Route::post('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'store'])->name('freights.store');
+    Route::put('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'update'])->name('freights.update');
 });

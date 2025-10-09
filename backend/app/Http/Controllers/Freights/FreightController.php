@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Freights;
 
 use App\Http\Actions\Freight\CreateFreightAction;
+use App\Http\Actions\Freight\UpdateFreightAction;
 use App\Http\Actions\Freight\UploadFreightDocumentAction;
 use App\Http\Controllers\Controller;
 use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Freights\StoreFreightRequest;
+use App\Http\Requests\Freights\UpdateFreightRequest;
 use App\Models\Fleet;
+use App\Models\Freight;
 use App\Models\Truck;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,12 +51,32 @@ class FreightController extends Controller
         );
     }
 
-    public function show($id)
+    public function update(UpdateFreightRequest $request, Fleet $fleet, Truck $truck, Freight $freight)
     {
-        //
+        $data = $request->validated();
+
+        (new UpdateFreightAction(
+            $freight,
+            $data['start_address'],
+            $data['end_address'],
+            $data['contractor_name'],
+            $data['date'],
+            $data['cargo_weight'],
+            $data['ton_price'],
+            $data['advance_percentage'],
+            $data['total_amount'],
+            $data['description'],
+        ))->execute();
+
+        return response()->json(
+            FlashMessage::success(trans_choice('flash_messages.success.updated.m', 1, [
+                'model' => trans_choice('model.freight', 1),
+            ])),
+            Response::HTTP_OK
+        );
     }
 
-    public function update(Request $request, $id)
+    public function show($id)
     {
         //
     }
