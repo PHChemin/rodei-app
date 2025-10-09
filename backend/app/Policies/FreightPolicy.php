@@ -33,7 +33,22 @@ class FreightPolicy
      */
     public function view(User $user, Freight $freight): bool
     {
-        return false;
+        if ($freight->driver_id === $user->id) 
+            return true;
+        
+        if ($user->manager) {
+            $manager = $user->manager;
+
+            $ownsFleet = $manager->fleets()->where('id', $freight->fleet_id)->exists();
+
+            $ownsTruck = $manager->fleets()
+                ->whereHas('trucks', fn($q) => $q->where('id', $freight->truck_id))
+                ->exists();
+
+            return $ownsFleet && $ownsTruck;
+        }
+
+        return false;   
     }
 
     /**

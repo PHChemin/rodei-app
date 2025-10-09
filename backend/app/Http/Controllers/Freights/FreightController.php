@@ -85,9 +85,13 @@ class FreightController extends Controller
         );
     }
 
-    public function show($id)
+    public function show(Request $request, Fleet $fleet, Truck $truck, Freight $freight)
     {
-        //
+        if($request->user()->cannot('view', [$freight])) {
+            abort(Response::HTTP_FORBIDDEN);
+        };
+
+        return FreightBaseResource::make($freight);
     }
 
     public function destroy($id)
