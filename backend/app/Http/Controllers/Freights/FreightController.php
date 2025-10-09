@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Freights;
 
 use App\Http\Actions\Freight\CreateFreightAction;
+use App\Http\Actions\Freight\DeleteFreightAction;
 use App\Http\Actions\Freight\UpdateFreightAction;
 use App\Http\Actions\Freight\UploadFreightDocumentAction;
 use App\Http\Controllers\Controller;
@@ -94,8 +95,21 @@ class FreightController extends Controller
         return FreightBaseResource::make($freight);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, Fleet $fleet, Truck $truck, Freight $freight)
     {
-        //
+        if($request->user()->cannot('delete', [$freight])) {
+            abort(Response::HTTP_FORBIDDEN);
+        };
+
+        (new DeleteFreightAction(
+            $freight
+        ))->execute();
+
+        return response()->json(
+            FlashMessage::success(trans_choice('flash_messages.success.deleted.m', 1, [
+                'model' => trans_choice('model.freight', 1),
+            ])),
+            Response::HTTP_OK
+        );
     }
 }

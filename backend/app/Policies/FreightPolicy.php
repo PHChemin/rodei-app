@@ -48,7 +48,7 @@ class FreightPolicy
             return $ownsFleet && $ownsTruck;
         }
 
-        return false;   
+        return false;
     }
 
     /**
@@ -96,7 +96,19 @@ class FreightPolicy
      */
     public function delete(User $user, Freight $freight): bool
     {
-        return false;
+        if(!$user->manager) {
+            return false;
+        }
+
+        $manager = $user->manager;
+
+        $ownsFleet = $manager->fleets()->where('id', $freight->fleet_id)->exists();
+
+        $ownsTruck = $manager->fleets()
+            ->whereHas('trucks', fn($q) => $q->where('id', $freight->truck_id))
+            ->exists();
+
+        return $ownsFleet && $ownsTruck;
     }
 
     /**

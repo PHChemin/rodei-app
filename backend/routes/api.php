@@ -31,5 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'index'])->name('freights.index');
     Route::post('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'store'])->name('freights.store');
     Route::put('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'update'])->name('freights.update');
+    Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'destroy'])->name('freights.destroy');
     Route::get('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'show'])->name('freights.show');
 });
