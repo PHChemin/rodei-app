@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Truck;
 
+use App\Http\Actions\Truck\AttachDriverToTruckAction;
 use App\Http\Actions\Truck\CreateTruckAction;
 use App\Http\Actions\Truck\DeleteTruckAction;
 use App\Http\Actions\Truck\UpdateTruckAction;
@@ -30,13 +31,18 @@ class TruckController extends Controller
     {
         $data = $request->validated();
 
-        (new CreateTruckAction(
+        $truck = (new CreateTruckAction(
             $fleet,
             $data['brand_name'],
             $data['model'],
             $data['license_plate'],
             $data['color'],
             $data['commission_percentage']
+        ))->execute();
+
+        (new AttachDriverToTruckAction(
+            $truck,
+            $data['driver_cpf']
         ))->execute();
 
         return response()->json(

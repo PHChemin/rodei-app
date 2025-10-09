@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Truck;
 
+use App\Models\Driver;
 use App\Models\Fleet;
 use App\Models\Manager;
 use App\Models\Truck;
@@ -16,6 +17,7 @@ class TruckControllerTest extends TestCase
 
     private Manager $manager;
     private User $user;
+    private Driver $driver;
     private Fleet $fleet;
     private Truck $truck;
 
@@ -27,6 +29,7 @@ class TruckControllerTest extends TestCase
             'license_plate' => 'ABC1234',
             'color' => 'Branca',
             'commission_percentage' => 10.5,
+            'driver_cpf' => $this->driver->user->cpf
         ];
     }
 
@@ -39,16 +42,19 @@ class TruckControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->driver = Driver::factory()->create();
 
         $this->user = User::factory()->create();
         $this->manager = $this->user->manager()->create();
         $this->fleet = Fleet::factory()->create(['manager_id' => $this->manager->id]);
+        $driver = Driver::factory()->create();
         $this->truck = $this->fleet->trucks()->create([
             'brand_name' => 'Volvo',
             'model' => 'FH 700',
             'license_plate' => 'VWX1234',
             'color' => 'Azul',
             'commission_percentage' => 10.5,
+            'driver_cpf' => $driver->user->cpf
         ]);
     }
 
@@ -85,7 +91,7 @@ class TruckControllerTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
-            'brand_name', 'model', 'license_plate', 'color', 'commission_percentage'
+            'brand_name', 'model', 'license_plate', 'color', 'commission_percentage', 'driver_cpf'
         ]);
     }
 
@@ -105,6 +111,35 @@ class TruckControllerTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['license_plate']);
+    }
+
+    public function test_creation_fails_if_driver_cpf_is_not_unique()
+    {
+        $this->fleet->trucks()->create([
+            'fleet_id' => $this->fleet->id,
+            'brand_name' => 'Volvo',
+            'model' => 'FH 540',
+            'license_plate' => 'ABC1234',
+            'color' => 'Branca',
+            'commission_percentage' => 10.5,
+            'driver_id' => $this->driver->id,
+        ]);
+
+        $payload = [
+            'fleet_id' => $this->fleet->id,
+            'brand_name' => 'Volvo',
+            'model' => 'FH 540',
+            'license_plate' => 'ABC1734',
+            'color' => 'Branca',
+            'commission_percentage' => 10.5,
+            'driver_cpf' => $this->driver->user->cpf
+        ];
+
+        $this->actingAsManager();
+        $response = $this->postJson("/api/fleets/{$this->fleet->id}/trucks", $payload);
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['driver_cpf']);
     }
 
     // -------------------------- UPDATE ------------------------------------//

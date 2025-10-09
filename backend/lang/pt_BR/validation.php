@@ -183,6 +183,11 @@ return [
         'auth' => [
             'wrong-password' => 'Senha incorreta.',
         ],
+        'user' => [
+            'invalid-cpf' => 'CPF inválido.',
+            'driver-not-found' => 'Motorista não encontrado.',
+            'driver-already-attached' => 'Motorista já possui veículo.',
+        ]
     ],
 
     /*
@@ -219,6 +224,7 @@ return [
         'total_amount' => 'valor total',
         'description' => 'descrição',
         'document' => 'documento',
+        'driver_cpf' => 'cpf do motorista',
     ],
 
 ];
