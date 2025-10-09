@@ -9,6 +9,7 @@ use App\Http\Actions\Truck\UpdateTruckAction;
 use App\Http\Controllers\Controller;
 use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Truck\StoreTruckRequest;
+use App\Http\Requests\Truck\UpdateTruckDriverRequest;
 use App\Http\Requests\Truck\UpdateTruckRequest;
 use App\Http\Resources\Truck\TruckBaseResource;
 use App\Models\Fleet;
@@ -84,6 +85,23 @@ class TruckController extends Controller
 
         return response()->json(
             FlashMessage::success(trans_choice('flash_messages.success.deleted.m', 1, [
+                'model' => trans_choice('model.truck', 1),
+            ])),
+            Response::HTTP_OK
+        );
+    }
+
+    public function updateTruckDriver(UpdateTruckDriverRequest $request,Fleet $fleet,Truck $truck)
+    {
+        $data = $request->validated();
+
+        (new AttachDriverToTruckAction(
+            $truck,
+            $data['driver_cpf']
+        ))->execute();
+
+        return response()->json(
+            FlashMessage::success(trans_choice('flash_messages.success.updated.m', 1, [
                 'model' => trans_choice('model.truck', 1),
             ])),
             Response::HTTP_OK

@@ -251,5 +251,38 @@ class TruckControllerTest extends TestCase
     
         $response->assertStatus(403);
     }
+
+    // updateTruckDriver
+
+    public function test_manager_can_update_truck_driver()
+    {
+        $newTruck = Truck::factory()->create(['fleet_id' => $this->fleet->id]);
+
+        $this->actingAsManager();
+        $response = $this->patchJson("/api/fleets/{$this->fleet->id}/trucks/{$newTruck->id}/driver", [
+            'driver_cpf' => $this->driver->user->cpf,
+        ]);
+    
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('trucks', [
+            'id' => $newTruck->id,
+            'driver_id' => $this->driver->user->id,
+        ]);
+    }
+
+    public function test_user_cannot_update_driver_from_other_users_fleet()
+    {
+        $newTruck = Truck::factory()->create(['fleet_id' => $this->fleet->id]);
+        
+        $otherManager = Manager::factory()->create();
+        $otherDriver = Driver::factory()->create();
+
+        $this->actingAs($otherManager->user);
+        $response = $this->patchJson("/api/fleets/{$this->fleet->id}/trucks/{$newTruck->id}/driver", [
+            'driver_cpf' => $otherDriver->user->cpf,
+        ]);
+    
+        $response->assertStatus(403);
+    }
     
 }
