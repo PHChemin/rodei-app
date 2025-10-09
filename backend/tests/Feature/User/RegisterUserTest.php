@@ -51,6 +51,15 @@ class RegisterUserTest extends TestCase
         );
     }
 
+    public function test_register_should_fail_if_cpf_is_invalid()
+    {
+        $response = $this->postJson(
+            $this->route($this->validInfo(['cpf' => '12345678901']))
+        );
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['cpf']);
+    }
+
     public function test_register_should_fail_if_name_is_bigger_than_255_characters()
     {
         $response = $this->postJson(
