@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Freights;
 
-use App\Actions\Freight\UploadFreightDocumentAction;
-use App\Http\Actions\Freights\CreateFreightAction;
+use App\Http\Actions\Freight\CreateFreightAction;
+use App\Http\Actions\Freight\UploadFreightDocumentAction;
 use App\Http\Controllers\Controller;
 use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Freights\StoreFreightRequest;

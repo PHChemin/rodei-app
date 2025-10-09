@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Actions\Freights;
+namespace App\Http\Actions\Freight;
 
 use App\Exceptions\HttpJsonResponseException;
 use App\Models\Freight;

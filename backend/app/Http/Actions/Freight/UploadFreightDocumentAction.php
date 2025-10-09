@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Freight;
+namespace App\Http\Actions\Freight;
 
 use App\Models\Freight;
 use Illuminate\Http\UploadedFile;
