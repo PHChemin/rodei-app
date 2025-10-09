@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\Cpf;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterUserRequest extends FormRequest
@@ -24,7 +25,7 @@ class RegisterUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'cpf' => ['required', 'string', 'size:11', 'unique:users'],
+            'cpf' => ['required', 'string', 'unique:users', new Cpf()],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'is_manager' => ['required', 'boolean'],
         ];

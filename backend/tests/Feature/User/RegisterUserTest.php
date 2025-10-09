@@ -22,7 +22,7 @@ class RegisterUserTest extends TestCase
         return array_merge([
             'name' => 'John Doe',
             'email' => 'john@example.com',
-            'cpf' => '12345678901',
+            'cpf' => '454.278.310-37',
             'password' => 'password',
             'password_confirmation' => 'password',
             'is_manager' => true,
