@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Freights\StoreFreightRequest;
 use App\Http\Requests\Freights\UpdateFreightRequest;
+use App\Http\Resources\Freight\FreightBaseResource;
 use App\Models\Fleet;
 use App\Models\Freight;
 use App\Models\Truck;
@@ -17,9 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FreightController extends Controller
 {
-    public function index()
+    public function index(Request $request, Fleet $fleet, Truck $truck)
     {
-        //
+        if($request->user()->cannot('viewAny', [Freight::class, $fleet->id, $truck->id])) {
+            abort(Response::HTTP_FORBIDDEN);
+        };
+
+        $freights = $truck->freights()
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return FreightBaseResource::collection($freights);
     }
 
     public function store(StoreFreightRequest $request, Fleet $fleet, Truck $truck)

@@ -11,9 +11,21 @@ class FreightPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user, int $fleetId, int $truckId): bool
     {
-        return false;
+        if (!$user->manager) {
+            return false;
+        }
+
+        $manager = $user->manager;
+
+        $ownsFleet = $manager->fleets()->where('id', $fleetId)->exists();
+
+        $ownsTruck = $manager->fleets()
+            ->whereHas('trucks', fn($q) => $q->where('id', $truckId))
+            ->exists();
+
+        return $ownsFleet && $ownsTruck;
     }
 
     /**
