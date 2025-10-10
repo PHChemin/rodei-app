@@ -11,6 +11,7 @@ use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Freights\StoreFreightRequest;
 use App\Http\Requests\Freights\UpdateFreightRequest;
 use App\Http\Resources\Freight\FreightBaseResource;
+use App\Http\Resources\Freight\FreightDetailsResource;
 use App\Models\Fleet;
 use App\Models\Freight;
 use App\Models\Truck;
@@ -96,7 +97,13 @@ class FreightController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         };
 
-        return FreightBaseResource::make($freight);
+        $freight->load([
+            'fleet',
+            'truck',
+            'driver.user'
+        ]);
+
+        return FreightDetailsResource::make($freight);
     }
 
     public function destroy(Request $request, Fleet $fleet, Truck $truck, Freight $freight)
