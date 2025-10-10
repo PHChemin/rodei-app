@@ -5,7 +5,7 @@ import { Image, TouchableOpacity, View } from "react-native";
 
 import { useCache } from "@/hooks/use-cache";
 import useModal from "@/hooks/use-modal";
-import { TruckBase } from "@/schemas";
+import { TruckWithDriver } from "@/schemas";
 import { api } from "@/services";
 import { colors, iconSize, spacing } from "@/services/theme/constants";
 import { getTruckBrandImage } from "@/services/truck-brand-images";
@@ -13,7 +13,7 @@ import { getTruckBrandImage } from "@/services/truck-brand-images";
 import { AlertModal, Flex, TextIcon } from "@/components/ui";
 
 type DetailsProps = {
-  truck: TruckBase;
+  truck: TruckWithDriver;
 };
 
 export function Details({ truck }: DetailsProps) {
@@ -87,18 +87,19 @@ export function Details({ truck }: DetailsProps) {
           </TouchableOpacity>
         </Flex>
       </View>
-
       <TextIcon
-        text="Motorista Exemplo"
+        text={truck.driver ? truck.driver?.user.name : "SEM MOTORISTA"}
         iconType="material-community"
         iconName="steering"
       />
 
-      <TextIcon
-        text="000.000.000-00"
-        iconType="material-community"
-        iconName="card-account-details-outline"
-      />
+      {truck.driver && (
+        <TextIcon
+          text={truck.driver ? truck.driver?.user.cpf : "CPF Motorista"}
+          iconType="material-community"
+          iconName="card-account-details-outline"
+        />
+      )}
 
       <TextIcon
         text={truck.commission_percentage.toFixed(2).toString()}
