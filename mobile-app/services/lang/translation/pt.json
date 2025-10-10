@@ -50,7 +50,11 @@
     "truck-details": {
       "title": "Detalhes do Caminhão",
       "delete": "Excluir Caminhão",
-      "delete-confirm": "Você tem certeza que deseja excluir o caminhão? Todos os dados referentes ao caminhão serão perdidos."
+      "delete-confirm": "Você tem certeza que deseja excluir o caminhão?",
+      "change-driver": {
+        "title": "Alterar Motorista",
+        "cpf": "CPF do Motorista"
+      }
     },
 
     "truck-edit": {
@@ -94,6 +98,41 @@
       "password": "Senha Atual",
       "new-password": "Nova Senha",
       "confirm-new-password": "Confirmar Nova Senha"
+    },
+
+    "freight-history": {
+      "title": "Histórico de Fretes",
+      "empty-title": "Nenhum frete cadastrado.",
+      "empty-message": "Adicione fretes para começar"
+    },
+
+    "freight-add": {
+      "title": "Adicionar Frete"
+    },
+
+    "freight-edit": {
+      "title": "Editar Frete"
+    },
+
+    "freight-details": {
+      "title": "Detalhes do Frete",
+      "sub-title": "Informações do Frete",
+      "delete": "Excluir Frete",
+      "delete-confirm": " Vocé tem certeza que deseja excluir o frete?",
+      "start-address": "Partida: ",
+      "end-address": "Destino: ",
+      "contractor-name": "Contratante/Transportadora: ",
+      "date": "Data: ",
+      "driver": "Motorista",
+      "cargo-weight": "Peso (KG): ",
+      "ton-price": "Valor Tonelada: ",
+      "total-amount": "Valor Total:",
+      "advance-percentage": "Adiantamento (%): ",
+      "advance": "Adiantamento: ",
+      "driver-commission": "Comissão do Motorista: ",
+      "expenses": "Despesas: ",
+      "profit": "Lucro: ",
+      "description": "Descrição"
     }
   },
 
@@ -111,9 +150,20 @@
     "model": "Modelo",
     "plate": "Placa",
     "color": "Cor",
-    "commission-percentage": "Percentual de Comissão",
+    "commission-percentage": "Percentual de Comissão do Motorista",
     "manager": "Gestor",
     "driver": "Motorista",
-    "role": "Tipo de Usuário"
+    "role": "Tipo de Usuário",
+    "start-address": "Endereço de Partida",
+    "end-address": "Endereço de Destino",
+    "contractor-name": "Nome do Contratante/Transportadora",
+    "date": "Data",
+    "cargo-weight": "Peso (KG)",
+    "ton-price": "Preço Tonelada",
+    "advance-percentage": "Adiantamento (%)",
+    "total-amount": "Valor Total",
+    "description": "Descrição",
+    "document": "Documento",
+    "driver-cpf": "CPF do Motorista"
   }
 }
