@@ -14,9 +14,10 @@ import { Truck } from "../_truck/_Truck";
 
 type FleetProps = {
   fleet: FleetWithTrucks;
+  refresh: () => void;
 };
 
-export function Fleet({ fleet }: FleetProps) {
+export function Fleet({ fleet, refresh }: FleetProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
 
@@ -34,8 +35,7 @@ export function Fleet({ fleet }: FleetProps) {
               name: name,
             });
 
-            router.dismissAll();
-            router.push(`/manager/fleets/my-fleets`);
+            refresh();
           } catch (e) {
             console.log(e);
           } finally {
@@ -57,8 +57,7 @@ export function Fleet({ fleet }: FleetProps) {
           try {
             await api().delete(`/fleets/${fleet.id}`);
 
-            router.dismissAll();
-            router.push(`/manager/fleets/my-fleets`);
+            refresh();
           } catch (e) {
             console.log(e);
           } finally {
