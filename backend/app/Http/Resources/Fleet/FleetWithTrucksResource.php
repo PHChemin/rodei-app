@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Fleet;
 
-use App\Http\Resources\Truck\TruckBaseResource;
+use App\Http\Resources\Truck\TruckWithDriverResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,7 +16,7 @@ class FleetWithTrucksResource extends FleetBaseResource
     public function toArray(Request $request): array
     {
         return array_merge(parent::toArray($request), [
-            'trucks' => TruckBaseResource::collection($this->whenLoaded('trucks')),
+            'trucks' => TruckWithDriverResource::collection($this->whenLoaded('trucks')),
         ]);
     }
 }
