@@ -252,7 +252,20 @@ class TruckControllerTest extends TestCase
         $response->assertStatus(403);
     }
 
-    // updateTruckDriver
+    // ------------------- SHOW ------------------------------------------------------------------ //
+
+    public function test_manager_can_show_truck()
+    {
+        $truck = Truck::factory()->create(['fleet_id' => $this->fleet->id, 'driver_id' => $this->driver->user->id]);
+
+        $this->actingAsManager();
+        $response = $this->getJson("/api/fleets/{$this->fleet->id}/trucks/{$truck->id}");
+    
+        $response->assertStatus(200);
+        $response->assertJsonPath('data.driver.user.name', $this->driver->user->name);
+    }
+
+    // ------------------ UPDATE TRUUCK DRIVER -------------------------------------------------- //
 
     public function test_manager_can_update_truck_driver()
     {

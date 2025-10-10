@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Actions\Freights;
+namespace Tests\Unit\Actions\Freight;
 
 use App\Http\Actions\Freight\UploadFreightDocumentAction;
 use App\Models\Driver;

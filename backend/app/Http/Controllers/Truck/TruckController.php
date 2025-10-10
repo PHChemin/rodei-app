@@ -11,7 +11,7 @@ use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Truck\StoreTruckRequest;
 use App\Http\Requests\Truck\UpdateTruckDriverRequest;
 use App\Http\Requests\Truck\UpdateTruckRequest;
-use App\Http\Resources\Truck\TruckBaseResource;
+use App\Http\Resources\Truck\TruckWithDriverResource;
 use App\Models\Fleet;
 use App\Models\Truck;
 use Illuminate\Http\Request;
@@ -25,7 +25,9 @@ class TruckController extends Controller
             abort(404);
         }
 
-        return new TruckBaseResource($truck);
+        $truck->load('driver.user');
+
+        return new TruckWithDriverResource($truck);
     }
 
     public function store(StoreTruckRequest $request, Fleet $fleet)
