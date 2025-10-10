@@ -14,11 +14,11 @@ class CreateFreightAction
     private readonly string $end_address;
     private readonly string $contractor_name;
     private readonly string $date;
-    private readonly float $cargo_weight;
-    private readonly float $ton_price;
-    private readonly float $advance_percentage;
-    private readonly float $total_amount;
-    private readonly string $description;
+    private readonly int|float $cargo_weight;
+    private readonly int|float $ton_price;
+    private readonly int|float $advance_percentage;
+    private readonly int|float $total_amount;
+    private readonly ?string $description;
     private readonly int $fleet_id;
     private readonly int $truck_id;
     private readonly int $driver_id;

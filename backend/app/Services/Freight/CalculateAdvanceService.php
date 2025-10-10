@@ -4,8 +4,8 @@ namespace App\Services\Freight;
 
 class CalculateAdvanceService
 {
-    public static function calculate(float $totalAmount, float $percentage): float
+    public static function calculate(float|int $totalAmount, float|int $percentage): float|int
     {
-        return ($totalAmount * $percentage) / 100;
+        return $totalAmount * ($percentage / 100);
     }
 }

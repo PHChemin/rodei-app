@@ -33,9 +33,9 @@ class FreightController extends Controller
     }
 
     public function store(StoreFreightRequest $request, Fleet $fleet, Truck $truck)
-    {
+    {   
         $data = $request->validated();
-
+        
         $freight = (new CreateFreightAction(
             $data['start_address'],
             $data['end_address'],
@@ -49,9 +49,13 @@ class FreightController extends Controller
             $fleet->id,
             $truck->id,
             $truck->driver->id,
-        ))->execute();
-
-        new UploadFreightDocumentAction($freight, $request->file('document'));
+            ))->execute();
+            
+            
+        if ($request->hasFile('document')) {
+            new UploadFreightDocumentAction($freight, $request->file('document'));
+        }
+        
 
         return response()->json(
             FlashMessage::success(trans_choice('flash_messages.success.created.m', 1, [
