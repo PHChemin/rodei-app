@@ -29,7 +29,6 @@ class FreightDetailsResource extends JsonResource
 
     private function calculateDriverCommission(): ?float
     {
-        return $this->resource->total_amount * ($this->resource->truck->driver_commission / 100);
+        return round($this->resource->total_amount * ($this->resource->truck->commission_percentage / 100), 2);
     }
-
 }
