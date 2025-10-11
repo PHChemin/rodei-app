@@ -230,6 +230,7 @@ class TruckControllerTest extends TestCase
     
         $response->assertStatus(200);
         $this->assertSoftDeleted('trucks', ['id' => $this->truck->id]);
+        $this->assertDatabaseHas('trucks', ['id' => $this->truck->id, 'driver_id' => null]);
     }
     
     public function test_user_cannot_delete_truck_from_other_users_fleet()

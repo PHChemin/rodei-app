@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Truck;
 use App\Http\Actions\Truck\AttachDriverToTruckAction;
 use App\Http\Actions\Truck\CreateTruckAction;
 use App\Http\Actions\Truck\DeleteTruckAction;
+use App\Http\Actions\Truck\DetachDriverFromTruckAction;
 use App\Http\Actions\Truck\UpdateTruckAction;
 use App\Http\Controllers\Controller;
 use App\Http\Messages\FlashMessage;
@@ -83,6 +84,7 @@ class TruckController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         }
 
+        (new DetachDriverFromTruckAction($truck)->execute());
         (new DeleteTruckAction($truck))->execute();
 
         return response()->json(
