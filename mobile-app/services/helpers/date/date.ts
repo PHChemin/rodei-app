@@ -6,7 +6,11 @@ dayjs.extend(customParseFormat);
 export function formatToApiDate(date: string): string {
   if (!date) return "";
 
-  return dayjs(date, "DD/MM/YYYY").format("YYYY-MM-DD");
+  const parsed = dayjs(date, "DD/MM/YYYY", true); // ⚠ o 'true' ativa a validação estrita
+
+  if (!parsed.isValid()) return "2006-02-31"; // Inválida
+
+  return parsed.format("YYYY-MM-DD");
 }
 
 export function formatToDisplayDate(date: string): string {
