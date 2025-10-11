@@ -48,7 +48,7 @@ export function AddFreighForm({ fleetId, truckId }: AddFreighFormProps) {
         cargo_weight: Number(cargoWeight),
         ton_price: formattedTonPrice,
         advance_percentage: Number(advancePercentage),
-        total_amount: (Number(cargoWeight) / 1000) * Number(tonPrice),
+        total_amount: (Number(cargoWeight) / 1000) * Number(formattedTonPrice),
         description: description,
         fleet_id: fleetId,
         truck_id: truckId,

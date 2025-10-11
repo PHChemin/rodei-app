@@ -11,8 +11,9 @@ import {
 import { useAsyncData } from "@/hooks/use-async-data";
 import useModal from "@/hooks/use-modal";
 import { TruckWithDriver } from "@/schemas";
-import { api } from "@/services";
+import { api, handleFormErrors } from "@/services";
 
+import { maskCPF } from "@/services/masks";
 import { Details } from "./_Details";
 
 type TruckDetailsScreenProps = {
@@ -43,7 +44,7 @@ export function TruckDetailsScreen({
         label={t("components.truck-details.change-driver.cpf")}
         minLength={2}
         submitButtonTitle={t("buttons.confirm")}
-        initialValue={truck.driver ? truck.driver.user.cpf : ""}
+        mask={maskCPF}
         onSubmit={async (cpf) => {
           try {
             await api().patch(`/fleets/${fleetId}/trucks/${truckId}/driver`, {
@@ -53,8 +54,6 @@ export function TruckDetailsScreen({
             refresh();
           } catch (error) {
             console.log(error);
-          } finally {
-            hideModal();
           }
         }}
       />

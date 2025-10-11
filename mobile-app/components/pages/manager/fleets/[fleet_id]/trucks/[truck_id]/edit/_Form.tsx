@@ -61,6 +61,7 @@ export function EditTruckForm({ fleetId, truckId }: EditTruckFormProps) {
         value={brandName}
         onChange={setBrandName}
         data={truckBrandOptions}
+        required
         errorMessage={errors.brand_name?.message?.toString()}
       />
 
@@ -68,6 +69,7 @@ export function EditTruckForm({ fleetId, truckId }: EditTruckFormProps) {
         label={t("fields.model")}
         value={model}
         onChangeText={setModel}
+        required
         errorMessage={errors.model?.message?.toString()}
       />
 
@@ -75,6 +77,7 @@ export function EditTruckForm({ fleetId, truckId }: EditTruckFormProps) {
         label={t("fields.plate")}
         value={licensePlate}
         onChangeText={setLicensePlate}
+        required
         errorMessage={errors.license_plate?.message?.toString()}
       />
 
@@ -83,6 +86,7 @@ export function EditTruckForm({ fleetId, truckId }: EditTruckFormProps) {
         value={color}
         onChange={setColor}
         data={colorOptions}
+        required
         errorMessage={errors.color?.message?.toString()}
       />
 
@@ -90,6 +94,7 @@ export function EditTruckForm({ fleetId, truckId }: EditTruckFormProps) {
         label={t("fields.commission-percentage")}
         value={commisionPercentage}
         onChangeText={setCommisionPercentage}
+        required
         errorMessage={errors.commission_percentage?.message?.toString()}
       />
 

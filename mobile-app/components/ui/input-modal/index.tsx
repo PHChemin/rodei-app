@@ -1,4 +1,11 @@
-import { Button, Icon, Input, makeStyles, Text } from "@rneui/themed";
+import {
+  Button,
+  Icon,
+  Input,
+  InputProps,
+  makeStyles,
+  Text,
+} from "@rneui/themed";
 import { t } from "i18next";
 import React, { useState } from "react";
 import { Alert, Dimensions, TouchableOpacity } from "react-native";
@@ -16,6 +23,9 @@ type InputModalProps = {
   submitButtonTitle?: string;
   minLength?: number;
   withCloseButton?: boolean;
+  mask?: (text: string) => string;
+  errorMessage?: string;
+  inputProps?: InputProps;
 };
 
 export function InputModal({
@@ -26,11 +36,18 @@ export function InputModal({
   submitButtonTitle,
   minLength,
   withCloseButton = true,
+  mask,
+  inputProps,
 }: InputModalProps) {
   const styles = useStyles();
   const { hideModal } = useModal();
 
   const [value, setValue] = useState(initialValue || "");
+
+  const handleChangeText = (text: string) => {
+    if (mask) setValue(mask(text));
+    else setValue(text);
+  };
 
   return (
     <Flex direction="column" style={styles.container}>
@@ -48,7 +65,12 @@ export function InputModal({
         )}
       </Flex>
 
-      <Input label={label} value={value} onChangeText={setValue} />
+      <Input
+        label={label}
+        value={value}
+        onChangeText={handleChangeText}
+        {...inputProps}
+      />
 
       <Button
         title={submitButtonTitle || t("buttons.ok")}
