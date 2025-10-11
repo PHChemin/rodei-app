@@ -20,6 +20,7 @@ class DriverNotAttachedToTruck implements ValidationRule
 
         if(! $user || $user->isManager()){
             $fail(trans('validation.custom.user.driver-not-found'));
+            return;
         }
 
         if ($user->driver->truck) {

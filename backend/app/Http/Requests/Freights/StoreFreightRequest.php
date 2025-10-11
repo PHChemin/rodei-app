@@ -29,7 +29,7 @@ class StoreFreightRequest extends FormRequest
             'start_address' => ['required', 'string', 'max:255'],
             'end_address' => ['required', 'string', 'max:255'],
             'contractor_name' => ['required', 'string', 'max:255'],
-            'date' => ['required', 'date', 'date_format:Y-m-d'],
+            'date' => ['required', 'date'],
             'cargo_weight' => ['required', 'numeric', 'gt:0'],
             'ton_price' => ['required', 'numeric', 'gt:0'],
             'advance_percentage' => ['required', 'numeric', 'between:1,100'],

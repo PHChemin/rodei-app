@@ -15,11 +15,11 @@ class UpdateFreightAction
     private readonly string $end_address;
     private readonly string $contractor_name;
     private readonly string $date;
-    private readonly float $cargo_weight;
-    private readonly float $ton_price;
-    private readonly float $advance_percentage;
-    private readonly float $total_amount;
-    private readonly string $description;
+    private readonly float|int $cargo_weight;
+    private readonly float|int $ton_price;
+    private readonly float|int $advance_percentage;
+    private readonly float|int $total_amount;
+    private readonly ?string $description;
     
     public function __construct(
         Freight $freight,
