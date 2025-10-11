@@ -5,30 +5,49 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { View } from "react-native";
 
+import { useCache } from "@/hooks/use-cache";
+import { FreightDetailsSchema } from "@/schemas";
 import { api, handleFormErrors } from "@/services";
 import { parseCurrency } from "@/services/helpers/currency/currencyFormatter";
-import { formatToApiDate } from "@/services/helpers/date/date";
+import {
+  formatToApiDate,
+  formatToDisplayDate,
+} from "@/services/helpers/date/date";
 import { maskCurrency, maskDate } from "@/services/masks";
 import { colors } from "@/services/theme/constants";
 
 import { Flex, TextInput } from "@/components/ui";
 
-type AddFreighFormProps = {
+type EditFreightFormProps = {
   fleetId: number;
   truckId: number;
+  freightId: number;
 };
 
-export function AddFreighForm({ fleetId, truckId }: AddFreighFormProps) {
+export function EditFreightForm({
+  fleetId,
+  truckId,
+  freightId,
+}: EditFreightFormProps) {
   const styles = useStyles();
+  const { cached, invalidate } = useCache();
 
-  const [startAddress, setStartAddress] = useState("");
-  const [endAddress, setEndAddress] = useState("");
-  const [contractorName, setContractorName] = useState("");
-  const [tonPrice, setTonPrice] = useState("");
-  const [cargoWeight, setCargoWeight] = useState("");
-  const [advancePercentage, setAdvancePercentage] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
+  const freight = FreightDetailsSchema.parse(cached("freight"));
+
+  const [startAddress, setStartAddress] = useState(freight.start_address);
+  const [endAddress, setEndAddress] = useState(freight.end_address);
+  const [contractorName, setContractorName] = useState(freight.contractor_name);
+  const [tonPrice, setTonPrice] = useState(freight.ton_price.toString());
+  const [cargoWeight, setCargoWeight] = useState(
+    freight.cargo_weight.toString()
+  );
+  const [advancePercentage, setAdvancePercentage] = useState(
+    freight.advance_percentage.toString()
+  );
+  const [date, setDate] = useState(formatToDisplayDate(freight.date));
+  const [description, setDescription] = useState(
+    freight.description ? freight.description : ""
+  );
 
   const {
     setError,
@@ -40,21 +59,26 @@ export function AddFreighForm({ fleetId, truckId }: AddFreighFormProps) {
       const formattedDate = formatToApiDate(date);
       const formattedTonPrice = parseCurrency(tonPrice);
 
-      await api().post(`/fleets/${fleetId}/trucks/${truckId}/freights`, {
-        start_address: startAddress,
-        end_address: endAddress,
-        contractor_name: contractorName,
-        date: formattedDate,
-        cargo_weight: Number(cargoWeight),
-        ton_price: formattedTonPrice,
-        advance_percentage: Number(advancePercentage),
-        total_amount: (Number(cargoWeight) / 1000) * Number(tonPrice),
-        description: description,
-        fleet_id: fleetId,
-        truck_id: truckId,
-      });
+      await api().put(
+        `/fleets/${fleetId}/trucks/${truckId}/freights/${freightId}`,
+        {
+          start_address: startAddress,
+          end_address: endAddress,
+          contractor_name: contractorName,
+          date: formattedDate,
+          cargo_weight: Number(cargoWeight),
+          ton_price: formattedTonPrice,
+          advance_percentage: Number(advancePercentage),
+          total_amount: (Number(cargoWeight) / 1000) * Number(tonPrice),
+          description: description,
+        }
+      );
 
-      router.dismiss();
+      invalidate("freight");
+      router.dismiss(2);
+      router.replace(
+        `/manager/fleets/${fleetId}/trucks/${truckId}/freights/${freightId}/details`
+      );
     } catch (error) {
       handleFormErrors(error, setError);
     }
@@ -197,7 +221,7 @@ export function AddFreighForm({ fleetId, truckId }: AddFreighFormProps) {
         errorMessage={errors.description?.message?.toString()}
       />
 
-      <Button title={t("buttons.add")} onPress={handleCreateFreight} />
+      <Button title={t("buttons.save")} onPress={handleCreateFreight} />
     </>
   );
 }

@@ -3,14 +3,15 @@ import { router } from "expo-router";
 import { t } from "i18next";
 import { TouchableOpacity, View } from "react-native";
 
-import { AlertModal, Flex } from "@/components/ui";
 import { useAsyncData } from "@/hooks/use-async-data";
 import { useCache } from "@/hooks/use-cache";
 import useModal from "@/hooks/use-modal";
 import { FreightDetailsSchema } from "@/schemas";
 import { api } from "@/services";
-import { formatToDisplayDate } from "@/services/date/date";
+import { formatToDisplayDate } from "@/services/helpers/date/date";
 import { colors, iconSize, spacing } from "@/services/theme/constants";
+
+import { AlertModal, Flex } from "@/components/ui";
 
 type FreightDetailsProps = {
   fleetId: number;
@@ -52,8 +53,8 @@ export function FreightDetails({
   const deleteFreightModal = async () => {
     showModal(
       <AlertModal
-        title={t("components.truck-details.delete")}
-        message={t("components.truck-details.delete-confirm")}
+        title={t("components.freight-details.delete")}
+        message={t("components.freight-details.delete-confirm")}
         confirmButtonTitle={t("buttons.yes")}
         cancelButtonTitle={t("buttons.no")}
         onConfirm={async () => {
@@ -62,7 +63,7 @@ export function FreightDetails({
               `/fleets/${fleetId}/trucks/${truckId}/freights/${freightId}`
             );
 
-            router.replace(`/manager/fleets/my-fleets`);
+            router.dismiss(2);
           } catch (e) {
             console.log(e);
           } finally {

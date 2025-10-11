@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { api, handleFormErrors } from "@/services";
+import { maskCPF } from "@/services/masks";
 
 import { SelectInput, TextInput } from "@/components/ui";
 
@@ -93,7 +94,7 @@ export function AddTruckForm({ fleetId }: AddTruckFormProps) {
       <TextInput
         label={t("fields.driver-cpf")}
         value={driverCpf}
-        onChangeText={setDriverCpf}
+        onChangeText={(text) => setDriverCpf(maskCPF(text))}
         required
         errorMessage={errors.driver_cpf?.message?.toString()}
       />
