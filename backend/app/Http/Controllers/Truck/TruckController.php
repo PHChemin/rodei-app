@@ -84,7 +84,7 @@ class TruckController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         }
 
-        (new DetachDriverFromTruckAction($truck)->execute());
+        (new DetachDriverFromTruckAction($truck))->execute();
         (new DeleteTruckAction($truck))->execute();
 
         return response()->json(
