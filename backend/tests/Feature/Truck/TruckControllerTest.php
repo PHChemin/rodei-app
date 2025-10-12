@@ -46,7 +46,7 @@ class TruckControllerTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->manager = $this->user->manager()->create();
-        $this->fleet = Fleet::factory()->create(['manager_id' => $this->manager->id]);
+        $this->fleet = Fleet::factory()->for($this->manager)->create();
         $driver = Driver::factory()->create();
         $this->truck = $this->fleet->trucks()->create([
             'brand_name' => 'Volvo',
