@@ -27,6 +27,8 @@ class FleetController extends Controller
         $user = $request->user();
         $fleets = $user->manager->fleets()->with('trucks')->get();
 
+        $fleets->load('trucks.driver.user');
+
         return FleetWithTrucksResource::collection($fleets);
     }
 

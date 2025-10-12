@@ -24,9 +24,11 @@ class UserProfileController extends Controller
 
     public function updateName(UpdateUserNameRequest $request): JsonResponse
     {
+        $data = $request->validated();
+
         (new UpdateUserNameAction(
             request()->user(),
-            $request->name,
+            $data['name'],
         ))->execute();
 
         return response()->json(
@@ -39,10 +41,12 @@ class UserProfileController extends Controller
 
     public function updatePassword(UpdateUserPasswordRequest $request): JsonResponse
     {
+        $data = $request->validated();
+
         (new UpdateUserPasswordAction(
             request()->user(),
-            $request->password,
-            $request->new_password
+            $data['password'],
+            $data['new_password'],
         ))->execute();
 
         return response()->json(

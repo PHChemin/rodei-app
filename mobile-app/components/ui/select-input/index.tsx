@@ -13,6 +13,7 @@ type SelectInputProps = {
   onChange: (value: string) => void;
   data?: SelectInputItem[];
   errorMessage?: string;
+  required?: boolean;
 };
 
 export function SelectInput({
@@ -21,6 +22,7 @@ export function SelectInput({
   onChange,
   data,
   errorMessage,
+  required = false,
 }: SelectInputProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
@@ -33,7 +35,11 @@ export function SelectInput({
 
   return (
     <>
-      {label && <InputLabel>{label}</InputLabel>}
+      {label && (
+        <InputLabel>
+          {label} {required && <Text style={{ color: "red" }}>*</Text>}
+        </InputLabel>
+      )}
 
       <TouchableOpacity onPress={selectModal}>
         <View style={styles.inputContainer}>

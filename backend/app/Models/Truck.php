@@ -6,9 +6,14 @@ use App\Enums\TruckBrand;
 use App\Enums\TruckColor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Truck extends Model
 {
+    use SoftDeletes;
+
     use HasFactory;
 
     /**
@@ -26,13 +31,18 @@ class Truck extends Model
         'driver_id',
     ];
 
-    public function fleet()
+    public function fleet(): BelongsTo
     {
         return $this->belongsTo(Fleet::class);
     }
 
-    public function driver()
+    public function driver(): BelongsTo
     {
         return $this->belongsTo(Driver::class);
+    }
+
+    public function freights(): HasMany
+    {
+        return $this->hasMany(Freight::class);
     }
 }

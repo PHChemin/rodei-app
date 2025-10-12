@@ -22,7 +22,7 @@ class RegisterUserTest extends TestCase
         return array_merge([
             'name' => 'John Doe',
             'email' => 'john@example.com',
-            'cpf' => '12345678901',
+            'cpf' => '454.278.310-37',
             'password' => 'password',
             'password_confirmation' => 'password',
             'is_manager' => true,
@@ -49,6 +49,15 @@ class RegisterUserTest extends TestCase
         $response->assertJsonValidationErrors(
             ['name', 'email', 'cpf', 'password', 'is_manager']
         );
+    }
+
+    public function test_register_should_fail_if_cpf_is_invalid()
+    {
+        $response = $this->postJson(
+            $this->route($this->validInfo(['cpf' => '12345678901']))
+        );
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['cpf']);
     }
 
     public function test_register_should_fail_if_name_is_bigger_than_255_characters()

@@ -12,6 +12,7 @@ export function logout() {
     })
     .then(() => {
       useToken.getState().clearToken();
+      router.dismissAll();
       router.replace("/");
     })
     .catch((err) => {

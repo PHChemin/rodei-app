@@ -149,7 +149,7 @@ class FleetControllerTest extends TestCase
         $response = $this->deleteJson(route('fleets.destroy', $fleet));
 
         $response->assertStatus(200);
-        $this->assertDatabaseMissing('fleets', ['id' => $fleet->id]);
+        $this->assertSoftDeleted('fleets', ['id' => $fleet->id]);
     }
 
     public function test_manager_cannot_delete_a_fleet_they_do_not_own()

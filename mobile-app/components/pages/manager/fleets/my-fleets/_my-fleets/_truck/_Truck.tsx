@@ -1,7 +1,7 @@
 import { Card, Icon, makeStyles, Text } from "@rneui/themed";
 import { Image, TouchableOpacity, View } from "react-native";
 
-import { TruckBase } from "@/schemas";
+import { TruckWithDriver } from "@/schemas";
 import { colors, iconSize } from "@/services/theme/constants";
 import { getTruckBrandImage } from "@/services/truck-brand-images";
 
@@ -9,7 +9,7 @@ import { Flex } from "@/components/ui";
 import { router } from "expo-router";
 
 type TruckProps = {
-  truck: TruckBase;
+  truck: TruckWithDriver;
 };
 
 export function Truck({ truck }: TruckProps) {
@@ -34,7 +34,9 @@ export function Truck({ truck }: TruckProps) {
                 {truck.brand_name} {truck.model}
               </Text>
               <Text>{truck.license_plate}</Text>
-              <Text h4>Motorista teste</Text>
+              <Text h4>
+                {truck.driver ? truck.driver.user.name : "Sem motorista"}
+              </Text>
             </View>
           </Flex>
 

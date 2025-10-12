@@ -4,6 +4,11 @@ namespace App\Http\Requests\Truck;
 
 use App\Enums\TruckBrand;
 use App\Enums\TruckColor;
+use App\Models\Driver;
+use App\Models\User;
+use App\Rules\Cpf;
+use App\Rules\DriverNotAttachedToTruck;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -32,6 +37,7 @@ class StoreTruckRequest extends FormRequest
             'license_plate' => ['required', 'string', 'size:7', 'unique:trucks,license_plate'],
             'color' => ['required', 'string', Rule::in(TruckColor::values())],
             'commission_percentage' => ['required', 'numeric', 'between:0,100'],
+            'driver_cpf' => ['required', 'string', new Cpf(), new DriverNotAttachedToTruck()],
         ];
     }
 

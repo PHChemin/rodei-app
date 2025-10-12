@@ -23,5 +23,12 @@ return [
             'update' => 'Não foi possível atualizar o caminhão.' . Translate::TRY_AGAIN,
             'delete' => 'Não foi possível excluir o caminhão.' . Translate::TRY_AGAIN,
         ]
+    ],
+    'freight' => [
+        'unable' => [
+            'create' => 'Não foi possível criar o frete.' . Translate::TRY_AGAIN,
+            'update' => 'Não foi possível atualizar o frete.' . Translate::TRY_AGAIN,
+            'delete' => 'Não foi possível excluir o frete.' . Translate::TRY_AGAIN,
+        ]
     ]
 ];

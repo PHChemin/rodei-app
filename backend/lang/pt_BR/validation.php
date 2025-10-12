@@ -182,6 +182,11 @@ return [
         ],
         'auth' => [
             'wrong-password' => 'Senha incorreta.',
+        ],
+        'user' => [
+            'invalid-cpf' => 'CPF inválido.',
+            'driver-not-found' => 'Motorista não encontrado.',
+            'driver-already-attached' => 'Motorista já possui veículo.',
         ]
     ],
 
@@ -209,6 +214,17 @@ return [
         'commission_percentage' => 'percentual de comissão',
         'new_password' => 'nova senha',
         'new_password_confirmation' => 'confirmar nova senha',
+        'start_address' => 'endereço de início',
+        'end_address' => 'endereço de destino',
+        'contractor_name' => 'nome do contratante',
+        'date' => 'data do frete',
+        'cargo_weight' => 'peso da carga',
+        'ton_price' => 'preço por tonelada',
+        'advance_percentage' => 'porcentagem do adiantamento',
+        'total_amount' => 'valor total',
+        'description' => 'descrição',
+        'document' => 'documento',
+        'driver_cpf' => 'cpf do motorista',
     ],
 
 ];

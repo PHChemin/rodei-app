@@ -4,8 +4,10 @@ import { t } from "i18next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Flex, InputLabel, TextInput } from "@/components/ui";
 import { api, handleFormErrors } from "@/services";
+import { maskCPF } from "@/services/masks";
+
+import { Flex, InputLabel, TextInput } from "@/components/ui";
 
 export function SignUpForm() {
   const styles = useStyles();
@@ -83,7 +85,7 @@ export function SignUpForm() {
       <TextInput
         label={t("fields.cpf")}
         value={cpf}
-        onChangeText={setCpf}
+        onChangeText={(text) => setCpf(maskCPF(text))}
         errorMessage={errors.cpf?.message?.toString()}
         inputProps={{
           keyboardType: "numeric",

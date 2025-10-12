@@ -14,6 +14,7 @@ export const colors = {
   primary: "#18344C",
   secondary: "#0D6292",
   error: "#E91E63",
+  success: "#008E00",
 };
 
 export const borderRadius = {

@@ -76,7 +76,7 @@ export function MyFleets({}: MyFleetsProps) {
       <FlatList
         data={fleets}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <Fleet fleet={item} />}
+        renderItem={({ item }) => <Fleet refresh={refresh} fleet={item} />}
         ListEmptyComponent={() => <EmpityMessage />}
         ItemSeparatorComponent={() => (
           <View style={{ height: spacing.xl * 2 }} />

@@ -9,3 +9,12 @@ export { FleetBase } from "./Fleet/FleetBase";
 
 // Truck
 export { TruckBase } from "./Truck/TruckBase";
+export { TruckWithDriver } from "./Truck/TruckWithDriver";
+
+// Driver
+export { DriverBase } from "./Driver/DriverBase";
+
+// Freight
+export { FreightBase } from "./Freight/FreightBase";
+export { FreightWithDriver } from "./Freight/FreightWithDriver";
+export { FreightDetailsSchema } from "./Freight/FreightDetails";

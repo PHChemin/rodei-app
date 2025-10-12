@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Fleet\FleetController;
+use App\Http\Controllers\Freights\FreightController;
 use App\Http\Controllers\Truck\TruckController;
 use App\Http\Controllers\User\RegisterUserController;
 use App\Http\Controllers\User\UserProfileController;
@@ -26,4 +27,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/fleets/{fleet}/trucks', [TruckController::class, 'store'])->name('fleets.trucks.store');
     Route::put('/fleets/{fleet}/trucks/{truck}', [TruckController::class, 'update'])->name('fleets.trucks.update');
     Route::delete('/fleets/{fleet}/trucks/{truck}', [TruckController::class, 'destroy'])->name('fleets.trucks.destroy');
+    Route::patch('/fleets/{fleet}/trucks/{truck}/driver', [TruckController::class, 'updateTruckDriver'])->name('fleets.trucks.driver.update');
+
+    Route::get('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'index'])->name('freights.index');
+    Route::post('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'store'])->name('freights.store');
+    Route::put('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'update'])->name('freights.update');
+    Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'destroy'])->name('freights.destroy');
+    Route::get('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'show'])->name('freights.show');
 });
