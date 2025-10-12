@@ -34,7 +34,7 @@ class UploadFreightDocumentActionTest extends TestCase
 
         $file = UploadedFile::fake()->create('document.pdf', 100, 'application/pdf');
 
-        $path = new UploadFreightDocumentAction($freight, $file)->execute();
+        $path = (new UploadFreightDocumentAction($freight, $file))->execute();
 
         $this->assertTrue(
             Storage::disk('public')->exists($path),

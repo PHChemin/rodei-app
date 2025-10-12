@@ -20,11 +20,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare The Environment
         run: cp .env.example .env
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.3
-          extensions: mbstring, bcmath, pdo_mysql
       - name: Install Composer Dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Generate Application Key
