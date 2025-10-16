@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Driver;
 use App\Models\Fleet;
 use App\Models\Truck;
-use App\Services\Freight\CalculateAdvanceService;
+use App\Services\Freight\CalculateFreightInfoService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -32,7 +32,7 @@ class FreightFactory extends Factory
             'cargo_weight' => fake()->randomFloat(2, 0),
             'ton_price' => fake()->randomFloat(2, 0),
             'advance_percentage' => fake()->randomFloat(2, 0, 100),
-            'advance' => CalculateAdvanceService::calculate(fake()->randomFloat(2, 0), fake()->randomFloat(2, 0, 100)),
+            'advance' => CalculateFreightInfoService::calculateAdvance(fake()->randomFloat(2, 0), fake()->randomFloat(2, 0, 100)),
             'total_amount' => fake()->randomFloat(2, 0),
             'description' => fake()->text(),
             'fleet_id' => $fleet->id,
