@@ -8,7 +8,6 @@ export const FreightDetailsSchema = FreightBase.extend({
   driver: DriverBase,
   truck: TruckBase,
   fleet: FleetBase,
-  driver_commission: z.number(),
   expenses_amount: z.number().nullable(),
   profit: z.number().nullable(),
 });

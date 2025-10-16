@@ -7,7 +7,7 @@ use App\Models\Driver;
 use App\Models\Fleet;
 use App\Models\Freight;
 use App\Models\Truck;
-use App\Services\Freight\CalculateAdvanceService;
+use App\Services\Freight\CalculateFreightInfoService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,7 +19,11 @@ class CreateFreightActionTest extends TestCase
     {
         $fleet = Fleet::factory()->create();
         $driver = Driver::factory()->create();
-        $truck = Truck::factory()->create(['fleet_id' => $fleet->id, 'driver_id' => $driver->id]);
+        $truck = Truck::factory()->create([
+            'fleet_id' => $fleet->id,
+            'driver_id' => $driver->id,
+            'commission_percentage' => 15
+        ]);
 
         $freight = (new CreateFreightAction(
             'Guarapuava',
@@ -32,7 +36,7 @@ class CreateFreightActionTest extends TestCase
             3750, // R$3750,00
             'Descrição do frete',
             $fleet->id,
-            $truck->id,
+            $truck,
             $driver->id
         ))->execute();
 
@@ -45,6 +49,7 @@ class CreateFreightActionTest extends TestCase
         $this->assertEquals(100, $freight->ton_price);
         $this->assertEquals(40, $freight->advance_percentage);
         $this->assertEquals(3750, $freight->total_amount);
+        $this->assertEquals(562.5, $freight->driver_commission);
         $this->assertEquals('Descrição do frete', $freight->description);
         $this->assertEquals($fleet->id, $freight->fleet_id);
         $this->assertEquals($truck->id, $freight->truck_id);
@@ -53,12 +58,5 @@ class CreateFreightActionTest extends TestCase
         $this->assertDatabaseHas('freights', [
             'id' => $freight->id
         ]);
-    }
-
-    public function test_should_calculate_advance_correctly(): void
-    {
-        $expectedAdvance = 3750 * 40 / 100;
-
-        $this->assertEquals($expectedAdvance, CalculateAdvanceService::calculate(3750, 40));
     }
 }

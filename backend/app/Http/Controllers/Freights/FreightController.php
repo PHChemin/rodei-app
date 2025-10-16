@@ -48,7 +48,7 @@ class FreightController extends Controller
             $data['total_amount'],
             $data['description'],
             $fleet->id,
-            $truck->id,
+            $truck,
             $truck->driver->id,
             ))->execute();
             
@@ -81,6 +81,7 @@ class FreightController extends Controller
             $data['advance_percentage'],
             $data['total_amount'],
             $data['description'],
+            $truck
         ))->execute();
 
         return response()->json(

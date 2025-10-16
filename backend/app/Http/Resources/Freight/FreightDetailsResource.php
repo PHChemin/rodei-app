@@ -21,14 +21,8 @@ class FreightDetailsResource extends JsonResource
             'driver' => DriverBaseResource::make($this->whenLoaded('driver')),
             'truck' => TruckBaseResource::make($this->whenLoaded('truck')),
             'fleet' => FleetBaseResource::make($this->whenLoaded('fleet')),
-            'driver_commission' => $this->calculateDriverCommission(),
             'expenses_amount' => null,
             'profit' => null
         ]);
-    }
-
-    private function calculateDriverCommission(): ?float
-    {
-        return round($this->resource->total_amount * ($this->resource->truck->commission_percentage / 100), 2);
     }
 }

@@ -29,6 +29,7 @@ class Freight extends Model
         'advance',
         'advance_percentage',
         'total_amount',
+        'driver_commission',
         'description',
         'document_path',
         'fleet_id',

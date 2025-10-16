@@ -4,7 +4,8 @@ namespace App\Http\Actions\Freight;
 
 use App\Exceptions\HttpJsonResponseException;
 use App\Models\Freight;
-use App\Services\Freight\CalculateAdvanceService;
+use App\Models\Truck;
+use App\Services\Freight\CalculateFreightInfoService;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,6 +21,7 @@ class UpdateFreightAction
     private readonly float|int $advance_percentage;
     private readonly float|int $total_amount;
     private readonly ?string $description;
+    private readonly Truck $truck;
     
     public function __construct(
         Freight $freight,
@@ -32,6 +34,7 @@ class UpdateFreightAction
         float $advance_percentage,
         float $total_amount,
         ?string $description,
+        Truck $truck
         )
     {
         $this->freight = $freight;
@@ -44,6 +47,7 @@ class UpdateFreightAction
         $this->advance_percentage = $advance_percentage;
         $this->total_amount = $total_amount;
         $this->description = $description;
+        $this->truck = $truck;
     }
 
     public function execute(): Freight
@@ -57,7 +61,8 @@ class UpdateFreightAction
                 'cargo_weight' => $this->cargo_weight,
                 'ton_price' => $this->ton_price,
                 'advance_percentage' => $this->advance_percentage,
-                'advance' => CalculateAdvanceService::calculate($this->total_amount, $this->advance_percentage),
+                'advance' => CalculateFreightInfoService::calculateAdvance($this->total_amount, $this->advance_percentage),
+                'driver_commission' => CalculateFreightInfoService::calculateDriverCommission($this->total_amount, $this->truck->commission_percentage),
                 'total_amount' => $this->total_amount,
                 'description' => $this->description,
             ]);

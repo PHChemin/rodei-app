@@ -11,6 +11,7 @@ export const FreightBase = z.object({
   advance_percentage: z.number(),
   advance: z.number(),
   total_amount: z.number(),
+  driver_commission: z.number(),
   description: z.optional(z.string()).nullable(),
   fleet_id: z.number(),
   truck_id: z.number(),
