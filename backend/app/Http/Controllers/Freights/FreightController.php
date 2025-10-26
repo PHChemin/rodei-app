@@ -50,7 +50,7 @@ class FreightController extends Controller
             $fleet->id,
             $truck,
             $truck->driver->id,
-            ))->execute();
+        ))->execute();
             
             
         if ($request->hasFile('document')) {
