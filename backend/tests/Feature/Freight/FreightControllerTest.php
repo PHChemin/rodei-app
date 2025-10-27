@@ -357,6 +357,36 @@ class FreightControllerTest extends TestCase
         $response->assertStatus(403);
     }
 
+    public function test_driver_can_show_freight(): void
+    {
+        $freight = Freight::factory()->create([
+            'fleet_id' => $this->fleet->id,
+            'truck_id' => $this->truck->id,
+            'driver_id' => $this->driver->id,
+        ]);
+
+        $response = $this->actingAs($this->driver->user)
+            ->getJson(route('freights.show', [$this->fleet, $this->truck, $freight]));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_non_freight_driver_cannot_show_freight_info(): void
+    {
+        $freight = Freight::factory()->create([
+            'fleet_id' => $this->fleet->id,
+            'truck_id' => $this->truck->id,
+            'driver_id' => $this->driver->id,
+        ]);
+
+        $anotherDriver = Driver::factory()->create();
+
+        $response = $this->actingAs($anotherDriver->user)
+            ->getJson(route('freights.show', [$this->fleet, $this->truck, $freight]));
+
+        $response->assertStatus(403);
+    }
+
     // Delete Tests
 
     public function test_manager_can_delete_freight()
