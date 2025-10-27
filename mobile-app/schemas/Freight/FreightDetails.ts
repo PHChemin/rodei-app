@@ -8,8 +8,8 @@ export const FreightDetailsSchema = FreightBase.extend({
   driver: DriverBase,
   truck: TruckBase,
   fleet: FleetBase,
-  expenses_amount: z.number().nullable(),
-  profit: z.number().nullable(),
+  expenses_amount: z.number(),
+  profit: z.number(),
 });
 
 export type FreightDetailsSchema = z.infer<typeof FreightDetailsSchema>;
