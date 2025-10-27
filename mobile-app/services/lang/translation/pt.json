@@ -13,7 +13,9 @@
     "edit": "Editar",
     "return-back": "Retornar à tela anterior",
     "return-start": "Retornar ao Início",
-    "save": "Salvar"
+    "save": "Salvar",
+    "report-expense": "Relatar Despesa",
+    "report": "Relatar"
   },
 
   "alerts": {
@@ -133,6 +135,22 @@
       "expenses": "Despesas: ",
       "profit": "Lucro: ",
       "description": "Descrição"
+    },
+
+    "expenses-history": {
+      "title": "Despesas",
+      "empty-title": "Nenhuma despesa cadastrada.",
+      "empty-message": "Relate uma despesa ou aguarde seu motorista informar!",
+      "delete": "Excluir Despesa",
+      "delete-confirm": " Vocé tem certeza que deseja excluir a despesa?"
+    },
+
+    "expenses-new": {
+      "title": "Relatar Despesa"
+    },
+
+    "expenses-edit": {
+      "title": "Editar Despesa"
     }
   },
 
@@ -157,13 +175,17 @@
     "start-address": "Endereço de Partida",
     "end-address": "Endereço de Destino",
     "contractor-name": "Nome do Contratante/Transportadora",
-    "date": "Data do Frete",
+    "freight-date": "Data do Frete",
+    "date": "Data",
     "cargo-weight": "Peso (KG)",
     "ton-price": "Preço Tonelada",
     "advance-percentage": "Adiantamento (%)",
     "total-amount": "Valor Total",
     "description": "Descrição",
     "document": "Documento",
-    "driver-cpf": "CPF do Motorista"
+    "driver-cpf": "CPF do Motorista",
+    "type": "Tipo",
+    "location": "Local",
+    "amount": "Valor"
   }
 }
