@@ -16,3 +16,6 @@ export { AddFreightScreen } from "./manager/fleets/[fleet_id]/trucks/[truck_id]/
 export { FreightHistoryScreen } from "./manager/fleets/[fleet_id]/trucks/[truck_id]/freights/history/FreightHistoryScreen";
 export { FreightDetailsScreen } from "./manager/fleets/[fleet_id]/trucks/[truck_id]/freights/[freight_id]/details/FreightDetailsScreen";
 export { FreightEditScreen } from "./manager/fleets/[fleet_id]/trucks/[truck_id]/freights/[freight_id]/edit/FreightEditScreen";
+
+export { AddExpenseScreen } from "./manager/fleets/[fleet_id]/trucks/[truck_id]/freights/[freight_id]/expenses/new/AddExpenseScreen";
+export { ExpenseEditScreen } from "./manager/fleets/[fleet_id]/trucks/[truck_id]/freights/[freight_id]/expenses/[expense_id]/edit/ExpenseEditScreen";
