@@ -43,6 +43,8 @@ class UpdateExpenseAction
                 'date' => $this->date,
                 'description' => $this->description,
             ]);
+
+            return $this->expense;
         } catch (Exception $e) {
             throw new HttpJsonResponseException(
                 trans('actions.expense.unable.update'),
