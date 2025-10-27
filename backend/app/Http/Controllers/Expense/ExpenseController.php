@@ -18,8 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExpenseController extends Controller
 {
-    public function store(
-        StoreExpenseRequest $request, Fleet $fleet, Truck $truck, Freight $freight)
+    public function store(StoreExpenseRequest $request, Fleet $fleet, Truck $truck, Freight $freight)
     {
         $data = $request->validated();
 

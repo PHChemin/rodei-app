@@ -18,6 +18,7 @@ class ExpenseBaseResource extends JsonResource
             'id' => $this->id,
             'type' => $this->type,
             'amount' => $this->amount,
+            'location' => $this->location,
             'date' => $this->date,
             'description' => $this->description,
             'document_path' => $this->document_path,

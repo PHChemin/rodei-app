@@ -22,7 +22,7 @@ class CreateExpenseAction
         string $location,
         float|int $amount,
         string $date,
-        string $description,
+        ?string $description,
         Freight $freight
         )
     {

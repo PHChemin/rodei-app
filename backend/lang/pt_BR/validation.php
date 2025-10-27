@@ -217,7 +217,7 @@ return [
         'start_address' => 'endereço de início',
         'end_address' => 'endereço de destino',
         'contractor_name' => 'nome do contratante',
-        'date' => 'data do frete',
+        'date' => 'data',
         'cargo_weight' => 'peso da carga',
         'ton_price' => 'preço por tonelada',
         'advance_percentage' => 'porcentagem do adiantamento',
@@ -225,6 +225,9 @@ return [
         'description' => 'descrição',
         'document' => 'documento',
         'driver_cpf' => 'cpf do motorista',
+        'amount' => 'valor',
+        'location' => 'local',
+        'type' => 'tipo',
     ],
 
 ];
