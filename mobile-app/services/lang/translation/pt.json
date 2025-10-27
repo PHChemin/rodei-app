@@ -28,7 +28,21 @@
 
   "components": {
     "driver-home": {
-      "title": "Início"
+      "title": "Início",
+      "truck-info": "Informações do Caminhão",
+      "freight-info": "Informações do Frete",
+      "model": "Modelo: ",
+      "plate": "Placa: ",
+      "driver": "Motorista: ",
+      "commission": "Comissão: ",
+      "start-address": "Partida: ",
+      "end-address": "Destino: ",
+      "contractor-name": "Contratante/Transportadora: ",
+      "date": "Data: ",
+      "cargo-weight": "Peso (KG): ",
+      "ton-price": "Valor da Tonelada: ",
+      "empty-truck": "Nenhum caminhão designado à você!",
+      "empty-freight": "Nenhum frete designado ao caminhão!"
     },
 
     "input-modal": {

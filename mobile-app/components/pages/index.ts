@@ -5,6 +5,7 @@ export { MyProfileScreen } from "./my-profile/MyProfileScreen";
 export { ChangePasswordScreen } from "./my-profile/change-password/ChangePasswordScreen";
 
 export { DriverHomeScreen } from "./driver/home/DriverHomeScreen";
+export { DriverAddExpenseScreen } from "./driver/fleets/[fleet_id]/trucks/[truck_id]/freights/[freight_id]/expenses/new/DriverAddExpenseScreen";
 
 export { MyFleetsScreen } from "./manager/fleets/my-fleets/MyFleetsScreen";
 
