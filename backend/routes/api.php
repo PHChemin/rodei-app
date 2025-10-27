@@ -42,4 +42,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expense/{expense}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
 
     Route::get('/driver', [DriverController::class, 'index'])->name('driver.index');
+    Route::get('/driver/freights', [DriverController::class, 'freightHistory'])->name('driver.freight.history');
 });

@@ -37,6 +37,8 @@ class DriverControllerTest extends TestCase
         ]);
     }
 
+    // - - - - - - - - - - - - INDEX - - - - - - - - - - - - - - - - - - - - //
+
     public function test_driver_can_view_homepage()
     {
         $this->actingAs($this->driver->user);
@@ -70,6 +72,27 @@ class DriverControllerTest extends TestCase
         $this->actingAs($this->manager->user);
 
         $response = $this->getJson(route('driver.index'));
+        $response->assertStatus(403);
+    }
+
+    // - - - - - - - - FREIGHT HISTORY - - - - - - - - - - - - - - - //
+
+    public function test_driver_can_view_freight_history()
+    {
+        $this->actingAs($this->driver->user);
+
+        $response = $this->getJson(route('driver.freight.history'));
+        $response->assertStatus(200);
+        $response->assertJsonCount(1, 'data');
+
+        $response->assertJsonPath('data.0.id', $this->freight->id);
+    }
+
+    public function test_manager_cannot_view_driver_freight_history()
+    {
+        $this->actingAs($this->manager->user);
+
+        $response = $this->getJson(route('driver.freight.history'));
         $response->assertStatus(403);
     }
 }
