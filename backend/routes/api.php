@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Driver\DriverController;
 use App\Http\Controllers\Expense\ExpenseController;
 use App\Http\Controllers\Fleet\FleetController;
 use App\Http\Controllers\Freights\FreightController;
@@ -39,4 +40,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expense', [ExpenseController::class, 'store'])->name('expense.store');
     Route::put('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expense/{expense}', [ExpenseController::class, 'update'])->name('expense.update');
     Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expense/{expense}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
+
+    Route::get('/driver', [DriverController::class, 'index'])->name('driver.index');
 });
