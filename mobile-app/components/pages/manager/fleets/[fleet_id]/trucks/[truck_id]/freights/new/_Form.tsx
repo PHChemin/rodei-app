@@ -166,7 +166,7 @@ export function AddFreighForm({ fleetId, truckId }: AddFreighFormProps) {
 
         <View style={styles.container}>
           <TextInput
-            label={t("fields.date")}
+            label={t("fields.freight-date")}
             value={date}
             onChangeText={(text) => setDate(maskDate(text))}
             required
