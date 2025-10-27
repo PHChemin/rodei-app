@@ -23,6 +23,7 @@ class FreightFactory extends Factory
         $fleet = Fleet::factory()->create();
         $driver = Driver::factory()->create();
         $truck = Truck::factory()->for($fleet)->for($driver)->create();
+        $totalAmount = fake()->randomFloat(2, 0);
 
         return [
             'start_address' => fake()->address(),
@@ -33,7 +34,8 @@ class FreightFactory extends Factory
             'ton_price' => fake()->randomFloat(2, 0),
             'advance_percentage' => fake()->randomFloat(2, 0, 100),
             'advance' => CalculateFreightInfoService::calculateAdvance(fake()->randomFloat(2, 0), fake()->randomFloat(2, 0, 100)),
-            'total_amount' => fake()->randomFloat(2, 0),
+            'driver_commission' => CalculateFreightInfoService::calculateDriverCommission($totalAmount, $truck->commission_percentage),
+            'total_amount' => $totalAmount,
             'description' => fake()->text(),
             'fleet_id' => $fleet->id,
             'truck_id' => $truck->id,
