@@ -6,6 +6,8 @@ export { ChangePasswordScreen } from "./my-profile/change-password/ChangePasswor
 
 export { DriverHomeScreen } from "./driver/home/DriverHomeScreen";
 export { DriverAddExpenseScreen } from "./driver/fleets/[fleet_id]/trucks/[truck_id]/freights/[freight_id]/expenses/new/DriverAddExpenseScreen";
+export { DriverFreightHistoryScreen } from "./driver/history/freights/DriverFreightHistoryScreen";
+export { DriverFreightDetailsScreen } from "./driver/fleets/[fleet_id]/trucks/[truck_id]/freights/[freight_id]/details/DriverFreightDetailsScreen";
 
 export { MyFleetsScreen } from "./manager/fleets/my-fleets/MyFleetsScreen";
 
