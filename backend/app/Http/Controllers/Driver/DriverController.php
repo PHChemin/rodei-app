@@ -18,7 +18,7 @@ class DriverController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         }
 
-        $driver = $request->user()->driver;
+        $driver = $request->user()->driver->load('user');
         $truck = $driver->truck;
         $lastFreight = Freight::where('driver_id', $driver->id)
             ->orderBy('date', 'desc')
