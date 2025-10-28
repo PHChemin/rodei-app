@@ -46,6 +46,10 @@ return [
             'f' => '{1}:model atualizada com sucesso.|[2,*]:model atualizadas com sucesso.',
             'm' => '{1}:model atualizado com sucesso.|[2,*]:model atualizados com sucesso.',
         ],
+        'uploaded' => [
+            'f' => '{1}:model anexada com sucesso.|[2,*]:model anexadas com sucesso.',
+            'm' => '{1}:model anexado com sucesso.|[2,*]:model anexados com sucesso.',
+        ],
     ],
     'errors' => 'Alguns erros foram encontrados, por favor verifique-os:',
 ];

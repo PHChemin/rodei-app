@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Freight;
 
+use App\Http\Actions\Freight\UploadFreightDocumentAction;
 use App\Http\Resources\Freight\FreightBaseResource;
 use App\Models\Driver;
 use App\Models\Expense;
@@ -211,7 +212,7 @@ class FreightControllerTest extends TestCase
             'fleet_id' => $this->fleet->id,
             'truck_id' => $this->truck->id,
             'driver_id' => $this->driver->id,
-            'document' => UploadedFile::fake()->create('file.exe', 10), // tipo inválido
+            // 'document' => UploadedFile::fake()->create('file.exe', 10), // tipo inválido
         ];
 
         $response = $this->actingAs($this->user)
@@ -228,7 +229,6 @@ class FreightControllerTest extends TestCase
             'advance_percentage',
             'total_amount',
             'description',
-            'document',
         ]);
     }
 
@@ -415,6 +415,44 @@ class FreightControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
         $response = $this->deleteJson(route('freights.destroy', [$this->fleet, $this->truck, $freight]));
+
+        $response->assertStatus(403);
+    }
+
+    // Upload
+
+    public function test_manager_can_upload_document()
+    {
+        $freight = Freight::factory()->create([
+            'document_path' => null,
+            'fleet_id' => $this->fleet->id,
+            'truck_id' => $this->truck->id,
+            'driver_id' => $this->driver->id,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->postJson(route('freights.upload', [$this->fleet, $this->truck, $freight]), [
+                'document' => UploadedFile::fake()->create('document.png', 10),
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['message' => ['type', 'text']]);
+    }
+
+    public function test_non_freight_owner_cannot_upload_document(): void
+    {
+        $freight = Freight::factory()->create([
+            'document_path' => null,
+            'fleet_id' => $this->fleet->id,
+            'truck_id' => $this->truck->id,
+            'driver_id' => $this->driver->id,
+        ]);
+
+        $manager = Manager::factory()->create();
+        $this->actingAs($manager->user);
+        $response = $this->postJson(route('freights.upload', [$this->fleet, $this->truck, $freight]), [
+            'document' => UploadedFile::fake()->create('document.png', 10),
+        ]);
 
         $response->assertStatus(403);
     }

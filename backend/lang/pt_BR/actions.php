@@ -37,5 +37,10 @@ return [
             'update' => 'Não foi possível atualizar a despesa.' . Translate::TRY_AGAIN,
             'delete' => 'Não foi possível excluir a despesa.' . Translate::TRY_AGAIN,
         ]
+    ],
+    'document' => [
+        'unable' => [
+            'delete' => 'Não foi possível excluir o documento.' . Translate::TRY_AGAIN,
+        ]
     ]
 ];

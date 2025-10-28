@@ -7,5 +7,6 @@ return [
     'fleet' => '{1}Frota|[2,*]Frotas',
     'truck' => '{1}Caminhão|[2,*]Caminhões',
     'freight' => '{1}Frete|[2,*]Fretes',
-    'expense' => '{1}Despesa|[2,*]Despesas'
+    'expense' => '{1}Despesa|[2,*]Despesas',
+    'document' => '{1}Documento|[2,*]Documentos',
 ];
