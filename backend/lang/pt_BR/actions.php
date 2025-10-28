@@ -30,5 +30,12 @@ return [
             'update' => 'Não foi possível atualizar o frete.' . Translate::TRY_AGAIN,
             'delete' => 'Não foi possível excluir o frete.' . Translate::TRY_AGAIN,
         ]
+    ],
+    'expense' => [
+        'unable' => [
+            'create' => 'Não foi possível criar a despesa.' . Translate::TRY_AGAIN,
+            'update' => 'Não foi possível atualizar a despesa.' . Translate::TRY_AGAIN,
+            'delete' => 'Não foi possível excluir a despesa.' . Translate::TRY_AGAIN,
+        ]
     ]
 ];

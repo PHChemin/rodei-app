@@ -4,11 +4,13 @@ namespace Tests\Feature\Freight;
 
 use App\Http\Resources\Freight\FreightBaseResource;
 use App\Models\Driver;
+use App\Models\Expense;
 use App\Models\Fleet;
 use App\Models\Freight;
 use App\Models\Manager;
 use App\Models\Truck;
 use App\Models\User;
+use App\Services\Freight\CalculateFreightInfoService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -313,6 +315,31 @@ class FreightControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonPath('data.id', $freight->id);
+
+        $response->assertJsonPath('data.expenses_amount', 0);
+        $response->assertJsonPath('data.profit', CalculateFreightInfoService::calculateProfit($freight->total_amount, 0, $freight->driver_commission));
+    }
+
+    public function test_manager_can_show_freight_with_expenses()
+    {
+        $freight = Freight::factory()->create([
+            'fleet_id' => $this->fleet->id,
+            'truck_id' => $this->truck->id,
+            'driver_id' => $this->driver->id,
+        ]);
+
+        $expense = Expense::factory()->create([
+            'freight_id' => $freight->id,
+            'amount' => 100,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->getJson(route('freights.show', [$this->fleet, $this->truck, $freight]));
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('data.expenses_amount', $expense->amount);
+        $response->assertJsonPath('data.profit', CalculateFreightInfoService::calculateProfit($freight->total_amount, $expense->amount, $freight->driver_commission));
+        $response->assertJsonPath('data.expenses.0.id', $expense->id);
     }
 
     public function test_non_freight_owner_cannot_show(): void
@@ -326,6 +353,36 @@ class FreightControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
         $response = $this->getJson(route('freights.show', [$this->fleet, $this->truck, $freight]));
+
+        $response->assertStatus(403);
+    }
+
+    public function test_driver_can_show_freight(): void
+    {
+        $freight = Freight::factory()->create([
+            'fleet_id' => $this->fleet->id,
+            'truck_id' => $this->truck->id,
+            'driver_id' => $this->driver->id,
+        ]);
+
+        $response = $this->actingAs($this->driver->user)
+            ->getJson(route('freights.show', [$this->fleet, $this->truck, $freight]));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_non_freight_driver_cannot_show_freight_info(): void
+    {
+        $freight = Freight::factory()->create([
+            'fleet_id' => $this->fleet->id,
+            'truck_id' => $this->truck->id,
+            'driver_id' => $this->driver->id,
+        ]);
+
+        $anotherDriver = Driver::factory()->create();
+
+        $response = $this->actingAs($anotherDriver->user)
+            ->getJson(route('freights.show', [$this->fleet, $this->truck, $freight]));
 
         $response->assertStatus(403);
     }

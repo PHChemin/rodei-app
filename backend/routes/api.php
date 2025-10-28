@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Driver\DriverController;
+use App\Http\Controllers\Expense\ExpenseController;
 use App\Http\Controllers\Fleet\FleetController;
 use App\Http\Controllers\Freights\FreightController;
 use App\Http\Controllers\Truck\TruckController;
@@ -34,4 +36,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'update'])->name('freights.update');
     Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'destroy'])->name('freights.destroy');
     Route::get('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'show'])->name('freights.show');
+
+    Route::post('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses', [ExpenseController::class, 'store'])->name('expense.store');
+    Route::put('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses/{expense}', [ExpenseController::class, 'update'])->name('expense.update');
+    Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
+
+    Route::get('/driver', [DriverController::class, 'index'])->name('driver.index');
+    Route::get('/driver/freights', [DriverController::class, 'freightHistory'])->name('driver.freight.history');
 });

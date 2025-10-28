@@ -5,6 +5,7 @@ import { TouchableOpacity, View } from "react-native";
 import { Flex } from "@/components/ui";
 import { FreightBase } from "@/schemas";
 import { colors, iconSize, spacing } from "@/services/theme/constants";
+import { formatToDisplayDate } from "@/services/helpers/date/date";
 
 type FreightProps = {
   freight: FreightBase;
@@ -18,7 +19,7 @@ export function Freight({ freight }: FreightProps) {
       style={styles.container}
       onPress={() =>
         router.push(
-          `/manager/fleets/${freight.fleet_id}/trucks/${freight.id}/freights/${freight.id}/details`
+          `/manager/fleets/${freight.fleet_id}/trucks/${freight.truck_id}/freights/${freight.id}/details`
         )
       }
     >
@@ -54,7 +55,7 @@ export function Freight({ freight }: FreightProps) {
                 </Text>
               </Flex>
 
-              <Text>{freight.date}</Text>
+              <Text>{formatToDisplayDate(freight.date)}</Text>
 
               <Text>{freight.contractor_name}</Text>
             </View>

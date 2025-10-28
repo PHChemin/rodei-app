@@ -18,7 +18,11 @@ class UpdateFreightActionTest extends TestCase
     {
         $fleet = Fleet::factory()->create();
         $driver = Driver::factory()->create();
-        $truck = Truck::factory()->create(['fleet_id' => $fleet->id, 'driver_id' => $driver->id]);
+        $truck = Truck::factory()->create([
+            'fleet_id' => $fleet->id,
+            'driver_id' => $driver->id,
+            'commission_percentage' => 15
+        ]);
 
         $freight = Freight::factory()->create([
             'fleet_id' => $fleet->id,
@@ -37,6 +41,7 @@ class UpdateFreightActionTest extends TestCase
             40, // 40%
             3750, // R$3750,00
             'Descrição do frete',
+            $truck
         ))->execute();
 
         $this->assertEquals('Guarapuava', $updatedFreight->start_address);
@@ -47,6 +52,7 @@ class UpdateFreightActionTest extends TestCase
         $this->assertEquals(100, $updatedFreight->ton_price);
         $this->assertEquals(40, $updatedFreight->advance_percentage);
         $this->assertEquals(3750, $updatedFreight->total_amount);
+        $this->assertEquals(562.5, $updatedFreight->driver_commission);
         $this->assertEquals('Descrição do frete', $updatedFreight->description);
 
         $this->assertDatabaseHas('freights', [

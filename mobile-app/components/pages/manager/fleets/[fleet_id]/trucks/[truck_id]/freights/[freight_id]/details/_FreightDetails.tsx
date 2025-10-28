@@ -3,50 +3,30 @@ import { router } from "expo-router";
 import { t } from "i18next";
 import { TouchableOpacity, View } from "react-native";
 
-import { useAsyncData } from "@/hooks/use-async-data";
 import { useCache } from "@/hooks/use-cache";
 import useModal from "@/hooks/use-modal";
-import { FreightDetailsSchema } from "@/schemas";
+import { FreightDetailsWithExpensesSchema } from "@/schemas";
 import { api } from "@/services";
+import { formatNumberBRL } from "@/services/helpers/currency/currencyFormatter";
 import { formatToDisplayDate } from "@/services/helpers/date/date";
 import { colors, iconSize, spacing } from "@/services/theme/constants";
 
 import { AlertModal, Flex } from "@/components/ui";
 
 type FreightDetailsProps = {
-  fleetId: number;
-  truckId: number;
-  freightId: number;
+  freight: FreightDetailsWithExpensesSchema;
 };
 
-export function FreightDetails({
-  fleetId,
-  truckId,
-  freightId,
-}: FreightDetailsProps) {
+export function FreightDetails({ freight }: FreightDetailsProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
   const { cache } = useCache();
-
-  const { loading, refresh, freight } = useAsyncData(async () => {
-    const { data } = await api().get(
-      `/fleets/${fleetId}/trucks/${truckId}/freights/${freightId}`
-    );
-
-    const freight = FreightDetailsSchema.parse(data.data);
-
-    return {
-      freight,
-    };
-  });
-
-  if (loading) return loading;
 
   const handleEditPress = () => {
     cache("freight", freight);
 
     router.push(
-      `/manager/fleets/${fleetId}/trucks/${truckId}/freights/${freightId}/edit`
+      `/manager/fleets/${freight.fleet_id}/trucks/${freight.truck_id}/freights/${freight.id}/edit`
     );
   };
 
@@ -60,7 +40,7 @@ export function FreightDetails({
         onConfirm={async () => {
           try {
             await api().delete(
-              `/fleets/${fleetId}/trucks/${truckId}/freights/${freightId}`
+              `/fleets/${freight.fleet_id}/trucks/${freight.truck_id}/freights/${freight.id}`
             );
 
             router.dismiss(2);
@@ -150,14 +130,14 @@ export function FreightDetails({
             <Text style={styles.strong}>
               {t("components.freight-details.ton-price")}
             </Text>
-            R$ {freight.ton_price}
+            R$ {formatNumberBRL(freight.ton_price)}
           </Text>
 
           <Text numberOfLines={2} adjustsFontSizeToFit={false}>
             <Text style={styles.strong}>
               {t("components.freight-details.total-amount")}
             </Text>
-            R$ {freight.total_amount}
+            R$ {formatNumberBRL(freight.total_amount)}
           </Text>
 
           <Text numberOfLines={2} adjustsFontSizeToFit={false}>
@@ -171,21 +151,25 @@ export function FreightDetails({
             <Text style={styles.strong}>
               {t("components.freight-details.advance")}
             </Text>
-            R$ {freight.advance}
+            R$ {formatNumberBRL(freight.advance)}
           </Text>
 
           <Text numberOfLines={2} adjustsFontSizeToFit={false}>
             <Text style={styles.strong}>
               {t("components.freight-details.driver-commission")}
             </Text>
-            R$ {freight.driver_commission}
+            R$ {formatNumberBRL(freight.driver_commission)}
           </Text>
 
-          <Text numberOfLines={2} adjustsFontSizeToFit={false}>
-            <Text style={styles.strong}>
+          <Text
+            numberOfLines={2}
+            adjustsFontSizeToFit={false}
+            style={[styles.expense, styles.strong]}
+          >
+            <Text style={[styles.expense, styles.strong]}>
               {t("components.freight-details.expenses")}
             </Text>
-            R$ {freight.expenses_amount ? freight.expenses_amount : ""}
+            R$ {formatNumberBRL(freight.expenses_amount)}
           </Text>
 
           <Text
@@ -197,7 +181,7 @@ export function FreightDetails({
             <Text style={[styles.strong, styles.profit]}>
               {t("components.freight-details.profit")}
             </Text>
-            R$ {freight.profit ? freight.profit : ""}
+            R$ {formatNumberBRL(freight.profit)}
           </Text>
         </View>
       </View>
@@ -225,5 +209,8 @@ const useStyles = makeStyles((theme) => ({
   },
   profit: {
     color: theme.colors.success,
+  },
+  expense: {
+    color: theme.colors.error,
   },
 }));

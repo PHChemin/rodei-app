@@ -4,7 +4,8 @@ namespace App\Http\Actions\Freight;
 
 use App\Exceptions\HttpJsonResponseException;
 use App\Models\Freight;
-use App\Services\Freight\CalculateAdvanceService;
+use App\Models\Truck;
+use App\Services\Freight\CalculateFreightInfoService;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +21,7 @@ class CreateFreightAction
     private readonly int|float $total_amount;
     private readonly ?string $description;
     private readonly int $fleet_id;
-    private readonly int $truck_id;
+    private readonly Truck $truck;
     private readonly int $driver_id;
     
     public function __construct(
@@ -34,7 +35,7 @@ class CreateFreightAction
         float $total_amount,
         ?string $description,
         int $fleet_id,
-        int $truck_id,
+        Truck $truck,
         int $driver_id,
         )
     {
@@ -48,7 +49,7 @@ class CreateFreightAction
         $this->total_amount = $total_amount;
         $this->description = $description;
         $this->fleet_id = $fleet_id;
-        $this->truck_id = $truck_id;
+        $this->truck = $truck;
         $this->driver_id = $driver_id;
     }
 
@@ -63,11 +64,12 @@ class CreateFreightAction
                 'cargo_weight' => $this->cargo_weight,
                 'ton_price' => $this->ton_price,
                 'advance_percentage' => $this->advance_percentage,
-                'advance' => CalculateAdvanceService::calculate($this->total_amount, $this->advance_percentage),
+                'advance' => CalculateFreightInfoService::calculateAdvance($this->total_amount, $this->advance_percentage),
+                'driver_commission' => CalculateFreightInfoService::calculateDriverCommission($this->total_amount, $this->truck->commission_percentage),
                 'total_amount' => $this->total_amount,
                 'description' => $this->description,
                 'fleet_id' => $this->fleet_id,
-                'truck_id' => $this->truck_id,
+                'truck_id' => $this->truck->id,
                 'driver_id' => $this->driver_id
             ]);
         } catch (Exception $e) {

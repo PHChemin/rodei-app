@@ -24,6 +24,7 @@ class FreightBaseResource extends JsonResource
             'ton_price' => $this->ton_price,
             'advance' => $this->advance,
             'advance_percentage' => $this->advance_percentage,
+            'driver_commission' => $this->driver_commission,
             'total_amount' => $this->total_amount,
             'description' => $this->description,
             'document_path' => $this->document_path,

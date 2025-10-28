@@ -12,6 +12,7 @@ use App\Http\Requests\Freights\StoreFreightRequest;
 use App\Http\Requests\Freights\UpdateFreightRequest;
 use App\Http\Resources\Freight\FreightBaseResource;
 use App\Http\Resources\Freight\FreightDetailsResource;
+use App\Http\Resources\Freight\FreightDetailsWithExpensesResource;
 use App\Models\Fleet;
 use App\Models\Freight;
 use App\Models\Truck;
@@ -48,9 +49,9 @@ class FreightController extends Controller
             $data['total_amount'],
             $data['description'],
             $fleet->id,
-            $truck->id,
+            $truck,
             $truck->driver->id,
-            ))->execute();
+        ))->execute();
             
             
         if ($request->hasFile('document')) {
@@ -81,6 +82,7 @@ class FreightController extends Controller
             $data['advance_percentage'],
             $data['total_amount'],
             $data['description'],
+            $truck
         ))->execute();
 
         return response()->json(
@@ -100,10 +102,11 @@ class FreightController extends Controller
         $freight->load([
             'fleet',
             'truck',
-            'driver.user'
+            'driver.user',
+            'expenses'
         ]);
 
-        return FreightDetailsResource::make($freight);
+        return FreightDetailsWithExpensesResource::make($freight);
     }
 
     public function destroy(Request $request, Fleet $fleet, Truck $truck, Freight $freight)

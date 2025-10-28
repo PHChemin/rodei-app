@@ -13,8 +13,9 @@ export { TruckWithDriver } from "./Truck/TruckWithDriver";
 
 // Driver
 export { DriverBase } from "./Driver/DriverBase";
+export { DriverHomeSchema } from "./Driver/DriverHome";
 
 // Freight
 export { FreightBase } from "./Freight/FreightBase";
-export { FreightWithDriver } from "./Freight/FreightWithDriver";
 export { FreightDetailsSchema } from "./Freight/FreightDetails";
+export { FreightDetailsWithExpensesSchema } from "./Freight/FreightDetailsWithExpenses";

@@ -33,8 +33,9 @@ class FreightPolicy
      */
     public function view(User $user, Freight $freight): bool
     {
-        if ($freight->driver_id === $user->id) 
-            return true;
+        if($user->isDriver()){
+            return $freight->driver_id === $user->driver->id;
+        }
         
         if ($user->manager) {
             $manager = $user->manager;

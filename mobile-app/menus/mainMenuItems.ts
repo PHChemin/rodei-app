@@ -23,7 +23,14 @@ const userMenu: HeaderMenuItemProps[] = [
 
 const managerMenu: HeaderMenuItemProps[] = [...userMenu];
 
-const driverMenu: HeaderMenuItemProps[] = [...userMenu];
+const driverMenu: HeaderMenuItemProps[] = [
+  {
+    icon: { type: "material-community", name: "clock-outline" },
+    title: "Histórico de Fretes",
+    onPress: () => router.push("/driver/history/freights"),
+  },
+  ...userMenu,
+];
 
 export function getMenuItems(isManager: boolean) {
   return isManager ? managerMenu : driverMenu;
