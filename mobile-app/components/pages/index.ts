@@ -9,6 +9,8 @@ export { DriverAddExpenseScreen } from "./driver/fleets/[fleet_id]/trucks/[truck
 export { DriverFreightHistoryScreen } from "./driver/history/freights/DriverFreightHistoryScreen";
 export { DriverFreightDetailsScreen } from "./driver/fleets/[fleet_id]/trucks/[truck_id]/freights/[freight_id]/details/DriverFreightDetailsScreen";
 
+export { ManagerFinancialStatementScreen } from "./manager/financial-statement/ManageFinancialStatementScreen";
+
 export { MyFleetsScreen } from "./manager/fleets/my-fleets/MyFleetsScreen";
 
 export { AddTruckScreen } from "./manager/fleets/[fleet_id]/trucks/new/AddTruckScreen";

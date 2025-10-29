@@ -21,7 +21,14 @@ const userMenu: HeaderMenuItemProps[] = [
   },
 ];
 
-const managerMenu: HeaderMenuItemProps[] = [...userMenu];
+const managerMenu: HeaderMenuItemProps[] = [
+  {
+    icon: { type: "material-community", name: "currency-usd" },
+    title: "Balanço Financeiro",
+    onPress: () => router.push("/manager/financial-statement"),
+  },
+  ...userMenu,
+];
 
 const driverMenu: HeaderMenuItemProps[] = [
   {
