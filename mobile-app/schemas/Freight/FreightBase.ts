@@ -13,6 +13,7 @@ export const FreightBase = z.object({
   total_amount: z.number(),
   driver_commission: z.number(),
   description: z.optional(z.string()).nullable(),
+  document_path: z.string().nullable(),
   fleet_id: z.number(),
   truck_id: z.number(),
   driver_id: z.number(),

@@ -15,7 +15,11 @@
     "return-start": "Retornar ao Início",
     "save": "Salvar",
     "report-expense": "Relatar Despesa",
-    "report": "Relatar"
+    "report": "Relatar",
+    "upload-image": "Anexar Imagem",
+    "download-image": "Baixar Imagem",
+    "upload": "Anexar",
+    "download": "Baixar"
   },
 
   "alerts": {
