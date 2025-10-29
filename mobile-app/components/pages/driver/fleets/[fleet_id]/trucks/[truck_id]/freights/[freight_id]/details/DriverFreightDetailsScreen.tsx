@@ -23,7 +23,7 @@ export function DriverFreightDetailsScreen({
 }: DriverFreightDetailsScreenProps) {
   const styles = useStyles();
 
-  const { loading, freight } = useAsyncData(async () => {
+  const { loading, refresh, freight } = useAsyncData(async () => {
     const { data } = await api().get(
       `/fleets/${fleetId}/trucks/${truckId}/freights/${freightId}`
     );
@@ -48,6 +48,7 @@ export function DriverFreightDetailsScreen({
         fleetId={fleetId}
         truckId={truckId}
         freightId={freightId}
+        refresh={refresh}
       />
     </ScreenWrapper.Scrollable>
   );
