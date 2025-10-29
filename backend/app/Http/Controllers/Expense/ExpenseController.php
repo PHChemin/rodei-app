@@ -119,10 +119,16 @@ class ExpenseController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         }
 
-        if (!$expense->document_path || !Storage::disk('public')->exists($expense->document_path)) {
+        if (!$expense->document_path) {
             abort(Response::HTTP_NOT_FOUND);
         }
-
-        return Storage::download($expense->document_path);
+    
+        $path = storage_path('app/public/' . $expense->document_path);
+    
+        if (!file_exists($path)) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+    
+        return response()->download($path);
     }
 }

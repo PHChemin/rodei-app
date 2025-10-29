@@ -162,10 +162,16 @@ class FreightController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         }
 
-        if (!$freight->document_path || !Storage::disk('public')->exists($freight->document_path)) {
+        if (!$freight->document_path) {
             abort(Response::HTTP_NOT_FOUND);
         }
-
-        return Storage::download($freight->document_path);
+    
+        $path = storage_path('app/public/' . $freight->document_path);
+    
+        if (!file_exists($path)) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+    
+        return response()->download($path);
     }
 }
