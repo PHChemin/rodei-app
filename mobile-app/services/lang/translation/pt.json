@@ -180,6 +180,14 @@
       "costs": "Custos",
       "profit": "Lucro das Operações",
       "profit-last-month": "Lucro do Mês Anterior"
+    },
+
+    "driver-financial-statement": {
+      "title": "Balanço Financeiro",
+      "freights": "Fretes",
+      "commission-percentage": "Comissão (%)",
+      "profit": "Ganhos de Comissão",
+      "profit-last-month": "Ganhos"
     }
   },
 
