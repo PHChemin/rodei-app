@@ -37,7 +37,6 @@ class StoreFreightRequest extends FormRequest
             'description' => ['nullable', 'string', 'max:255'],
             'fleet_id' => ['required', 'exists:fleets,id'],
             'truck_id' => ['required', 'exists:trucks,id'],
-            'document' => ['nullable', 'file', 'mimes:pdf,jpg,png', 'max:10240'],
         ];
     }
 }

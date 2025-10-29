@@ -1,27 +1,23 @@
-import { Button, Icon, makeStyles, Text } from "@rneui/themed";
+import { Button, Card, Icon, makeStyles, Text } from "@rneui/themed";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import { t } from "i18next";
-import { View } from "react-native";
+import { TouchableOpacity } from "react-native";
 
-import { ExpenseBaseSchema } from "@/schemas/Expense/ExpenseBase";
+import { FreightBase } from "@/schemas";
 import { api, Log } from "@/services";
 import { uploadMultipartImage } from "@/services/api/uploaders/imageUploaderMultipart";
-import { formatNumberBRL } from "@/services/helpers/currency/currencyFormatter";
-import { formatToDisplayDate } from "@/services/helpers/date/date";
 import PhotoService from "@/services/photo-service";
 import { colors, iconSize } from "@/services/theme/constants";
 
 import { Flex } from "@/components/ui";
 
-type ExpenseProps = {
-  expense: ExpenseBaseSchema;
-  fleetId: number;
-  truckId: number;
+type DocumentDetailsProps = {
+  freight: FreightBase;
   refresh: () => void;
 };
 
-export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
+export function DocumentDetails({ freight, refresh }: DocumentDetailsProps) {
   const styles = useStyles();
 
   const handleUploadDocument = async () => {
@@ -34,7 +30,7 @@ export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
         const uploadSuccess = await uploadMultipartImage({
           url:
             api().defaults.baseURL +
-            `/fleets/${fleetId}/trucks/${truckId}/freights/${expense.freight_id}/expenses/${expense.id}/document`,
+            `/fleets/${freight.fleet_id}/trucks/${freight.truck_id}/freights/${freight.id}/document`,
           fieldName: "document",
           imageUri: resizedImage.uri,
         });
@@ -52,13 +48,13 @@ export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
     try {
       const url =
         api().defaults.baseURL +
-        `/fleets/${fleetId}/trucks/${truckId}/freights/${expense.freight_id}/expenses/${expense.id}/download`;
+        `/fleets/${freight.fleet_id}/trucks/${freight.truck_id}/freights/${freight.id}/download`;
 
-      const extension = expense.document_path?.split(".").pop();
+      const extension = freight.document_path?.split(".").pop();
 
       const tempFileUri =
         FileSystem.cacheDirectory +
-        `Despesa_${expense.type + expense.id}.${extension}`;
+        `Frete_${freight.contractor_name + freight.id}.${extension}`;
 
       // Baixar o arquivo para cache local
       const { uri } = await FileSystem.downloadAsync(url, tempFileUri);
@@ -80,32 +76,37 @@ export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
     }
   };
 
+  const handleDeleteDocument = async () => {
+    try {
+      await api().delete(
+        `/fleets/${freight.fleet_id}/trucks/${freight.truck_id}/freights/${freight.id}/document`
+      );
+      await refresh();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
-    <Flex justify="space-between" style={styles.container}>
-      <View style={styles.iconContainer}>
-        <Icon
-          type="material-community"
-          name="clipboard-list-outline"
-          color="white"
-        />
-      </View>
+    <Card containerStyle={styles.container}>
+      <Flex justify="space-between">
+        <Text h3>Documento </Text>
 
-      <View style={styles.textContainer}>
-        <Text h4>{expense.type}</Text>
-
-        <Text numberOfLines={2}>{expense.location}</Text>
-
-        <Text>{formatToDisplayDate(expense.date)}</Text>
-
-        <Text style={styles.amount}>
-          - R$ {formatNumberBRL(expense.amount)}
-        </Text>
-      </View>
-
-      {expense.document_path ? (
+        {freight.document_path && (
+          <TouchableOpacity onPress={handleDeleteDocument}>
+            <Icon
+              type="material-community"
+              name="trash-can-outline"
+              size={iconSize.lg}
+              color="red"
+            />
+          </TouchableOpacity>
+        )}
+      </Flex>
+      {freight.document_path ? (
         <Button
           type="outline"
-          title={t("buttons.download")}
+          title={t("buttons.download-image")}
           size="sm"
           iconRight
           icon={{
@@ -119,7 +120,7 @@ export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
       ) : (
         <Button
           type="outline"
-          title={t("buttons.upload")}
+          title={t("buttons.upload-image")}
           size="sm"
           iconRight
           icon={{
@@ -131,30 +132,12 @@ export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
           onPress={handleUploadDocument}
         />
       )}
-    </Flex>
+    </Card>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    padding: theme.spacing.sm,
-    borderTopWidth: 1,
-    borderColor: theme.colors.grey3,
-  },
-  amount: {
-    color: theme.colors.error,
-    fontWeight: "bold",
-    fontSize: theme.spacing.lg,
-  },
-  iconContainer: {
-    padding: theme.spacing.md,
-    borderRadius: 100,
-    backgroundColor: theme.colors.error,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textContainer: {
-    flex: 1,
-    fontSize: theme.spacing.lg,
+    marginTop: theme.spacing.lg,
   },
 }));

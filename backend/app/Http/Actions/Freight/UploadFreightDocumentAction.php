@@ -20,7 +20,7 @@ class UploadFreightDocumentAction
 
     public function execute(): string   
     {
-        $userName = Str::slug($this->freight->fleet->manager->name);
+        $userName = Str::slug($this->freight->fleet->manager->user->name);
         $freightId = $this->freight->id;
         $timestamp = now()->format('Ymd');
         $extension = $this->file->getClientOriginalExtension();

@@ -1,4 +1,5 @@
 import { makeStyles } from "@rneui/themed";
+
 import { t } from "i18next";
 
 import { useAsyncData } from "@/hooks/use-async-data";
@@ -7,6 +8,7 @@ import { api } from "@/services";
 
 import { Header, ScreenWrapper } from "@/components/ui";
 
+import { DocumentDetails } from "./_DocumentDetails";
 import { ExpensesHisotry } from "./_expenses-history/_ExpensesHistory";
 import { FreightDetails } from "./_FreightDetails";
 
@@ -23,7 +25,7 @@ export function FreightDetailsScreen({
 }: FreightDetailsScreenProps) {
   const styles = useStyles();
 
-  const { loading, freight } = useAsyncData(async () => {
+  const { loading, refresh, freight } = useAsyncData(async () => {
     const { data } = await api().get(
       `/fleets/${fleetId}/trucks/${truckId}/freights/${freightId}`
     );
@@ -43,11 +45,14 @@ export function FreightDetailsScreen({
 
       <FreightDetails freight={freight} />
 
+      <DocumentDetails freight={freight} refresh={refresh} />
+
       <ExpensesHisotry
         expenses={freight.expenses}
         fleetId={fleetId}
         truckId={truckId}
         freightId={freightId}
+        refresh={refresh}
       />
     </ScreenWrapper.Scrollable>
   );

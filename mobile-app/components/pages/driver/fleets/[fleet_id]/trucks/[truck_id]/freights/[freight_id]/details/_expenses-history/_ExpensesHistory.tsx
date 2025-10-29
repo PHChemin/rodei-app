@@ -14,6 +14,7 @@ type ExpensesHisotryProps = {
   fleetId: number;
   truckId: number;
   freightId: number;
+  refresh: () => void;
 };
 
 export function ExpensesHisotry({
@@ -21,6 +22,7 @@ export function ExpensesHisotry({
   fleetId,
   truckId,
   freightId,
+  refresh,
 }: ExpensesHisotryProps) {
   const styles = useStyles();
 
@@ -55,6 +57,7 @@ export function ExpensesHisotry({
             fleetId={fleetId}
             truckId={truckId}
             key={expense.id}
+            refresh={refresh}
           />
         ))
       )}
