@@ -6,12 +6,14 @@ use App\Http\Actions\Truck\AttachDriverToTruckAction;
 use App\Http\Actions\Truck\CreateTruckAction;
 use App\Http\Actions\Truck\DeleteTruckAction;
 use App\Http\Actions\Truck\DetachDriverFromTruckAction;
+use App\Http\Actions\Truck\TruckFinancialStatementAction;
 use App\Http\Actions\Truck\UpdateTruckAction;
 use App\Http\Controllers\Controller;
 use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Truck\StoreTruckRequest;
 use App\Http\Requests\Truck\UpdateTruckDriverRequest;
 use App\Http\Requests\Truck\UpdateTruckRequest;
+use App\Http\Resources\Truck\TruckFinancialStatementResource;
 use App\Http\Resources\Truck\TruckWithDriverResource;
 use App\Models\Fleet;
 use App\Models\Truck;
@@ -110,5 +112,16 @@ class TruckController extends Controller
             ])),
             Response::HTTP_OK
         );
+    }
+
+    public function financialStatement(Request $request,Fleet $fleet,Truck $truck)
+    {
+        if($request->user()->cannot('viewFinances', $truck)) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
+        $statement = (new TruckFinancialStatementAction($truck))->execute();
+
+        return new TruckFinancialStatementResource($statement);
     }
 }

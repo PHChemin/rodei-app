@@ -28,12 +28,16 @@ class DriverControllerTest extends TestCase
         $this->driver = Driver::factory()->create();
         $this->manager = Manager::factory()->create();
         $this->fleet = Fleet::factory()->for($this->manager)->create();
-        $this->truck = Truck::factory()->for($this->fleet)->create(['driver_id' => $this->driver->id]);
+        $this->truck = Truck::factory()->for($this->fleet)->create([
+            'commission_percentage' => 10,
+            'driver_id' => $this->driver->id
+        ]);
         $this->freight = Freight::factory()->create([
             'date' => '2023-01-01',
             'fleet_id' => $this->fleet->id,
             'truck_id' => $this->truck->id,
             'driver_id' => $this->driver->id,
+            'driver_commission' => 100
         ]);
     }
 
@@ -93,6 +97,31 @@ class DriverControllerTest extends TestCase
         $this->actingAs($this->manager->user);
 
         $response = $this->getJson(route('driver.freight.history'));
+        $response->assertStatus(403);
+    }
+
+    // - - - - - - - - - -  FINANCIAL STATEMENT - - - - - - - - - - - - - - //
+
+    public function test_driver_can_view_financial_statement()
+    {
+        $this->actingAs($this->driver->user);
+        $response = $this->getJson(route('driver.finance'));
+
+        $response->assertStatus(200);
+
+        // Resource test
+        $response->assertJsonCount(4, 'data');
+        $response->assertJsonPath('data.freights_count', 1);
+        $response->assertJsonPath('data.commission_percentage', 10);
+        $response->assertJsonPath('data.total_profit', 100);
+        $response->assertJsonPath('data.last_month_profit', 0);
+    }
+
+    public function test_manager_cannot_view_driver_financial_statement()
+    {
+        $this->actingAs($this->manager->user);
+        $response = $this->getJson(route('driver.finance'));
+        
         $response->assertStatus(403);
     }
 }

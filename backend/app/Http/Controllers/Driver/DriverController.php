@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Driver;
 
+use App\Http\Actions\Driver\DriverFinancialStatementAction;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Driver\DriverFinancialStatementResource;
 use App\Http\Resources\Driver\DriverHomeResource;
 use App\Http\Resources\Freight\FreightBaseResource;
 use App\Models\Driver;
@@ -46,5 +48,18 @@ class DriverController extends Controller
             ->get();
 
         return FreightBaseResource::collection($freights);
+    }
+
+    public function financialStatement(Request $request)
+    {
+        if($request->user()->isManager()) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
+        $statement = (new DriverFinancialStatementAction(
+            $request->user()->driver
+        ))->execute();
+
+        return new DriverFinancialStatementResource($statement);
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Driver\DriverController;
 use App\Http\Controllers\Expense\ExpenseController;
 use App\Http\Controllers\Fleet\FleetController;
 use App\Http\Controllers\Freights\FreightController;
+use App\Http\Controllers\Manager\ManagerController;
 use App\Http\Controllers\Truck\TruckController;
 use App\Http\Controllers\User\RegisterUserController;
 use App\Http\Controllers\User\UserProfileController;
@@ -24,13 +25,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/fleets', [FleetController::class, 'store'])->name('fleets.store');
     Route::put('/fleets/{fleet}', [FleetController::class, 'update'])->name('fleets.update');
     Route::delete('/fleets/{fleet}', [FleetController::class, 'destroy'])->name('fleets.destroy');
-
+    
     Route::get('/fleets/{fleet}/trucks/{truck}', [TruckController::class, 'show'])->name('fleets.trucks.show');
     Route::post('/fleets/{fleet}/trucks', [TruckController::class, 'store'])->name('fleets.trucks.store');
     Route::put('/fleets/{fleet}/trucks/{truck}', [TruckController::class, 'update'])->name('fleets.trucks.update');
     Route::delete('/fleets/{fleet}/trucks/{truck}', [TruckController::class, 'destroy'])->name('fleets.trucks.destroy');
     Route::patch('/fleets/{fleet}/trucks/{truck}/driver', [TruckController::class, 'updateTruckDriver'])->name('fleets.trucks.driver.update');
-
+    Route::get('/fleets/{fleet}/trucks/{truck}/finance', [TruckController::class, 'financialStatement'])->name('fleets.trucks.finance');
+    
     Route::get('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'index'])->name('freights.index');
     Route::post('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'store'])->name('freights.store');
     Route::put('/fleets/{fleet}/trucks/{truck}/freights/{freight}', [FreightController::class, 'update'])->name('freights.update');
@@ -39,14 +41,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/fleets/{fleet}/trucks/{truck}/freights/{freight}/document', [FreightController::class, 'uploadDocument'])->name('freights.upload');
     Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}/document', [FreightController::class, 'destroyDocument'])->name('freights.destroy.document');
     Route::get('/fleets/{fleet}/trucks/{truck}/freights/{freight}/download', [FreightController::class, 'downloadDocument'])->name('freights.download');
-
+    
     Route::post('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses', [ExpenseController::class, 'store'])->name('expense.store');
     Route::put('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses/{expense}', [ExpenseController::class, 'update'])->name('expense.update');
     Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
     Route::post('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses/{expense}/document', [ExpenseController::class, 'uploadDocument'])->name('expense.upload');
     Route::delete('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses/{expense}/document', [ExpenseController::class, 'destroyDocument'])->name('expense.destroy.document');
     Route::get('/fleets/{fleet}/trucks/{truck}/freights/{freight}/expenses/{expense}/download', [ExpenseController::class, 'downloadDocument'])->name('expense.download');
-
+    
     Route::get('/driver', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/driver/freights', [DriverController::class, 'freightHistory'])->name('driver.freight.history');
+    Route::get('/driver/finance', [DriverController::class, 'financialStatement'])->name('driver.finance');
+
+    Route::get('/manager/finance', [ManagerController::class, 'financialStatement'])->name('manager.finance');
 });

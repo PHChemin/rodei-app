@@ -10,11 +10,12 @@ import {
 } from "@/components/ui";
 import { useAsyncData } from "@/hooks/use-async-data";
 import useModal from "@/hooks/use-modal";
-import { TruckWithDriver } from "@/schemas";
-import { api, handleFormErrors } from "@/services";
-
+import { TruckFinancialStatement, TruckWithDriver } from "@/schemas";
+import { api } from "@/services";
 import { maskCPF } from "@/services/masks";
+
 import { Details } from "./_Details";
+import { TruckFinancialDetails } from "./_FinanceDetails";
 
 type TruckDetailsScreenProps = {
   fleetId: number;
@@ -27,12 +28,18 @@ export function TruckDetailsScreen({
 }: TruckDetailsScreenProps) {
   const { showModal, hideModal } = useModal();
 
-  const { loading, truck, refresh } = useAsyncData(async () => {
+  const { loading, truck, statement, refresh } = useAsyncData(async () => {
     const { data } = await api().get(`/fleets/${fleetId}/trucks/${truckId}`);
+
+    const statementData = await api().get(
+      `/fleets/${fleetId}/trucks/${truckId}/finance`
+    );
 
     const truck = TruckWithDriver.parse(data.data);
 
-    return { truck };
+    const statement = TruckFinancialStatement.parse(statementData.data.data);
+
+    return { truck, statement };
   }, []);
 
   if (loading) return loading;
@@ -61,7 +68,7 @@ export function TruckDetailsScreen({
   };
 
   return (
-    <ScreenWrapper.Fullscreen>
+    <ScreenWrapper.Scrollable>
       <Header.WithTitle title={t("components.truck-details.title")} />
 
       <Details truck={truck} />
@@ -93,6 +100,8 @@ export function TruckDetailsScreen({
           icon={{ name: "steering", type: "material-community" }}
         />
       </Menu>
-    </ScreenWrapper.Fullscreen>
+
+      <TruckFinancialDetails statement={statement} />
+    </ScreenWrapper.Scrollable>
   );
 }
