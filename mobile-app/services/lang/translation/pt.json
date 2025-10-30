@@ -182,6 +182,17 @@
       "profit-last-month": "Lucro do Mês Anterior"
     },
 
+    "truck-financial-statement": {
+      "title": "Balanço Financeiro",
+      "genereal-statement": "Balanço Geral",
+      "freights": "Fretes",
+      "expenses": "Despesas",
+      "revenue": "Faturamento",
+      "costs": "Custos",
+      "profit": "Lucro das Operações",
+      "profit-last-month": "Lucro do Mês Anterior"
+    },
+
     "driver-financial-statement": {
       "title": "Balanço Financeiro",
       "freights": "Fretes",

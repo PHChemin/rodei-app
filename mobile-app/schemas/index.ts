@@ -11,6 +11,7 @@ export { FleetBase } from "./Fleet/FleetBase";
 // Truck
 export { TruckBase } from "./Truck/TruckBase";
 export { TruckWithDriver } from "./Truck/TruckWithDriver";
+export { TruckFinancialStatement } from "./Truck/TruckFinancialStatement";
 
 // Driver
 export { DriverBase } from "./Driver/DriverBase";
