@@ -3,7 +3,9 @@
 namespace Tests\Feature\Truck;
 
 use App\Models\Driver;
+use App\Models\Expense;
 use App\Models\Fleet;
+use App\Models\Freight;
 use App\Models\Manager;
 use App\Models\Truck;
 use App\Models\User;
@@ -299,4 +301,51 @@ class TruckControllerTest extends TestCase
         $response->assertStatus(403);
     }
     
+    // - - - - - - - - - - FINANCIAL STATEMENT - - - - - - - - - - - - - - //
+
+    public function test_manager_can_see_truck_financial_statement()
+    {
+        $freight = Freight::factory()->create([
+            'driver_commission' => 100,
+            'total_amount' => 1000,
+            'date' => now()->subMonth()->format('Y-m-d'),
+            'fleet_id' => $this->fleet->id,
+            'truck_id' => $this->truck->id,
+        ]);
+
+        Expense::factory()->count(2)->create([
+            'amount' => 100,
+            'freight_id' => $freight->id,
+        ]);
+
+        $this->actingAsManager();
+        $response = $this->getJson(route('fleets.trucks.finance', [$this->fleet, $this->truck]));
+    
+        $response->assertStatus(200);
+
+        $response->assertJsonPath('data.freights_count', 1);
+        $response->assertJsonPath('data.expenses_count', 2);
+        $response->assertJsonPath('data.total_revenue', 1000);
+        $response->assertJsonPath('data.total_costs', 300);
+        $response->assertJsonPath('data.total_profit', 700);
+        $response->assertJsonPath('data.last_month_profit', 700);
+    }
+
+    public function test_user_cannot_see_truck_financial_statement_from_other_users_fleet()
+    {
+        $otherManager = Manager::factory()->create();
+
+        $this->actingAs($otherManager->user);
+        $response = $this->getJson(route('fleets.trucks.finance', [$this->fleet, $this->truck]));
+    
+        $response->assertStatus(403);
+    }
+
+    public function test_driver_cannot_see_truck_financial_statement()
+    {
+        $this->actingAs($this->driver->user);
+        $response = $this->getJson(route('fleets.trucks.finance', [$this->fleet, $this->truck]));
+    
+        $response->assertStatus(403);
+    }
 }

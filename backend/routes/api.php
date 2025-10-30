@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/fleets/{fleet}/trucks/{truck}', [TruckController::class, 'update'])->name('fleets.trucks.update');
     Route::delete('/fleets/{fleet}/trucks/{truck}', [TruckController::class, 'destroy'])->name('fleets.trucks.destroy');
     Route::patch('/fleets/{fleet}/trucks/{truck}/driver', [TruckController::class, 'updateTruckDriver'])->name('fleets.trucks.driver.update');
+    Route::get('/fleets/{fleet}/trucks/{truck}/finance', [TruckController::class, 'financialStatement'])->name('fleets.trucks.finance');
     
     Route::get('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'index'])->name('freights.index');
     Route::post('/fleets/{fleet}/trucks/{truck}/freights', [FreightController::class, 'store'])->name('freights.store');
