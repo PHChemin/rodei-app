@@ -25,14 +25,12 @@ export function DocumentDetails({ freight, refresh }: DocumentDetailsProps) {
       const image = await PhotoService.pick();
 
       if (image) {
-        const resizedImage = await PhotoService.resize(image.uri, 256, 256);
-
         const uploadSuccess = await uploadMultipartImage({
           url:
             api().defaults.baseURL +
             `/fleets/${freight.fleet_id}/trucks/${freight.truck_id}/freights/${freight.id}/document`,
           fieldName: "document",
-          imageUri: resizedImage.uri,
+          imageUri: image.uri,
         });
 
         if (uploadSuccess) {
@@ -90,7 +88,7 @@ export function DocumentDetails({ freight, refresh }: DocumentDetailsProps) {
   return (
     <Card containerStyle={styles.container}>
       <Flex justify="space-between">
-        <Text h3>Documento </Text>
+        <Text h3>Documento do Frete </Text>
 
         {freight.document_path && (
           <TouchableOpacity onPress={handleDeleteDocument}>

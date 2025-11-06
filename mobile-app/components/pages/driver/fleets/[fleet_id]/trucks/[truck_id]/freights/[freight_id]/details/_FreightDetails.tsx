@@ -44,6 +44,13 @@ export function FreightDetails({ freight }: FreightDetailsProps) {
 
           <Text numberOfLines={2} adjustsFontSizeToFit={false}>
             <Text style={styles.strong}>
+              {t("components.freight-details.description")}
+            </Text>
+            {freight.description}
+          </Text>
+
+          <Text numberOfLines={2} adjustsFontSizeToFit={false}>
+            <Text style={styles.strong}>
               {t("components.freight-details.driver")}
             </Text>
             {freight.driver.user.name}
