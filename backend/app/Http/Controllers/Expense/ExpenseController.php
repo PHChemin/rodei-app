@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Expense;
 
 use App\Http\Actions\Expense\CreateExpenseAction;
 use App\Http\Actions\Expense\DeleteExpenseAction;
+use App\Http\Actions\Expense\DeleteExpenseDocumentAction;
 use App\Http\Actions\Expense\UpdateExpenseAction;
 use App\Http\Actions\Expense\UploadExpenseDocumentAction;
 use App\Http\Controllers\Controller;
@@ -101,13 +102,13 @@ class ExpenseController extends Controller
             abort(Response::HTTP_FORBIDDEN);
         };
 
-        (new DeleteExpenseAction(
+        (new DeleteExpenseDocumentAction(
             $expense
         ))->execute();
 
         return response()->json(
-            FlashMessage::success(trans_choice('flash_messages.success.deleted.f', 1, [
-                'model' => trans_choice('model.expense', 1),
+            FlashMessage::success(trans_choice('flash_messages.success.deleted.m', 1, [
+                'model' => trans_choice('model.document', 1),
             ])),
             Response::HTTP_OK
         );
