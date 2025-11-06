@@ -101,11 +101,11 @@ export function LoginScreen() {
         onPress={() => router.push("/sign-up")}
       />
 
-      <Button
+      {/* <Button
         type="clear"
         title={t("buttons.forget-password")}
         // onPress={() => router.push("/forgot-password")}
-      />
+      /> */}
 
       {process.env.EXPO_PUBLIC_EAS_CHANNEL !== "production" && (
         <>

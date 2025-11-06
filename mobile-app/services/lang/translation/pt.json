@@ -19,7 +19,9 @@
     "upload-image": "Anexar Imagem",
     "download-image": "Baixar Imagem",
     "upload": "Anexar",
-    "download": "Baixar"
+    "download": "Baixar",
+    "less": "Ver Menos",
+    "more": "Ver Mais"
   },
 
   "alerts": {
@@ -34,7 +36,7 @@
     "driver-home": {
       "title": "Início",
       "truck-info": "Informações do Caminhão",
-      "freight-info": "Informações do Frete",
+      "freight-info": "Informações do Último Frete",
       "model": "Modelo: ",
       "plate": "Placa: ",
       "driver": "Motorista: ",
@@ -152,7 +154,7 @@
       "driver-commission": "Comissão do Motorista: ",
       "expenses": "Despesas: ",
       "profit": "Lucro: ",
-      "description": "Descrição"
+      "description": "Descrição: "
     },
 
     "expenses-history": {

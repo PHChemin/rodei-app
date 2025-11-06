@@ -1,6 +1,7 @@
-import { Card, Icon, makeStyles, Text } from "@rneui/themed";
+import { Button, Card, Icon, makeStyles, Text } from "@rneui/themed";
 import { router } from "expo-router";
 import { t } from "i18next";
+import { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 
 import { useCache } from "@/hooks/use-cache";
@@ -21,6 +22,8 @@ export function FreightDetails({ freight }: FreightDetailsProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
   const { cache } = useCache();
+
+  const [showMore, setShowMore] = useState(false);
 
   const handleEditPress = () => {
     cache("freight", freight);
@@ -183,8 +186,30 @@ export function FreightDetails({ freight }: FreightDetailsProps) {
             </Text>
             R$ {formatNumberBRL(freight.profit)}
           </Text>
+
+          {showMore && (
+            <Text adjustsFontSizeToFit={false}>
+              <Text style={styles.strong}>
+                {t("components.freight-details.description")}
+              </Text>
+              {freight.description}
+            </Text>
+          )}
         </View>
       </View>
+
+      <Button
+        type="clear"
+        title={showMore ? t("buttons.less") : t("buttons.more")}
+        iconRight
+        icon={{
+          name: showMore ? "chevron-up" : "chevron-down",
+          type: "material-community",
+          color: colors.primary,
+          size: iconSize.sm,
+        }}
+        onPress={() => setShowMore(!showMore)}
+      />
     </Card>
   );
 }

@@ -16,6 +16,7 @@ import PhotoService from "@/services/photo-service";
 import { colors, iconSize, spacing } from "@/services/theme/constants";
 
 import { AlertModal, Flex } from "@/components/ui";
+import { useState } from "react";
 
 type ExpenseProps = {
   expense: ExpenseBaseSchema;
@@ -28,6 +29,8 @@ export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
   const styles = useStyles();
   const { showModal, hideModal } = useModal();
   const { cache } = useCache();
+
+  const [showMore, setShowMore] = useState(false);
 
   const handleEditPress = () => {
     cache("expense", expense);
@@ -120,86 +123,133 @@ export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
     }
   };
 
+  const handleDeleteDocument = async () => {
+    try {
+      await api().delete(
+        `/fleets/${fleetId}/trucks/${truckId}/freights/${expense.freight_id}/expenses/${expense.id}/document`
+      );
+      await refresh();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
-    <Flex justify="space-between" style={styles.container}>
-      <View style={styles.iconContainer}>
-        <Icon
-          type="material-community"
-          name="clipboard-list-outline"
-          color="white"
-        />
-      </View>
-
-      <View style={styles.textContainer}>
-        <Text h4>{expense.type}</Text>
-
-        <Text numberOfLines={2}>{expense.location}</Text>
-
-        <Text>{formatToDisplayDate(expense.date)}</Text>
-
-        <Text style={styles.amount}>
-          - R$ {formatNumberBRL(expense.amount)}
-        </Text>
-      </View>
-
-      <View style={{ alignItems: "center" }}>
-        <Flex gap={spacing.lg}>
-          <TouchableOpacity onPress={handleEditPress}>
-            <Icon
-              type="material-community"
-              name="square-edit-outline"
-              size={iconSize.md}
-              color={colors.primary}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={deleteExpenseModal}>
-            <Icon
-              type="material-community"
-              name="trash-can-outline"
-              size={iconSize.lg}
-              color="red"
-            />
-          </TouchableOpacity>
-        </Flex>
-
-        {expense.document_path ? (
-          <Button
-            type="outline"
-            title={t("buttons.download")}
-            size="sm"
-            iconRight
-            icon={{
-              name: "download",
-              type: "matterial-community",
-              color: colors.primary,
-              size: iconSize.sm,
-            }}
-            onPress={handleDownloadDocument}
+    <View>
+      <Flex justify="space-between" style={styles.container}>
+        <View style={styles.iconContainer}>
+          <Icon
+            type="material-community"
+            name="clipboard-list-outline"
+            color="white"
           />
-        ) : (
-          <Button
-            type="outline"
-            title={t("buttons.upload")}
-            size="sm"
-            iconRight
-            icon={{
-              name: "upload",
-              type: "matterial-community",
-              color: colors.primary,
-              size: iconSize.sm,
-            }}
-            onPress={handleUploadDocument}
-          />
-        )}
-      </View>
-    </Flex>
+        </View>
+
+        <View style={styles.textContainer}>
+          <Text h4>{expense.type}</Text>
+
+          <Text numberOfLines={2}>{expense.location}</Text>
+
+          <Text>{formatToDisplayDate(expense.date)}</Text>
+
+          <Text style={styles.amount}>
+            - R$ {formatNumberBRL(expense.amount)}
+          </Text>
+
+          {showMore && <Text>{expense.description}</Text>}
+        </View>
+
+        <View style={{ alignItems: "center" }}>
+          <Flex gap={spacing.lg}>
+            <TouchableOpacity onPress={handleEditPress}>
+              <Icon
+                type="material-community"
+                name="square-edit-outline"
+                size={iconSize.md}
+                color={colors.primary}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={deleteExpenseModal}>
+              <Icon
+                type="material-community"
+                name="trash-can-outline"
+                size={iconSize.lg}
+                color="red"
+              />
+            </TouchableOpacity>
+          </Flex>
+        </View>
+      </Flex>
+
+      {showMore && (
+        <View style={{ marginTop: spacing.lg }}>
+          <Flex justify="center">
+            <Text h4>Documento</Text>
+
+            {expense.document_path && (
+              <TouchableOpacity onPress={handleDeleteDocument}>
+                <Icon
+                  type="material-community"
+                  name="trash-can-outline"
+                  size={iconSize.lg}
+                  color="red"
+                />
+              </TouchableOpacity>
+            )}
+          </Flex>
+          {expense.document_path ? (
+            <Button
+              type="outline"
+              title={t("buttons.download")}
+              size="sm"
+              iconRight
+              icon={{
+                name: "download",
+                type: "matterial-community",
+                color: colors.primary,
+                size: iconSize.sm,
+              }}
+              onPress={handleDownloadDocument}
+            />
+          ) : (
+            <Button
+              type="outline"
+              title={t("buttons.upload")}
+              size="sm"
+              iconRight
+              icon={{
+                name: "upload",
+                type: "matterial-community",
+                color: colors.primary,
+                size: iconSize.sm,
+              }}
+              onPress={handleUploadDocument}
+            />
+          )}
+        </View>
+      )}
+
+      <Button
+        type="clear"
+        title={showMore ? t("buttons.less") : t("buttons.more")}
+        iconRight
+        icon={{
+          name: showMore ? "chevron-up" : "chevron-down",
+          type: "material-community",
+          color: colors.primary,
+          size: iconSize.sm,
+        }}
+        onPress={() => setShowMore(!showMore)}
+      />
+    </View>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing.sm,
+    paddingBottom: 0,
     borderTopWidth: 1,
     borderColor: theme.colors.grey3,
   },

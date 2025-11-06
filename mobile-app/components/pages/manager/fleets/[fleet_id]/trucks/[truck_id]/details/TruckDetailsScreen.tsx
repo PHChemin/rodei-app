@@ -68,7 +68,7 @@ export function TruckDetailsScreen({
   };
 
   return (
-    <ScreenWrapper.Scrollable>
+    <ScreenWrapper.Scrollable onRefresh={refresh}>
       <Header.WithTitle title={t("components.truck-details.title")} />
 
       <Details truck={truck} />
