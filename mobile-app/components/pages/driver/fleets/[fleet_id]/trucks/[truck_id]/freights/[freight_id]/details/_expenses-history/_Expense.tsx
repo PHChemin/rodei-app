@@ -2,6 +2,7 @@ import { Button, Icon, makeStyles, Text } from "@rneui/themed";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import { t } from "i18next";
+import { useState } from "react";
 import { View } from "react-native";
 
 import { ExpenseBaseSchema } from "@/schemas/Expense/ExpenseBase";
@@ -23,6 +24,8 @@ type ExpenseProps = {
 
 export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
   const styles = useStyles();
+
+  const [showMore, setShowMore] = useState(false);
 
   const handleUploadDocument = async () => {
     try {
@@ -81,57 +84,76 @@ export function Expense({ expense, fleetId, truckId, refresh }: ExpenseProps) {
   };
 
   return (
-    <Flex justify="space-between" style={styles.container}>
-      <View style={styles.iconContainer}>
-        <Icon
-          type="material-community"
-          name="clipboard-list-outline"
-          color="white"
-        />
-      </View>
+    <View>
+      <Flex justify="space-between" style={styles.container}>
+        <View style={styles.iconContainer}>
+          <Icon
+            type="material-community"
+            name="clipboard-list-outline"
+            color="white"
+          />
+        </View>
 
-      <View style={styles.textContainer}>
-        <Text h4>{expense.type}</Text>
+        <View style={styles.textContainer}>
+          <Text h4>{expense.type}</Text>
 
-        <Text numberOfLines={2}>{expense.location}</Text>
+          <Text numberOfLines={2}>{expense.location}</Text>
 
-        <Text>{formatToDisplayDate(expense.date)}</Text>
+          <Text>{formatToDisplayDate(expense.date)}</Text>
 
-        <Text style={styles.amount}>
-          - R$ {formatNumberBRL(expense.amount)}
-        </Text>
-      </View>
+          <Text style={styles.amount}>
+            - R$ {formatNumberBRL(expense.amount)}
+          </Text>
 
-      {expense.document_path ? (
-        <Button
-          type="outline"
-          title={t("buttons.download")}
-          size="sm"
-          iconRight
-          icon={{
-            name: "download",
-            type: "matterial-community",
-            color: colors.primary,
-            size: iconSize.sm,
-          }}
-          onPress={handleDownloadDocument}
-        />
-      ) : (
-        <Button
-          type="outline"
-          title={t("buttons.upload")}
-          size="sm"
-          iconRight
-          icon={{
-            name: "upload",
-            type: "matterial-community",
-            color: colors.primary,
-            size: iconSize.sm,
-          }}
-          onPress={handleUploadDocument}
-        />
-      )}
-    </Flex>
+          {showMore && <Text>{expense.description}</Text>}
+        </View>
+
+        <View>
+          <Text h4>Documento</Text>
+          {expense.document_path ? (
+            <Button
+              type="outline"
+              title={t("buttons.download")}
+              size="sm"
+              iconRight
+              icon={{
+                name: "download",
+                type: "matterial-community",
+                color: colors.primary,
+                size: iconSize.sm,
+              }}
+              onPress={handleDownloadDocument}
+            />
+          ) : (
+            <Button
+              type="outline"
+              title={t("buttons.upload")}
+              size="sm"
+              iconRight
+              icon={{
+                name: "upload",
+                type: "matterial-community",
+                color: colors.primary,
+                size: iconSize.sm,
+              }}
+              onPress={handleUploadDocument}
+            />
+          )}
+        </View>
+      </Flex>
+      <Button
+        type="clear"
+        title={showMore ? t("buttons.less") : t("buttons.more")}
+        iconRight
+        icon={{
+          name: showMore ? "chevron-up" : "chevron-down",
+          type: "material-community",
+          color: colors.primary,
+          size: iconSize.sm,
+        }}
+        onPress={() => setShowMore(!showMore)}
+      />
+    </View>
   );
 }
 

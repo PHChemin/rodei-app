@@ -7,7 +7,6 @@ import { DriverBase, FreightBase, TruckBase } from "@/schemas";
 import { formatNumberBRL } from "@/services/helpers/currency/currencyFormatter";
 import { formatToDisplayDate } from "@/services/helpers/date/date";
 
-import { Flex } from "@/components/ui";
 import { EmptyMessage } from "./_EmptyMessage";
 
 type DriverInfoProps = {
@@ -21,33 +20,13 @@ export function DriverInfo({ driver, truck, lastFreight }: DriverInfoProps) {
 
   return (
     <>
-      <Flex justify="space-between" style={styles.headerContainer}>
-        <Text h3 style={styles.greeting}>
-          Olá, MOTORISTA
-        </Text>
-
-        {lastFreight && truck && (
-          <Button
-            title={t("buttons.report-expense")}
-            size="sm"
-            iconRight
-            icon={{
-              name: "clipboard-list-outline",
-              type: "material-community",
-              color: "white",
-            }}
-            onPress={() => {
-              router.push(
-                `/driver/fleets/${lastFreight.fleet_id}/trucks/${lastFreight.truck_id}/freights/${lastFreight.id}/expenses/new`
-              );
-            }}
-          />
-        )}
-      </Flex>
+      <Text h3 style={styles.greeting}>
+        Olá, MOTORISTA
+      </Text>
 
       <Card containerStyle={styles.cardContainer}>
         <View style={styles.textContainer}>
-          <Text h3>Informações do Caminhão</Text>
+          <Text h3>{t("components.driver-home.truck-info")}</Text>
 
           <Text numberOfLines={2} adjustsFontSizeToFit={false}>
             <Text style={styles.strong}>
@@ -81,7 +60,7 @@ export function DriverInfo({ driver, truck, lastFreight }: DriverInfoProps) {
 
       {lastFreight ? (
         <Card containerStyle={styles.cardContainer}>
-          <Text h3>Informações do Frete</Text>
+          <Text h3>{t("components.driver-home.freight-info")}</Text>
 
           <Text numberOfLines={2} adjustsFontSizeToFit={false}>
             <Text style={styles.strong}>
@@ -136,6 +115,22 @@ export function DriverInfo({ driver, truck, lastFreight }: DriverInfoProps) {
             </Text>
             R$ {formatNumberBRL(lastFreight.driver_commission)}
           </Text>
+
+          <Button
+            title={t("buttons.report-expense")}
+            size="sm"
+            iconRight
+            icon={{
+              name: "clipboard-list-outline",
+              type: "material-community",
+              color: "white",
+            }}
+            onPress={() => {
+              router.push(
+                `/driver/fleets/${lastFreight.fleet_id}/trucks/${lastFreight.truck_id}/freights/${lastFreight.id}/expenses/new`
+              );
+            }}
+          />
         </Card>
       ) : (
         <EmptyMessage message={t("components.driver-home.empty-freight")} />
